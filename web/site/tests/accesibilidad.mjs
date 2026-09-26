@@ -206,7 +206,16 @@ async function comportamientos(p) {
       depuracion: "centrada=" + centro + " scrollLeft=" + Math.round(t.scrollLeft) + " max=" + (t.scrollWidth - t.clientWidth) }; })()`);
   if (!final.foco) problemas.push("Carrusel: la flecha «siguiente» pierde el foco al llegar al final");
   if (final.aria !== "true") problemas.push(`Carrusel: al final, «siguiente» debería tener aria-disabled="true" (tiene ${final.aria}; ${final.depuracion})`);
-  // 3. Formulario: enviarlo vacío marca los obligatorios, asocia el error y lleva el foco al primero
+  // 3. Menú (móvil): abierto, salir de él con Tab lo cierra
+  await p.abrir(BASE + "/", PANTALLAS[1], "dark");
+  await p.evaluar(`document.querySelector(".burger").click()`);
+  await espera(300);
+  for (let i = 0; i < 12; i++) await p.tecla("Tab", "Tab", 9);
+  await espera(300);
+  const menu = await p.evaluar(`({ abierto: document.getElementById("menu").classList.contains("open"), fuera: !document.getElementById("menu").contains(document.activeElement) })`);
+  if (menu.fuera && menu.abierto) problemas.push("Menú: el foco ha salido del menú con Tab pero sigue abierto");
+
+  // 4. Formulario: enviarlo vacío marca los obligatorios, asocia el error y lleva el foco al primero
   for (const tema of TEMAS) {
     await p.abrir(BASE + "/", PANTALLAS[0], tema);
     await p.evaluar(`document.querySelector("[data-formulario-compra] button[type=submit]").focus()`);
@@ -267,7 +276,7 @@ try {
   }
   const extra = WEB_PRINCIPAL ? await comportamientos(p) : [];
   totalProblemas += extra.length;
-  if (WEB_PRINCIPAL) console.log(`${extra.length ? "✗" : "✓"} Comportamientos (Escape del equipo, flechas del carrusel, errores del formulario)${extra.length ? "" : " — correctos"}`);
+  if (WEB_PRINCIPAL) console.log(`${extra.length ? "✗" : "✓"} Comportamientos (Escape del equipo, flechas del carrusel, menú, errores del formulario)${extra.length ? "" : " — correctos"}`);
   extra.forEach((x) => console.log("    " + x));
   ws.close();
 } catch (e) {
