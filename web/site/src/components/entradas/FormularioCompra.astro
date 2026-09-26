@@ -1,6 +1,10 @@
 ---
 // Formulario de compra. SIN pasarela todavía: solo valida en el navegador y avisa de que la venta
 // abrirá pronto (no envía datos a ningún sitio). Con Stripe, el botón irá a Stripe Checkout.
+//
+// Debajo del botón va la "primera capa" de información del RGPD (quién, para qué, derechos) con enlace
+// a la política completa: es obligatoria ANTES de que alguien envíe sus datos.
+import { titular } from "../../data/legal";
 ---
 <form class="buy" novalidate data-formulario-compra>
   <p class="price"><span>Entrada general</span><strong>Precio por anunciar</strong></p>
@@ -16,6 +20,11 @@
   <input id="f-cupon" name="cupon" autocomplete="off" maxlength="40" />
   <button type="submit">COMPRAR</button>
   <p class="note" aria-live="polite"></p>
+  <p class="privacidad">
+    Usaremos tus datos solo para gestionar tu entrada. Responsable: {titular.nombre ?? "la organización de Píntega Conf"}.
+    Puedes acceder a ellos, corregirlos o borrarlos escribiendo a <a href={`mailto:${titular.email}`}>{titular.email}</a>.
+    Más información en la <a href="/privacidad">política de privacidad</a>.
+  </p>
 </form>
 
 <style>
@@ -30,6 +39,8 @@
   button { align-self: center; margin-top: .8rem; background: var(--gold); color: var(--ink); border: 0; font: 600 16px var(--f-sans); padding: .55rem 1.1rem; cursor: pointer; }
   button:hover { filter: brightness(1.06); }
   button:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+  .privacidad { font-size: 11.5px; line-height: 1.5; color: var(--text-3); margin: .6rem 0 0; }
+  .privacidad a { color: var(--accent-text); }
   .note { font-size: 12px; color: var(--text-3); text-align: center; min-height: 1em; margin: .3rem 0 0; }
   @media (max-width: 680px) {
     .price { flex-direction: column; align-items: flex-start; gap: .2rem; }
