@@ -25,19 +25,26 @@ npm run audit     # vulnerabilidades conocidas en las dependencias
 
 ```
 src/
-  pages/index.astro          la página: solo ordena las secciones
-  layouts/Base.astro         <head>: SEO, Open Graph, schema.org, fuentes, script del tema
+  pages/
+    index.astro              la portada: solo ordena las secciones
+    faq.astro                preguntas frecuentes (<details>, sin JS)
+    aviso-legal.astro, privacidad.astro, cookies.astro   textos legales (BORRADOR hasta rellenar data/legal.ts)
+  layouts/
+    Base.astro               <head>: SEO, Open Graph, schema.org, fuentes, script del tema
+    PaginaTexto.astro        páginas de texto: cabecera, menú, bloque de lectura y pie
   components/
     layout/                  Cabecera, Menu (desplegable), Pie
     secciones/               Portada, QueEs, Agenda, Ponentes, Patrocinadores, Logos, Equipo, Entradas
     entradas/                PaseWallet, TicketClasico, FormularioCompra, QrDecorativo
     LogoHueco.astro          un hueco de logo (logo real o "Tu logo aquí")
+    Dato.astro               un dato legal o el hueco "pendiente: ..." si falta
   data/                      ← EL CONTENIDO. Casi todo lo que cambia se edita aquí
     evento.ts                fechas, lugares, email, descripciones
     navegacion.ts            secciones del menú y enlaces del pie
     equipo.ts                personas, fila y sus ilustraciones
     patrocinio.ts            niveles, logos de patrocinadores, colaboradores, comunidades
     ponentes.ts              line-up
+    legal.ts                 titular de la web (nombre, NIF, domicilio) y hosting: PENDIENTE
   scripts/                   JavaScript del navegador (TypeScript), uno por comportamiento
     tema.ts, cabecera.ts, menu.ts
     equipo/revelado.ts       hover por silueta (ratón) y toques (tablet)
@@ -65,6 +72,8 @@ se destapa a alguien del equipo) están marcados con `:global(...)`.
   1. Dejar sus 3 dibujos (capucha, manos, rostro; lienzo 1236×1272) en `web/web_assets/designs/<persona>/`.
   2. Añadirlo a `PERSONAS` en `web/tools/procesar-equipo.py` y ejecutarlo (`python3 web/tools/procesar-equipo.py <slug>`).
   3. Importar las 3 imágenes en `src/data/equipo.ts` y ponerlas en su `ilustracion`.
+- **Datos legales:** rellenar `src/data/legal.ts`. Cuando estén todos, desaparece el aviso de borrador de las páginas legales y el aviso del build. Los textos deberían revisarlos una persona experta antes de publicarlos.
+- **Enlaces a páginas:** con barra final (`/faq/`, `/privacidad/`), que es la URL que genera Astro y la que aparece en el sitemap.
 - **Volver al ticket clásico:** `DISENO_ENTRADA = "clasico"` en `components/secciones/Entradas.astro`.
 - **Colores:** siempre con los tokens de `styles/tokens.css`, que tienen valor claro y oscuro. Nunca colores sueltos en las secciones.
 

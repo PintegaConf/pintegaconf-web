@@ -74,7 +74,7 @@ Cómo se mitigan los contras de Astro:
 
 ## Mejoras propuestas (siguientes pasos)
 
-1. Páginas de **FAQ, aviso legal, privacidad y cookies** como páginas Astro, reutilizando `Base.astro`, `Cabecera` y `Pie`.
+1. ~~Páginas de FAQ, aviso legal, privacidad y cookies~~ **Hechas** (las legales, como BORRADOR hasta tener los datos del titular en `site/src/data/legal.ts` y una revisión legal). Además: sitemap (`@astrojs/sitemap`) y aviso de privacidad junto al formulario de compra.
 2. **Integración de Stripe** (ver arriba).
 3. **Accesibilidad:**
    - enlace "saltar al contenido";
