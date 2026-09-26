@@ -1,91 +1,160 @@
 ---
-// Preguntas frecuentes. Solo datos confirmados del evento (ver claude/CLAUDE.md). Cada pregunta es un
-// <details>: se abre y cierra sin JavaScript y es accesible con teclado y lector de pantalla.
+// Preguntas frecuentes. Solo datos confirmados del evento (ver claude/CLAUDE.md).
+// Escritorio: columna lateral fija (intro, índice por temas, contacto) + preguntas agrupadas por tema.
+// Móvil: todo en una columna.
 import PaginaTexto from "../layouts/PaginaTexto.astro";
+import PreguntaFaq from "../components/PreguntaFaq.astro";
 import { evento, mailto } from "../data/evento";
+
+const temas = [
+  { id: "evento", titulo: "El evento", preguntas: 3 },
+  { id: "entradas", titulo: "Entradas", preguntas: 1 },
+  { id: "charlas", titulo: "Charlas y ponentes", preguntas: 2 },
+  { id: "patrocinio", titulo: "Patrocinio", preguntas: 1 },
+];
 ---
-<PaginaTexto titulo="Preguntas frecuentes" descripcion={`Fechas, lugar, entradas, charlas y patrocinio de ${evento.nombre}.`}>
+<PaginaTexto
+  titulo="Preguntas frecuentes"
+  antetitulo={`${evento.nombre} · FAQ`}
+  descripcion={`Fechas, lugar, entradas, charlas y patrocinio de ${evento.nombre}.`}
+  ancho="amplio"
+>
   <div class="faq">
-    <details open>
-      <summary>¿Cuándo y dónde es?</summary>
-      <p>
-        El <strong>sábado 10 de abril de 2027</strong> es el día de las charlas, en {evento.charlas.lugarEnFrase} ({evento.ciudad}).
-        El <strong>viernes 9</strong> hay un pre-evento para conocernos, sin charlas, en un lugar que anunciaremos pronto.
-      </p>
-    </details>
+    <aside class="lateral">
+      <p class="intro">Todo lo que suele preguntarse sobre el evento. Si no encuentras tu respuesta, escríbenos.</p>
 
-    <details>
-      <summary>¿Qué es Píntega Conf?</summary>
-      <p>
-        Una conferencia tecnológica que reúne a las comunidades tech: la evolución de Lareira Conf.
-        La <em>píntega</em> es la salamandra en gallego, la mascota de esta nueva etapa.
-      </p>
-    </details>
+      <nav class="indice" aria-label="Temas">
+        {temas.map((t) => (
+          <a href={`#${t.id}`}><span>{t.titulo}</span><span class="cuenta">{t.preguntas}</span></a>
+        ))}
+      </nav>
 
-    <details>
-      <summary>¿Para quién es?</summary>
-      <p>
-        Para todos los perfiles: estudiantes, desarrolladores, profesionales IT y cualquier persona con curiosidad por la tecnología,
-        de cualquier edad, trayectoria o cargo. Así es también el cartel de ponentes.
-      </p>
-    </details>
+      <div class="contacto">
+        <p class="contacto-titulo">¿Otra pregunta?</p>
+        <p>Te respondemos en el correo de la organización.</p>
+        <a class="btn btn-gold" href={`mailto:${evento.email}`}>{evento.email}</a>
+      </div>
+    </aside>
 
-    <details>
-      <summary>¿Cuánto cuesta la entrada y cómo la compro?</summary>
-      <p>
-        El precio se anunciará cuando abramos la venta. Se comprará en esta web y el pago se hará con Stripe, en su propia página de pago:
-        los datos de tu tarjeta nunca pasan por nuestra web.
-      </p>
-      <p><a href={mailto("Avísame cuando salgan las entradas")}>Escríbenos</a> si quieres que te avisemos.</p>
-    </details>
+    <div class="temas">
+      <section id="evento" class="tema">
+        <h2>El evento</h2>
+        <PreguntaFaq numero={1} pregunta="¿Cuándo y dónde es?" abierta>
+          <p>
+            El <strong>sábado 10 de abril de 2027</strong> es el día de las charlas, en {evento.charlas.lugarEnFrase} ({evento.ciudad}).
+            El <strong>viernes 9</strong> hay un pre-evento para conocernos, sin charlas, en un lugar que anunciaremos pronto.
+          </p>
+        </PreguntaFaq>
+        <PreguntaFaq numero={2} pregunta="¿Qué es Píntega Conf?">
+          <p>
+            Una conferencia tecnológica que reúne a las comunidades tech: la evolución de Lareira Conf.
+            La <em>píntega</em> es la salamandra en gallego, la mascota de esta nueva etapa.
+          </p>
+        </PreguntaFaq>
+        <PreguntaFaq numero={3} pregunta="¿Para quién es?">
+          <p>
+            Para todos los perfiles: estudiantes, desarrolladores, profesionales IT y cualquier persona con curiosidad por la tecnología,
+            de cualquier edad, trayectoria o cargo. Así es también el cartel de ponentes.
+          </p>
+        </PreguntaFaq>
+      </section>
 
-    <details>
-      <summary>Quiero dar una charla. ¿Cómo lo hago?</summary>
-      <p>
-        Escríbenos a <a href={mailto("Quiero dar una charla en Píntega Conf")}>{evento.email}</a> con tu propuesta.
-        Las charlas duran de media entre 30 y 45 minutos, con duraciones variadas según el tema.
-      </p>
-      <p>A los ponentes les ofrecemos:</p>
-      <ul>
-        <li>viaje y hotel cubiertos;</li>
-        <li>entrada full-pass;</li>
-        <li>cena en el post-evento;</li>
-        <li>grabación de la charla y difusión en la web y en redes;</li>
-        <li>un regalo de ponente.</li>
-      </ul>
-    </details>
+      <section id="entradas" class="tema">
+        <h2>Entradas</h2>
+        <PreguntaFaq numero={4} pregunta="¿Cuánto cuesta la entrada y cómo la compro?">
+          <p>
+            El precio se anunciará cuando abramos la venta. Se comprará en esta web y el pago se hará con Stripe, en su propia página de
+            pago: los datos de tu tarjeta nunca pasan por nuestra web.
+          </p>
+          <p><a href={mailto("Avísame cuando salgan las entradas")}>Escríbenos</a> si quieres que te avisemos.</p>
+        </PreguntaFaq>
+      </section>
 
-    <details>
-      <summary>¿Se graban las charlas?</summary>
-      <p>Sí. Las charlas se graban y se difunden después en la web y en redes sociales.</p>
-    </details>
+      <section id="charlas" class="tema">
+        <h2>Charlas y ponentes</h2>
+        <PreguntaFaq numero={5} pregunta="Quiero dar una charla. ¿Cómo lo hago?">
+          <p>
+            Escríbenos a <a href={mailto("Quiero dar una charla en Píntega Conf")}>{evento.email}</a> con tu propuesta. Las charlas duran
+            de media entre 30 y 45 minutos, con duraciones variadas según el tema.
+          </p>
+          <p>A los ponentes les ofrecemos:</p>
+          <ul>
+            <li>viaje y hotel cubiertos;</li>
+            <li>entrada full-pass;</li>
+            <li>cena en el post-evento;</li>
+            <li>grabación de la charla y difusión en la web y en redes;</li>
+            <li>un regalo de ponente.</li>
+          </ul>
+        </PreguntaFaq>
+        <PreguntaFaq numero={6} pregunta="¿Se graban las charlas?">
+          <p>Sí. Las charlas se graban y se difunden después en la web y en redes sociales.</p>
+        </PreguntaFaq>
+      </section>
 
-    <details>
-      <summary>¿Cómo puede patrocinar mi empresa?</summary>
-      <p>
-        Hay cuatro niveles: <strong>Dragón</strong> (patrocinio principal, exclusivo para una sola empresa), <strong>Basilisco</strong>,{" "}
-        <strong>Tritón</strong> y <strong>Ajolote</strong>. Pídenos el dossier en{" "}
-        <a href={mailto("Patrocinio Píntega Conf '27")}>{evento.email}</a> y lo hablamos.
-      </p>
-    </details>
-
-    <details>
-      <summary>¿Cómo contacto con la organización?</summary>
-      <p>En <a href={`mailto:${evento.email}`}>{evento.email}</a>.</p>
-    </details>
+      <section id="patrocinio" class="tema">
+        <h2>Patrocinio</h2>
+        <PreguntaFaq numero={7} pregunta="¿Cómo puede patrocinar mi empresa?">
+          <p>
+            Hay cuatro niveles: <strong>Dragón</strong> (patrocinio principal, exclusivo para una sola empresa), <strong>Basilisco</strong>,{" "}
+            <strong>Tritón</strong> y <strong>Ajolote</strong>. Pídenos el dossier en{" "}
+            <a href={mailto("Patrocinio Píntega Conf '27")}>{evento.email}</a> y lo hablamos.
+          </p>
+        </PreguntaFaq>
+      </section>
+    </div>
   </div>
 </PaginaTexto>
 
 <style>
-  .faq { display: grid; gap: .8rem; }
-  details { border: 1px solid var(--gold); background: linear-gradient(180deg, var(--panel-top), var(--panel-bottom)); padding: 0 1.3rem; }
-  summary {
-    cursor: pointer; list-style: none; padding: 1.1rem 2rem 1.1rem 0; position: relative;
-    font: 400 21px/1.3 var(--f-head); color: var(--text);
+  .faq { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 4rem; align-items: start; }
+
+  /* ---------- Columna lateral (fija al hacer scroll en escritorio) ---------- */
+  .lateral { position: sticky; top: calc(var(--bar-h) + 2rem); display: grid; gap: 2rem; }
+  .intro { margin: 0; font-size: 17px; color: var(--text-2); }
+
+  .indice { display: grid; border-top: 1px solid var(--line); }
+  .indice a {
+    display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: .75rem .2rem;
+    border-bottom: 1px solid var(--line); text-decoration: none; color: var(--text);
+    font: 400 19px var(--f-head); transition: color .2s, padding-left .25s var(--ease);
   }
-  summary::-webkit-details-marker { display: none; }
-  summary::after { content: "+"; position: absolute; right: 0; top: 50%; transform: translateY(-50%); font: 700 24px var(--f-mono); color: var(--accent-text); }
-  details[open] summary::after { content: "−"; }
-  summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
-  details[open] { padding-bottom: .4rem; }
+  .indice a:hover { color: var(--accent-text); padding-left: .6rem; }
+  .indice a:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  .cuenta {
+    min-width: 26px; height: 26px; display: grid; place-items: center; border-radius: 999px;
+    font: 700 12px var(--f-mono); background: var(--slot-bg); color: var(--accent-text); border: 1px solid rgba(253, 195, 48, .4);
+  }
+
+  .contacto { position: relative; padding: 1.5rem 1.4rem 1.6rem; border: 1px solid var(--gold); background: linear-gradient(180deg, var(--panel-top), var(--panel-bottom)); }
+  .contacto::after { content: ""; position: absolute; left: -1px; bottom: -1px; width: 22px; height: 22px; background: var(--gold); }
+  .contacto p { margin: 0 0 1rem; font-size: 15px; }
+  .contacto .contacto-titulo { font: 400 23px/1.2 var(--f-head); color: var(--text); margin-bottom: .4rem; }
+  /* color explícito: si no, hereda el dorado de los enlaces del texto y queda dorado sobre dorado */
+  .contacto .btn { color: var(--ink); text-decoration: none; font-size: 15px; padding: .6rem 1.1rem; max-width: 100%; overflow-wrap: anywhere; }
+
+  /* ---------- Preguntas por tema ---------- */
+  .temas { display: grid; gap: 3rem; }
+  .tema { display: grid; gap: .8rem; }
+  /* .faq .tema h2 gana a los estilos genéricos de h2 de PaginaTexto (más específico) */
+  .faq .tema h2 {
+    display: flex; align-items: center; gap: .8rem; margin: 0 0 .4rem;
+    font: 700 13px var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--accent-text);
+  }
+  .faq .tema h2::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(253, 195, 48, .5), transparent); }
+
+  /* Una columna: la lateral se "deshace" para ordenar intro → índice → preguntas → contacto (al final, como cierre) */
+  @media (max-width: 980px) {
+    .faq { grid-template-columns: 1fr; gap: 2.5rem; }
+    .lateral { display: contents; }
+    .intro { order: 1; }
+    .indice { order: 2; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 1.2rem; }
+    .temas { order: 3; }
+    .contacto { order: 4; }
+  }
+  @media (max-width: 680px) {
+    .indice { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .indice a { transition: none; }
+  }
 </style>

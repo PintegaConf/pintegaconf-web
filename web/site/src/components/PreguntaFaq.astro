@@ -1,0 +1,68 @@
+---
+// Una pregunta de la FAQ: número, pregunta y respuesta (el <slot />). Es un <details> nativo: se abre y
+// cierra sin JavaScript, con teclado y con lector de pantalla. La apertura se anima donde el navegador
+// lo permite (::details-content + interpolate-size); en el resto se abre al instante.
+interface Props {
+  numero: number;
+  pregunta: string;
+  abierta?: boolean;
+}
+const { numero, pregunta, abierta = false } = Astro.props;
+---
+<details class="pregunta" open={abierta}>
+  <summary>
+    <span class="num" aria-hidden="true">{String(numero).padStart(2, "0")}</span>
+    <span class="q">{pregunta}</span>
+    <span class="icono" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    </span>
+  </summary>
+  <div class="respuesta"><slot /></div>
+</details>
+
+<style>
+  .pregunta {
+    position: relative; border: 1px solid var(--line); border-left: 3px solid transparent;
+    background: linear-gradient(180deg, var(--panel-top), var(--panel-bottom));
+    transition: border-color .25s var(--ease), box-shadow .25s var(--ease);
+    interpolate-size: allow-keywords;   /* permite animar hasta height:auto (Chrome/Edge) */
+  }
+  .pregunta:hover { border-color: rgba(253, 195, 48, .45); border-left-color: rgba(253, 195, 48, .45); }
+  .pregunta[open] { border-color: rgba(253, 195, 48, .55); border-left-color: var(--gold); box-shadow: 0 14px 30px -18px rgba(0, 0, 0, .55); }
+
+  summary {
+    list-style: none; cursor: pointer; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.1rem;
+    padding: 1.15rem 1.3rem;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+  .num { font: 700 13px var(--f-mono); letter-spacing: .08em; color: var(--accent-text); opacity: .7; transition: opacity .25s; }
+  .pregunta[open] .num, .pregunta:hover .num { opacity: 1; }
+  .q { font: 400 21px/1.3 var(--f-head); color: var(--text); }
+
+  .icono {
+    width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center;
+    border: 1.5px solid color-mix(in srgb, var(--accent-text) 60%, transparent); color: var(--accent-text);   /* dorado en oscuro, ocre en claro */
+    transition: transform .35s var(--ease), background .25s, color .25s;
+  }
+  .pregunta[open] .icono { transform: rotate(180deg); background: var(--gold); color: var(--ink); border-color: var(--gold); }
+
+  /* Respuesta alineada con el texto de la pregunta (a la altura tras el número) */
+  .respuesta { padding: 0 1.3rem 1.3rem calc(1.3rem + 1.1rem + 2.2ch); color: var(--text-2); }
+  .respuesta :global(p:last-child), .respuesta :global(ul:last-child) { margin-bottom: 0; }
+
+  /* Animación de apertura (solo donde se soporta ::details-content) */
+  .pregunta::details-content { block-size: 0; overflow: clip; transition: block-size .4s var(--ease), content-visibility .4s allow-discrete; }
+  .pregunta[open]::details-content { block-size: auto; }
+
+  @media (max-width: 680px) {
+    summary { gap: .8rem; padding: 1rem 1rem; }
+    .q { font-size: 18px; }
+    .icono { width: 30px; height: 30px; }
+    .respuesta { padding: 0 1rem 1.1rem 1rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pregunta, .icono, .pregunta::details-content { transition: none; }
+  }
+</style>
