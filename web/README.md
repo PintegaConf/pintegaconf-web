@@ -76,7 +76,7 @@ Cómo se mitigan los contras de Astro:
 
 1. ~~Páginas de FAQ, aviso legal, privacidad y cookies~~ **Hechas** (las legales, como BORRADOR hasta tener los datos del titular en `site/src/data/legal.ts` y una revisión legal). Además: sitemap (`@astrojs/sitemap`) y aviso de privacidad junto al formulario de compra.
 2. **Integración de Stripe** (ver arriba).
-3. **Accesibilidad:**
+3. ~~Accesibilidad~~ **Hecho (sep 2026):** WCAG 2.2 AA en autoevaluación, con auditoría automática en la CI (`npm run a11y`), declaración de accesibilidad y página de seguridad. **Pendiente:** probar con lectores de pantalla reales (VoiceOver, NVDA, TalkBack). Plan inicial:
    - enlace "saltar al contenido";
    - revisar el orden de foco del menú;
    - comprobar el contraste del modo claro con una herramienta;

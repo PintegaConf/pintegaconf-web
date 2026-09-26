@@ -19,6 +19,7 @@ npm run dev       # servidor local con recarga en http://localhost:4321
 npm run build     # comprueba tipos y genera dist/
 npm run preview   # sirve dist/ para verlo tal cual quedará publicado
 npm run audit     # vulnerabilidades conocidas en las dependencias
+npm run a11y      # compila y audita la accesibilidad (ver «Accesibilidad» más abajo)
 ```
 
 ## Estructura
@@ -29,6 +30,8 @@ src/
     index.astro              la portada: solo ordena las secciones
     faq.astro                preguntas frecuentes (<details>, sin JS)
     aviso-legal.astro, privacidad.astro, cookies.astro   textos legales (BORRADOR hasta rellenar data/legal.ts)
+    accesibilidad.astro      declaración de accesibilidad (actualizarla al revisar)
+    seguridad.astro          seguridad y privacidad explicadas al visitante
   layouts/
     Base.astro               <head>: SEO, Open Graph, schema.org, fuentes, script del tema
     PaginaTexto.astro        páginas de texto: cabecera, menú, bloque de lectura y pie
@@ -85,6 +88,30 @@ se destapa a alguien del equipo) están marcados con `:global(...)`.
 - **Scroll horizontal:** no puede haber en ningún ancho. Comprobar a 320, 375, 768 y 1024 px con `document.documentElement.scrollWidth === innerWidth`.
 - **Navegadores:** probar en Safari (Mac, iPhone, iPad) además de Chrome.
 
+## Accesibilidad (obligatoria: WCAG 2.2 AA)
+
+`npm run a11y` compila la web y ejecuta `tests/accesibilidad.mjs` (necesita Google Chrome). La CI lo hace en cada cambio y falla si hay problemas:
+- **axe-core** (WCAG 2.0, 2.1 y 2.2 A y AA + buenas prácticas) en todas las páginas, en escritorio y móvil, en los temas oscuro y claro, y con el menú abierto.
+- **Recorrido real con Tab:** nombre accesible, foco visible, foco no tapado por la cabecera y objetivos de 24×24 px.
+- **Espaciado de texto** (1.4.12), **reducir movimiento** y **palabras pegadas** a enlaces o negritas.
+- **Comportamientos:** Escape en el equipo, flechas del carrusel, cierre del menú y errores del formulario.
+
+Opciones:
+- `A11Y_DETALLE=1`: orden de tabulación completo.
+- `A11Y_REVISAR=1`: casos que axe no puede decidir (texto sobre degradados), para revisar el contraste a mano.
+- `A11Y_DIST=../temporal A11Y_PAGINAS=/`: auditar otra web.
+
+Lo que la herramienta NO cubre y hay que revisar a mano en cambios visuales:
+- el **modo de alto contraste** (colores forzados: nada que dependa solo del color de fondo);
+- los **lectores de pantalla reales**: VoiceOver, NVDA y TalkBack. Aún no se ha hecho, y está anotado en la declaración.
+
+Reglas:
+- Foco: solo el global de `base.css`. No hay que añadir estilos de foco por componente.
+- Nada animado más de 5 s sin forma de pararlo.
+- Errores de formulario asociados a su campo.
+- Controles con borde transparente, para que tengan contorno en alto contraste.
+- Si cambia algo relevante, actualizar la fecha y los pendientes de `pages/accesibilidad.astro`.
+
 ## Seguridad
 
 - **CSP:** va en un `<meta>` que genera Astro (`astro.config.mjs` → `security.csp`), con hash de cada script y estilo propio. Si un script externo nuevo deja de funcionar, es la CSP: hay que añadir su origen en `directives`, a conciencia.
@@ -105,5 +132,7 @@ se destapa a alguien del equipo) están marcados con `:global(...)`.
   4. `npm run build`;
   5. probar;
   6. commit del `package-lock.json`.
+- **`public/.well-known/security.txt`** (RFC 9116): contacto para avisar de fallos. **Caduca el 26-09-2027**: renovarlo antes.
+- **Distintivos del pie** (`components/layout/Distintivos.astro`): solo compromisos reales y comprobables, enlazados a su página. Nada de sellos oficiales que no se tengan.
 - **Telemetría de Astro:** desactivada en esta máquina (`npx astro telemetry disable`).
 - Análisis completo en `web/README.md`.

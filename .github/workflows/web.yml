@@ -4,7 +4,7 @@
 # antes de publicar.
 #
 # Coste: el plan Free de la organización incluye 2.000 minutos/mes en repos privados y cada ejecución
-# tarda ~2,5 minutos. Solo se ejecuta cuando cambia algo de web/site, web/temporal o este archivo.
+# tarda unos 3 minutos. Solo se ejecuta cuando cambia algo de web/site, web/temporal o este archivo.
 name: Web
 
 on:

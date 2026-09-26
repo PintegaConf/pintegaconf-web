@@ -63,6 +63,7 @@ Seguridad del proyecto: `.npmrc` con `ignore-scripts` y versiones exactas (no qu
 ## Reglas al trabajar en la web
 
 - **Commits a GitHub (MUY IMPORTANTE):** cada commit trata **un solo cambio** y su mensaje explica bien **qué cambia y por qué** (y qué se ha probado). Nada de commits de mil cosas a la vez con miles de líneas: arreglos, reorganizaciones y contenido nuevo van en commits separados. Los movimientos de archivos, en un commit propio sin ediciones mezcladas.
+- **ACCESIBILIDAD OBLIGATORIA (WCAG 2.2 AA + buenas prácticas, al pie de la letra):** todo el mundo tiene que poder usar la web, en todos los navegadores y dispositivos. Teclado perfecto (orden lógico, foco siempre visible y nunca tapado por la cabecera fija), contraste AA en los dos temas (también bordes de campos y foco, 3:1), `prefers-reduced-motion`, nada animado de más de 5 s sin pausa, nombres accesibles, landmarks, un solo h1 y errores de formulario asociados a su campo. Ningún cambio se da por bueno sin comprobarlo: `npm run a11y` (axe, Tab real, espaciado, movimiento, palabras pegadas, comportamientos; también en la CI) + panel Audit + alto contraste a mano en cambios visuales. Mantener al día `pages/accesibilidad.astro` (declaración). Distintivos del pie: solo compromisos reales, nunca sellos oficiales que no se tengan. Puede haber una ponente de accesibilidad: la web tiene que ser ejemplar.
 - **"Audit" = panel Audit de la barra de desarrollo de Astro** (accesibilidad y rendimiento en `npm run dev`), no `npm audit` (vulnerabilidades de dependencias). Revisar los dos y no decir "0 problemas" sin haber mirado el panel.
 
 - Probar siempre en **Safari (Mac) e iPhone** además de Chrome: Safari ha dado bugs distintos (centrado, máscaras, flechas del carrusel).
@@ -85,6 +86,8 @@ Seguridad del proyecto: `.npmrc` con `ignore-scripts` y versiones exactas (no qu
 - Line-up de ponentes, logos de patrocinadores (`logos` de cada nivel en `web/site/src/data/patrocinio.ts`), colaboradores y comunidades.
 - Precio de entrada + integración con Stripe.
 - Agenda: detalles del pre-evento (viernes 9) y horario de charlas (sábado 10).
+- **Accesibilidad: probar con lectores de pantalla reales** (VoiceOver macOS/iOS, NVDA, TalkBack) y actualizar la declaración. Lo automático y el teclado ya están (sep 2026).
+- **Renovar `security.txt`** antes del 26-09-2027.
 - **Traducciones: inglés y gallego** además del español (idioma por defecto). Plan técnico en `web/README.md` → Mejoras propuestas.
 - Páginas FAQ, aviso legal, privacidad y cookies: **hechas** (sep 2026). Las legales son BORRADOR: faltan titular (nombre, NIF, domicilio, registro si lo hay) y hosting en `web/site/src/data/legal.ts`, y una revisión legal. No inventar esos datos.
 - Web v2 en Astro hecha y probada por Matías en Safari de Mac, iPhone e iPad (sep 2026). Falta publicarla (el código ya está en el repo privado).
