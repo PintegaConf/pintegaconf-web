@@ -1,0 +1,41 @@
+---
+// Seguridad y privacidad: las medidas REALES de la web, explicadas para cualquier visitante. Nada de
+// sellos inventados: si algo aún no está (p. ej. HTTPS hasta publicar), se dice.
+import PaginaTexto from "../layouts/PaginaTexto.astro";
+import { evento } from "../data/evento";
+---
+<PaginaTexto
+  titulo="Seguridad y privacidad"
+  descripcion={`Cómo protege la web de ${evento.nombre} tu privacidad y tu seguridad.`}
+  actualizado="2026-09-27"
+>
+  <p>Esta web está pensada para recoger los mínimos datos posibles y para no exponerte a terceros. En concreto:</p>
+
+  <h2>Privacidad por diseño</h2>
+  <ul>
+    <li><strong>Sin cookies ni rastreadores.</strong> No hay analítica, publicidad ni botones de redes sociales que te sigan. Más detalle en la <a href="/cookies/">política de cookies</a>.</li>
+    <li><strong>Sin llamadas a terceros al visitarla.</strong> Las fuentes tipográficas y las imágenes se sirven desde nuestro propio dominio: tu dirección IP no llega a Google ni a nadie más.</li>
+    <li><strong>Solo los datos necesarios.</strong> Para comprar una entrada pediremos lo imprescindible para gestionarla. Qué datos, para qué y tus derechos: <a href="/privacidad/">política de privacidad</a>.</li>
+  </ul>
+
+  <h2>Pagos</h2>
+  <p>
+    Las entradas se pagarán con <strong>Stripe</strong>, en su propia página de pago. Los datos de tu tarjeta los recibe Stripe
+    directamente y nunca pasan por esta web. Stripe tiene la certificación <strong>PCI DSS de nivel 1</strong>, la más exigente del sector
+    de los pagos con tarjeta.
+  </p>
+
+  <h2>Seguridad de la web</h2>
+  <ul>
+    <li><strong>Web estática</strong>: no hay servidor de aplicaciones, base de datos ni panel de administración que atacar.</li>
+    <li><strong>Política de seguridad de contenido (CSP) estricta</strong>: el navegador solo ejecuta los scripts y estilos de esta web, identificados por su huella criptográfica.</li>
+    <li><strong>Cabeceras de seguridad</strong>: la web no se puede incrustar en otras páginas (protección contra <em>clickjacking</em>) y, una vez publicada, se servirá siempre por HTTPS (HSTS).</li>
+    <li><strong>Dependencias auditadas</strong> automáticamente con cada cambio y avisos de seguridad activados; al instalarlas, ningún paquete puede ejecutar código.</li>
+  </ul>
+
+  <h2>¿Has encontrado un fallo de seguridad?</h2>
+  <p>
+    Escríbenos a <a href={`mailto:${evento.email}?subject=${encodeURIComponent("Fallo de seguridad en la web")}`}>{evento.email}</a> con
+    los detalles. Te agradeceremos que nos des tiempo a corregirlo antes de hacerlo público.
+  </p>
+</PaginaTexto>

@@ -1,0 +1,51 @@
+---
+// Distintivos del pie: compromisos REALES de la web, cada uno enlazado a la página que lo explica.
+// No son certificados oficiales (no existen para WCAG ni para el RGPD): son autoevaluaciones y
+// hechos comprobables. Si alguno deja de ser cierto, se quita. PCI DSS es de Stripe (sí es real).
+const distintivos = [
+  {
+    href: "/accesibilidad/",
+    texto: "Accesible · WCAG 2.2 AA",
+    detalle: "autoevaluación",
+    icono: '<circle cx="12" cy="4.5" r="2"/><path d="M5 8.5l7 1.5 7-1.5M12 10v5l-3 6m3-6l3 6"/>',
+  },
+  {
+    href: "/cookies/",
+    texto: "Sin cookies ni rastreadores",
+    icono: '<circle cx="12" cy="12" r="8.5"/><circle cx="9" cy="10" r="1"/><circle cx="14.5" cy="14" r="1"/><circle cx="14" cy="8.5" r=".8"/><path d="M4.5 19.5l15-15"/>',
+  },
+  {
+    href: "/seguridad/",
+    texto: "Privacidad por diseño",
+    icono: '<path d="M12 3l7 3v5.5c0 4.3-3 7.9-7 9.5-4-1.6-7-5.2-7-9.5V6z"/><path d="M9 12l2 2 4-4"/>',
+  },
+  {
+    href: "/seguridad/",
+    texto: "Pagos con Stripe · PCI DSS",
+    icono: '<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 15h3"/>',
+  },
+];
+---
+<ul class="distintivos" aria-label="Compromisos de esta web">
+  {distintivos.map((d) => (
+    <li>
+      <a href={d.href}>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={d.icono} />
+        <span>{d.texto}{d.detalle && <span class="detalle"> ({d.detalle})</span>}</span>
+      </a>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .distintivos { list-style: none; margin: 0 0 .6rem; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; }
+  a {
+    display: inline-flex; align-items: center; gap: .45rem; min-height: 32px; padding: .3rem .8rem .3rem .6rem;
+    border-radius: 999px; border: 1.5px solid var(--ink); background: var(--ink); color: var(--gold);
+    font: 600 13px/1.2 var(--f-sans); text-decoration: none; transition: background .2s, color .2s;
+  }
+  a:hover { background: transparent; color: var(--ink); }
+  .detalle { font-weight: 400; opacity: .85; }
+  svg { flex: none; }
+  @media (prefers-reduced-motion: reduce) { a { transition: none; } }
+</style>

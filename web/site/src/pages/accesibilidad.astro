@@ -1,0 +1,63 @@
+---
+// Declaración de accesibilidad, siguiendo la estructura del modelo europeo (Directiva UE 2016/2102 y
+// RD 1112/2018). Es una AUTOEVALUACIÓN: dice qué se ha comprobado, cómo, y qué falta. Actualizar la
+// fecha y la lista de pendientes cada vez que se revise (p. ej. tras probar con lectores de pantalla).
+import PaginaTexto from "../layouts/PaginaTexto.astro";
+import { evento, mailto } from "../data/evento";
+
+const REVISADO = "2026-09-27";
+---
+<PaginaTexto
+  titulo="Declaración de accesibilidad"
+  descripcion={`Nivel de accesibilidad de la web de ${evento.nombre}, cómo se ha comprobado y cómo avisarnos de un problema.`}
+  actualizado={REVISADO}
+>
+  <p>
+    Queremos que todo el mundo pueda consultar esta web y asistir a {evento.nombre}, sea cual sea su forma de navegar: con ratón,
+    teclado, pantalla táctil, lector de pantalla, ampliador o en modo de alto contraste.
+  </p>
+
+  <h2>Situación de cumplimiento</h2>
+  <p>
+    El objetivo es el nivel <strong>AA</strong> de las <strong>Pautas de Accesibilidad para el Contenido Web (WCAG) 2.2</strong>, la
+    norma de referencia en la UE (EN 301 549). Según nuestra <strong>autoevaluación</strong>, la web cumple todos los criterios de nivel
+    A y AA que hemos podido comprobar. Nos falta verificarla con lectores de pantalla reales (ver más abajo).
+  </p>
+
+  <h2>Cómo lo hemos comprobado</h2>
+  <ul>
+    <li><strong>Auditoría automática con axe-core</strong> (reglas de WCAG 2.0, 2.1 y 2.2 A y AA y buenas prácticas) en todas las páginas, en escritorio y móvil, en tema claro y oscuro. Se repite automáticamente con cada cambio de la web.</li>
+    <li><strong>Recorrido completo con el teclado</strong>: en cada elemento comprobamos que tiene nombre, que el foco se ve y que no queda tapado, y que el objetivo mide al menos 24×24 px.</li>
+    <li><strong>Comportamientos</strong>: el contenido que aparece al pasar el ratón o al enfocar se cierra con Escape; el carrusel del equipo y el menú no pierden el foco; los errores del formulario se anuncian y se asocian a su campo.</li>
+    <li><strong>Contraste</strong> de todos los textos y controles en los dos temas, también el que axe no puede calcular (texto sobre degradados).</li>
+    <li><strong>Espaciado de texto</strong> (WCAG 1.4.12), <strong>anchura de 320 px</strong> sin desplazamiento horizontal, <strong>preferencia de reducir movimiento</strong> y <strong>modo de alto contraste</strong> (colores forzados).</li>
+    <li>Pruebas manuales en Safari (Mac, iPhone y iPad) y Chrome.</li>
+  </ul>
+
+  <h2>Lo que aún falta</h2>
+  <ul>
+    <li>Probar la web de principio a fin con lectores de pantalla reales: VoiceOver (macOS e iOS), NVDA (Windows) y TalkBack (Android).</li>
+    <li>La web está solo en español. Habrá versiones en inglés y gallego.</li>
+  </ul>
+
+  <h2>Características de accesibilidad</h2>
+  <ul>
+    <li>Enlace «Saltar al contenido» al principio de cada página.</li>
+    <li>Indicador de foco de dos colores, visible sobre cualquier fondo.</li>
+    <li>Tema claro y oscuro, que respeta la preferencia de tu sistema.</li>
+    <li>Sin animaciones automáticas de más de 5 segundos; con «reducir movimiento», ninguna.</li>
+    <li>Las preguntas frecuentes y el resto de la web funcionan sin necesidad de ratón.</li>
+  </ul>
+
+  <h2>¿Has encontrado un problema?</h2>
+  <p>
+    Si algo de esta web no te resulta accesible, o necesitas la información en otro formato, escríbenos a{" "}
+    <a href={mailto("Accesibilidad de la web")}>{evento.email}</a>. Te responderemos lo antes posible.
+  </p>
+
+  <h2>Accesibilidad en el evento</h2>
+  <p>
+    Si necesitas alguna adaptación para asistir a {evento.nombre}, escríbenos a{" "}
+    <a href={mailto("Adaptación para asistir a Píntega Conf")}>{evento.email}</a> y veremos cómo ayudarte.
+  </p>
+</PaginaTexto>
