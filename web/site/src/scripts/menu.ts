@@ -26,6 +26,12 @@ document.addEventListener("keydown", (e) => {
     hamburguesa.focus();
   }
 });
+// Si el foco sale del menú con Tab (hacia la página), se cierra: si no, el panel seguiría abierto
+// tapando el contenido que se está recorriendo con el teclado.
+menu.addEventListener("focusout", (e) => {
+  const destino = e.relatedTarget as Node | null;
+  if (estaAbierto() && destino && !menu.contains(destino) && !hamburguesa.contains(destino)) abrir(false);
+});
 document.addEventListener("click", (e) => {
   const destino = e.target as Node;
   if (estaAbierto() && !menu.contains(destino) && !hamburguesa.contains(destino)) abrir(false);
