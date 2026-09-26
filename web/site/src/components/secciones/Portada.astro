@@ -16,15 +16,15 @@ import { evento } from "../../data/evento";
       <ul class="facts">
         <li>
           <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M3.5 10h17M8 3v4M16 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
-          <span><strong>Sábado 10 de abril</strong>2027 · día de charlas</span>
+          <span><strong>Sábado 10 de abril</strong> 2027 · día de charlas</span>
         </li>
         <li>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path><circle cx="12" cy="9.5" r="2.5" fill="none" stroke="currentColor" stroke-width="2"></circle></svg>
-          <span><strong>{evento.charlas.lugar}</strong>{evento.ciudad}</span>
+          <span><strong>{evento.charlas.lugar}</strong> {evento.ciudad}</span>
         </li>
         <li>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.1 6.9L21 12l-6.9 2.1L12 21l-2.1-6.9L3 12l6.9-2.1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path></svg>
-          <span><strong>Viernes 9 · pre-evento</strong>{evento.preEvento.lugar ?? "lugar por anunciar"}</span>
+          <span><strong>Viernes 9 · pre-evento</strong> {evento.preEvento.lugar ?? "lugar por anunciar"}</span>
         </li>
       </ul>
       <div class="cta">
@@ -49,6 +49,8 @@ import { evento } from "../../data/evento";
   .lede { font: 18px/1.55 var(--f-sans); max-width: 34rem; margin: 0 0 1.8rem; color: #333; }
   .facts { list-style: none; margin: 0 0 2.1rem; padding: 0; display: flex; flex-wrap: wrap; gap: .9rem 2rem; }
   .facts li { display: flex; align-items: center; gap: .7rem; font: 15px/1.25 var(--f-sans); color: #444; }
+  /* strong en bloque: el espacio que le sigue en el HTML no se ve, pero evita que el lector de pantalla
+     lea "abril2027" todo junto */
   .facts strong { display: block; font: 700 19px var(--f-head); color: var(--ink); }
   .facts svg { flex: none; width: 40px; height: 40px; padding: 9px; border-radius: 50%; background: var(--ink); color: var(--gold); }
   .cta { display: flex; flex-wrap: wrap; gap: .9rem; }
