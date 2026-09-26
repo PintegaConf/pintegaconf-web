@@ -12,7 +12,8 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "audit": "npm audit --omit=dev"
+    "audit": "npm audit --omit=dev",
+    "a11y": "npm run build && node tests/accesibilidad.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "3.7.4",
@@ -20,6 +21,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",
+    "axe-core": "4.13.0",
     "typescript": "6.0.3"
   }
 }
