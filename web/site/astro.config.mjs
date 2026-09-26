@@ -1,10 +1,14 @@
 // @ts-check
 import { defineConfig, fontProviders } from "astro/config";
+import sitemap from "@astrojs/sitemap";
 
 // Web estática: `npm run build` genera dist/ con HTML, CSS, JS e imágenes listos para subir a
 // cualquier hosting (sin servidor Node en producción).
 export default defineConfig({
-  site: "https://pintegaconf.es", // dominio previsto (sin confirmar): se usa en las URL absolutas de Open Graph
+  site: "https://pintegaconf.es", // dominio previsto (sin confirmar): URL absolutas de Open Graph y del sitemap
+
+  // sitemap-index.xml con todas las páginas, para los buscadores (enlazado desde public/robots.txt)
+  integrations: [sitemap()],
 
   // Fuentes: Astro las descarga de Google al compilar y las sirve desde nuestro dominio.
   // Así el navegador del visitante nunca contacta con Google (RGPD: la IP es un dato personal).
