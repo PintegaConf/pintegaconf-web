@@ -77,7 +77,7 @@
   .works-top { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 5px 8px; }
   .works-top p { margin: 0; }
   .pausa {
-    min-height: 24px; padding: .3rem .8rem; border: 0; border-radius: 999px; cursor: pointer;
+    min-height: 24px; padding: .3rem .8rem; border: 2px solid transparent; border-radius: 999px; cursor: pointer;
     background: var(--ink); color: var(--gold); font: 700 12px/1.4 var(--f-mono); letter-spacing: .08em; text-transform: uppercase;
   }
   .pausa:hover { text-decoration: underline; }
@@ -96,6 +96,7 @@
     min-height: min(88vh, 760px); padding: 3.5rem 0 4.5rem;
   }
   .logo { width: min(460px, 100%); height: auto; }
+  @media (forced-colors: active) { .logo { background: #fff; padding: 4px 8px; border-radius: 4px; forced-color-adjust: none; } }
   .kicker { margin: 2rem 0 .6rem; font: 700 13px/1.4 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; }
   h1 { margin: 0; font: 700 clamp(34px, 5.2vw, 58px)/1.08 var(--f-head); letter-spacing: -.01em; max-width: 14ch; }
   .facts { display: flex; flex-wrap: wrap; gap: .7rem; margin: 2rem 0 0; padding: 0; list-style: none; }
