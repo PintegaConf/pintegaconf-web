@@ -83,4 +83,10 @@ Cómo se mitigan los contras de Astro:
    - probar con VoiceOver en iPhone y Mac.
 4. ~~Integración continua~~ **Hecho:** workflow `.github/workflows/web.yml` (tipos, build y `npm audit` en cada cambio de `web/site`) y **Dependabot** (`.github/dependabot.yml`), más alertas y correcciones automáticas de seguridad activadas en el repositorio.
 5. **Web temporal** como segunda página del proyecto Astro (hoy está suelta en `web-temporal/`), para compartir cabecera, fuentes y CSP.
-6. **Probar en Safari (Mac, iPhone, iPad).** Se ha verificado en Chrome; Safari ha dado bugs propios en la v1.
+6. **Traducciones al inglés y al gallego** (el español sigue siendo el idioma por defecto). Plan:
+   - **Rutas:** usar el enrutado de idiomas que Astro trae de serie (`i18n` en `astro.config.mjs`, `locales: ["es", "en", "gl"]`, `defaultLocale: "es"`). Así el español sigue en `/` y los otros idiomas van en `/en/` y `/gl/`. No hace falta ninguna integración.
+   - **Textos:** sacar los que hoy están escritos dentro de los componentes a diccionarios por idioma (p. ej. `src/i18n/{es,en,gl}.ts`), junto con los textos de `src/data/`, y un selector de idioma en la cabecera y el menú.
+   - **SEO:** `<html lang>` según el idioma, etiquetas `hreflang` entre versiones y la opción `i18n` de `@astrojs/sitemap`.
+   - **Legales:** el aviso legal, la privacidad y las cookies también se traducen; la versión en español sigue siendo la de referencia.
+   - El nombre "Píntega" se mantiene en todos los idiomas (es gallego).
+7. **Probar en Safari (Mac, iPhone, iPad).** Se ha verificado en Chrome; Safari ha dado bugs propios en la v1.
