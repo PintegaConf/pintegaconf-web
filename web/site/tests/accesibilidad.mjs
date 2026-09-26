@@ -115,7 +115,9 @@ class Pestana {
     await espera(700); // transiciones de color del tema (0,4 s)
   }
   async tecla(key, code, keyCode) {
-    await this.enviar("Input.dispatchKeyEvent", { type: "keyDown", key, code, windowsVirtualKeyCode: keyCode });
+    // Enter necesita el carácter "\r" para activar botones y enlaces (como una pulsación real)
+    const texto = key === "Enter" ? { text: "\r", unmodifiedText: "\r" } : {};
+    await this.enviar("Input.dispatchKeyEvent", { type: "keyDown", key, code, windowsVirtualKeyCode: keyCode, ...texto });
     await this.enviar("Input.dispatchKeyEvent", { type: "keyUp", key, code, windowsVirtualKeyCode: keyCode });
   }
 }
@@ -172,6 +174,39 @@ async function recorridoTab(p) {
   return { pasos, problemas };
 }
 
+// ---------- Comportamientos concretos (lo que axe no puede comprobar) ----------
+async function comportamientos(p) {
+  const problemas = [];
+  // 1. Escritorio: el teclado destapa a una persona y Escape la vuelve a tapar sin mover el foco (WCAG 1.4.13)
+  await p.abrir(BASE + "/", PANTALLAS[0], "dark");
+  await p.evaluar(`document.querySelector("#equipo .dossier").focus()`);
+  await espera(1500);
+  const destapada = await p.evaluar(`getComputedStyle(document.querySelector("#equipo .operative .layer-hood")).opacity`);
+  await p.tecla("Escape", "Escape", 27);
+  await espera(800);
+  const trasEscape = await p.evaluar(`({ capucha: getComputedStyle(document.querySelector("#equipo .operative .layer-hood")).opacity,
+    foco: document.activeElement === document.querySelector("#equipo .dossier") })`);
+  if (destapada !== "0") problemas.push(`Equipo: el foco con teclado no destapa a la persona (opacidad capucha ${destapada})`);
+  if (trasEscape.capucha !== "1") problemas.push(`Equipo: Escape no vuelve a tapar a la persona (opacidad capucha ${trasEscape.capucha})`);
+  if (!trasEscape.foco) problemas.push("Equipo: Escape ha movido el foco");
+
+  // 2. Móvil: la flecha "siguiente" no pierde el foco al llegar al final (aria-disabled, no disabled)
+  await p.abrir(BASE + "/", PANTALLAS[1], "dark");
+  await p.evaluar(`document.querySelector("#equipo").scrollIntoView(); document.querySelector("#equipo .nav-next").focus()`);
+  for (let i = 0; i < 8; i++) {
+    await p.tecla("Enter", "Enter", 13);
+    await espera(700);
+  }
+  const final = await p.evaluar(`(() => { const t = document.querySelector("#equipo .formation-inner"); const ops = [...t.querySelectorAll(".operative")];
+    const mid = t.getBoundingClientRect().left + t.clientWidth / 2;
+    const centro = ops.map(o => { const r = o.getBoundingClientRect(); return [o.querySelector(".info-name").textContent, Math.abs(r.left + r.width / 2 - mid)]; }).sort((a, b) => a[1] - b[1])[0][0];
+    return { foco: document.activeElement?.classList.contains("nav-next"), aria: document.querySelector("#equipo .nav-next").getAttribute("aria-disabled"),
+      depuracion: "centrada=" + centro + " scrollLeft=" + Math.round(t.scrollLeft) + " max=" + (t.scrollWidth - t.clientWidth) }; })()`);
+  if (!final.foco) problemas.push("Carrusel: la flecha «siguiente» pierde el foco al llegar al final");
+  if (final.aria !== "true") problemas.push(`Carrusel: al final, «siguiente» debería tener aria-disabled="true" (tiene ${final.aria}; ${final.depuracion})`);
+  return problemas;
+}
+
 // ---------- Ejecución ----------
 let totalProblemas = 0;
 try {
@@ -210,6 +245,10 @@ try {
       if (process.env.A11Y_DETALLE) pasos.forEach((f, i) => console.log(`      ${i + 1}. ${f.id} «${f.nombre}»`));
     }
   }
+  const extra = await comportamientos(p);
+  totalProblemas += extra.length;
+  console.log(`${extra.length ? "✗" : "✓"} Comportamientos del equipo (Escape, flechas del carrusel)${extra.length ? "" : " — correctos"}`);
+  extra.forEach((x) => console.log("    " + x));
   ws.close();
 } catch (e) {
   console.error("Error en la auditoría:", e);
