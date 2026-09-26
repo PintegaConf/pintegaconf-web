@@ -49,7 +49,13 @@ import { secciones, enlaceEntradas, enlaceSeccion } from "../../data/navegacion"
   :global([data-effective-theme="light"]) .i-sun { display: block; }
 
   .burger { display: none; flex: none; width: 44px; height: 44px; background: none; border: 0; padding: 10px 7px; cursor: pointer; flex-direction: column; justify-content: space-between; }
-  .burger span { display: block; height: 3px; background: var(--ink); border-radius: 2px; }
+  /* Rayas con borde, no con fondo: en alto contraste los fondos se eliminan y la hamburguesa desaparecía */
+  .burger span { display: block; height: 0; border-top: 3px solid var(--ink); border-radius: 2px; }
+
+  /* Alto contraste (colores forzados): el logo es negro y el fondo pasa a negro; placa blanca para que se vea */
+  @media (forced-colors: active) {
+    .logo { background: #fff; padding: 3px 6px; border-radius: 4px; forced-color-adjust: none; }
+  }
 
   @media (max-width: 1240px) {
     .topnav { gap: 1.1rem; }

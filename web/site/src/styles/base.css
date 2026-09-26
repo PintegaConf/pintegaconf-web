@@ -32,7 +32,7 @@ section { scroll-margin-top: calc(var(--bar-h) + 1rem); }
 /* Enlace "Saltar al contenido" (WCAG 2.4.1): primer elemento enfocable; solo se ve al enfocarlo */
 .saltar {
   position: fixed; top: .6rem; left: .6rem; z-index: 300;
-  padding: .7rem 1.1rem; border-radius: 999px; background: var(--ink); color: var(--gold);
+  padding: .7rem 1.1rem; border-radius: 999px; background: var(--ink); color: var(--gold); border: 2px solid transparent;
   font: 700 16px var(--f-sans); text-decoration: none;
   transform: translateY(-200%);
 }

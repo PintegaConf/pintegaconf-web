@@ -150,7 +150,7 @@ const miembros = equipo.map((m, indice) => {
     .nav {
       display: flex; align-items: center; justify-content: center; position: absolute; z-index: 70;
       top: calc(2.25rem + 2.5rem + min(62vw, 240px) * 1272 / 1236 / 2); transform: translateY(-50%);
-      width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%;
+      width: 44px; height: 44px; padding: 0; border: 2px solid transparent; border-radius: 50%;   /* contorno en alto contraste */
       background: var(--gold); color: var(--ink); cursor: pointer;
       transition: opacity .25s var(--ease), transform .15s var(--ease); -webkit-tap-highlight-color: transparent;
     }

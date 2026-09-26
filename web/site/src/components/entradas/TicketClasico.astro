@@ -17,6 +17,10 @@ import { evento } from "../../data/evento";
   .ticket { position: relative; background: var(--gold); color: var(--ink); height: 320px; display: grid; grid-template-columns: 1fr 86px; }
   .ticket-main { display: grid; place-items: center; align-content: center; gap: .6rem; padding: 1.4rem; }
   .ticket-main img { width: 390px; max-width: 100%; height: auto; }
+  /* Alto contraste (colores forzados): el logo es negro y el fondo pasa a negro; placa blanca para que se vea */
+  @media (forced-colors: active) {
+    .ticket-main img { background: #fff; padding: 3px 6px; border-radius: 4px; forced-color-adjust: none; }
+  }
   .ticket-date { font: 48px/1 var(--f-head); margin: 0; }
   .ticket-stub { border-left: 4px dotted var(--ink); display: grid; place-items: center; }
   .ticket-stub span { writing-mode: vertical-rl; transform: rotate(180deg); font: 48px var(--f-head); letter-spacing: .02em; }

@@ -77,7 +77,8 @@ const campos: Campo[] = [
   input[aria-invalid="true"] { border-bottom: 2px solid var(--error); }
   .error { margin: 0; font-size: 13px; color: var(--error); }
   .error:empty { display: none; }
-  button { align-self: center; margin-top: .8rem; background: var(--gold); color: var(--ink); border: 0; font: 600 16px var(--f-sans); padding: .55rem 1.1rem; min-height: 44px; cursor: pointer; }
+  /* borde transparente: invisible normalmente, dibuja el contorno del botón en alto contraste */
+  button { align-self: center; margin-top: .8rem; background: var(--gold); color: var(--ink); border: 2px solid transparent; font: 600 16px var(--f-sans); padding: .55rem 1.1rem; min-height: 44px; cursor: pointer; }
   button:hover { filter: brightness(1.06); }
   .privacidad { font-size: 12px; line-height: 1.5; color: var(--text-3); margin: .6rem 0 0; }
   .privacidad a { color: var(--accent-text); }
