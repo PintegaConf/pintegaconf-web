@@ -1,0 +1,59 @@
+---
+// Páginas de texto (FAQ, aviso legal, privacidad, cookies): cabecera, menú y pie de la web con un
+// bloque de lectura. El contenido lo pone cada página en el <slot />.
+import Base from "./Base.astro";
+import Cabecera from "../components/layout/Cabecera.astro";
+import Menu from "../components/layout/Menu.astro";
+import Pie from "../components/layout/Pie.astro";
+import { evento } from "../data/evento";
+
+interface Props {
+  titulo: string;
+  descripcion: string;
+  /** Fecha de la última revisión del texto (AAAA-MM-DD). */
+  actualizado?: string;
+  /** Muestra el aviso de borrador (textos legales sin revisar o con datos pendientes). */
+  borrador?: boolean;
+}
+const { titulo, descripcion, actualizado, borrador = false } = Astro.props;
+const fecha = actualizado
+  ? new Date(actualizado).toLocaleDateString("es-ES", { day: "numeric", month: "long", year: "numeric" })
+  : null;
+---
+<Base titulo={`${titulo} · ${evento.nombre}`} descripcion={descripcion}>
+  <Cabecera />
+  <Menu />
+  <main class="wrap texto">
+    <h1>{titulo}</h1>
+    {borrador && (
+      <p class="borrador" role="note">
+        <strong>Borrador.</strong> Este texto está pendiente de revisión y le faltan datos del titular.
+        No es la versión definitiva.
+      </p>
+    )}
+    <slot />
+    {fecha && <p class="actualizado">Última actualización: {fecha}.</p>}
+  </main>
+  <Pie />
+</Base>
+
+<style>
+  /* alto mínimo: en páginas cortas el pie queda abajo y no a media pantalla */
+  .texto { max-width: 760px; min-height: calc(100vh - var(--bar-h) - 3.5rem); padding: 4rem 0 5rem; font: 16px/1.7 var(--f-sans); color: var(--text-2); }
+  h1 { font: 400 clamp(36px, 5vw, 48px) / 1.1 var(--f-head); color: var(--accent-text); margin: 0 0 2rem; }
+  .borrador { border: 1px dashed var(--gold); background: var(--slot-bg); color: var(--text); padding: .9rem 1.1rem; margin: 0 0 2rem; }
+  .actualizado { margin-top: 3rem; font-size: 14px; color: var(--text-3); }
+
+  /* Contenido del <slot /> (viene de cada página, por eso :global) */
+  .texto :global(h2) { font: 400 26px/1.25 var(--f-head); color: var(--text); margin: 2.4rem 0 .8rem; }
+  .texto :global(h3) { font: 700 17px/1.3 var(--f-sans); color: var(--text); margin: 1.6rem 0 .4rem; }
+  .texto :global(p), .texto :global(ul) { margin: 0 0 1rem; }
+  .texto :global(li) { margin-bottom: .35rem; }
+  .texto :global(a) { color: var(--accent-text); text-underline-offset: 3px; }
+  .texto :global(strong) { color: var(--text); }
+  .texto :global(.pendiente) { background: rgba(253, 195, 48, .18); color: var(--text); padding: 0 .3em; border-radius: 3px; font-style: italic; }
+
+  @media (max-width: 680px) {
+    .texto { padding: 2.5rem 0 4rem; }
+  }
+</style>

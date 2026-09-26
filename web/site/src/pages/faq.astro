@@ -1,0 +1,91 @@
+---
+// Preguntas frecuentes. Solo datos confirmados del evento (ver claude/CLAUDE.md). Cada pregunta es un
+// <details>: se abre y cierra sin JavaScript y es accesible con teclado y lector de pantalla.
+import PaginaTexto from "../layouts/PaginaTexto.astro";
+import { evento, mailto } from "../data/evento";
+---
+<PaginaTexto titulo="Preguntas frecuentes" descripcion={`Fechas, lugar, entradas, charlas y patrocinio de ${evento.nombre}.`}>
+  <div class="faq">
+    <details open>
+      <summary>¿Cuándo y dónde es?</summary>
+      <p>
+        El <strong>sábado 10 de abril de 2027</strong> es el día de las charlas, en {evento.charlas.lugarEnFrase} ({evento.ciudad}).
+        El <strong>viernes 9</strong> hay un pre-evento para conocernos, sin charlas, en un lugar que anunciaremos pronto.
+      </p>
+    </details>
+
+    <details>
+      <summary>¿Qué es Píntega Conf?</summary>
+      <p>
+        Una conferencia tecnológica que reúne a las comunidades tech: la evolución de Lareira Conf.
+        La <em>píntega</em> es la salamandra en gallego, la mascota de esta nueva etapa.
+      </p>
+    </details>
+
+    <details>
+      <summary>¿Para quién es?</summary>
+      <p>
+        Para todos los perfiles: estudiantes, desarrolladores, profesionales IT y cualquier persona con curiosidad por la tecnología,
+        de cualquier edad, trayectoria o cargo. Así es también el cartel de ponentes.
+      </p>
+    </details>
+
+    <details>
+      <summary>¿Cuánto cuesta la entrada y cómo la compro?</summary>
+      <p>
+        El precio se anunciará cuando abramos la venta. Se comprará en esta web y el pago se hará con Stripe, en su propia página de pago:
+        los datos de tu tarjeta nunca pasan por nuestra web.
+      </p>
+      <p><a href={mailto("Avísame cuando salgan las entradas")}>Escríbenos</a> si quieres que te avisemos.</p>
+    </details>
+
+    <details>
+      <summary>Quiero dar una charla. ¿Cómo lo hago?</summary>
+      <p>
+        Escríbenos a <a href={mailto("Quiero dar una charla en Píntega Conf")}>{evento.email}</a> con tu propuesta.
+        Las charlas duran de media entre 30 y 45 minutos, con duraciones variadas según el tema.
+      </p>
+      <p>A los ponentes les ofrecemos:</p>
+      <ul>
+        <li>viaje y hotel cubiertos;</li>
+        <li>entrada full-pass;</li>
+        <li>cena en el post-evento;</li>
+        <li>grabación de la charla y difusión en la web y en redes;</li>
+        <li>un regalo de ponente.</li>
+      </ul>
+    </details>
+
+    <details>
+      <summary>¿Se graban las charlas?</summary>
+      <p>Sí. Las charlas se graban y se difunden después en la web y en redes sociales.</p>
+    </details>
+
+    <details>
+      <summary>¿Cómo puede patrocinar mi empresa?</summary>
+      <p>
+        Hay cuatro niveles: <strong>Dragón</strong> (patrocinio principal, exclusivo para una sola empresa), <strong>Basilisco</strong>,
+        <strong>Tritón</strong> y <strong>Ajolote</strong>. Pídenos el dossier en
+        <a href={mailto("Patrocinio Píntega Conf '27")}>{evento.email}</a> y lo hablamos.
+      </p>
+    </details>
+
+    <details>
+      <summary>¿Cómo contacto con la organización?</summary>
+      <p>En <a href={`mailto:${evento.email}`}>{evento.email}</a>.</p>
+    </details>
+  </div>
+</PaginaTexto>
+
+<style>
+  .faq { display: grid; gap: .8rem; }
+  details { border: 1px solid var(--gold); background: linear-gradient(180deg, var(--panel-top), var(--panel-bottom)); padding: 0 1.3rem; }
+  summary {
+    cursor: pointer; list-style: none; padding: 1.1rem 2rem 1.1rem 0; position: relative;
+    font: 400 21px/1.3 var(--f-head); color: var(--text);
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; position: absolute; right: 0; top: 50%; transform: translateY(-50%); font: 700 24px var(--f-mono); color: var(--accent-text); }
+  details[open] summary::after { content: "−"; }
+  summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+  details[open] { padding-bottom: .4rem; }
+</style>

@@ -16,7 +16,7 @@ export const enlaceSeccion = (id: string) => `/#${id}`;
 // Pie. `href: null` = la página aún no existe: se muestra el texto sin enlace (un enlace a "#"
 // es un enlace roto). Cuando se cree la página, poner su ruta, p. ej. "/privacidad".
 export const enlacesPie: { href: string | null; titulo: string }[] = [
-  { href: null, titulo: "FAQS" },
+  { href: "/faq", titulo: "FAQS" },
   { href: null, titulo: "AVISO LEGAL" },
   { href: null, titulo: "POLÍTICA DE PRIVACIDAD" },
   { href: null, titulo: "POLÍTICA DE COOKIES" },
