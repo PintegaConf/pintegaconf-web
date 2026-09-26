@@ -15,6 +15,11 @@ updates:
       # Parches y versiones menores juntos en un solo PR; las versiones MAYORES, cada una en el suyo
       menores:
         update-types: [minor, patch]
+    ignore:
+      # TypeScript 7: @astrojs/check (verificador de tipos de Astro) solo admite TypeScript 5 y 6
+      # (peerDependencies "^5.0.0 || ^6.0.0", sep 2026). Quitar esta regla cuando lo admita.
+      - dependency-name: typescript
+        versions: [">=7"]
 
   # Las acciones del workflow (fijadas por hash)
   - package-ecosystem: github-actions
