@@ -9,6 +9,7 @@
 //
 // Revelado: capucha → manos → rostro, con fundidos (nada de cortes secos). Las capas van apiladas:
 // capucha (arriba) > manos > rostro. El difuminado de hombros va incrustado en las imágenes.
+import { Image } from "astro:assets";
 import { equipo, ilustracionPorDefecto } from "../../data/equipo";
 
 // Columna de la rejilla de escritorio: delante 1,3,5,7 · atrás 2,4,6 (medio paso desplazada)
@@ -29,9 +30,9 @@ const miembros = equipo.map((m, indice) => {
             <div class="dossier" tabindex="0" aria-label={`${m.nombre}, ${m.rol}`}>
               <div class="frame">
                 <div class="portrait">
-                  <img class="layer-hood" src={m.ilu.capucha.src} width={m.ilu.capucha.width} height={m.ilu.capucha.height} alt="" loading="lazy" decoding="async" draggable="false" />
-                  <img class="layer-hands" src={m.ilu.manos.src} width={m.ilu.manos.width} height={m.ilu.manos.height} alt="" loading="lazy" decoding="async" draggable="false" />
-                  <img class="layer-face" src={m.ilu.rostro.src} width={m.ilu.rostro.width} height={m.ilu.rostro.height} alt="" loading="lazy" decoding="async" draggable="false" />
+                  <Image class="layer-hood" src={m.ilu.capucha} alt="" width={480} quality={90} draggable="false" />
+                  <Image class="layer-hands" src={m.ilu.manos} alt="" width={480} quality={90} draggable="false" />
+                  <Image class="layer-face" src={m.ilu.rostro} alt="" width={480} quality={90} draggable="false" />
                 </div>
               </div>
               <div class="info" aria-hidden="true"><p class="info-name">{m.nombre}</p><p class="info-role">{m.rol}</p></div>
