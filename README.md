@@ -12,6 +12,12 @@ La v1 (`backup/pintega-conf-web.v1.html`) era un único HTML de 867 KB y ~1.080 
 dentro: CSS, JavaScript y las imágenes en base64. La v2 es la misma web, visualmente idéntica,
 reorganizada en componentes. Se comparó captura a captura en escritorio y móvil.
 
+## Reglas del repositorio
+
+- **Commits pequeños y bien explicados.** Cada commit trata un solo cambio, y el mensaje dice qué cambia, por qué y qué se ha probado. Arreglos, reorganizaciones y contenido nuevo van en commits separados; mover archivos, en un commit propio. Nada de commits de mil cosas y miles de líneas.
+- **El repositorio es privado** y debe seguir siéndolo.
+- **Antes de subir:** `npm run build` sin errores y el panel **Audit** de `npm run dev` (barra inferior de Astro) sin avisos nuevos.
+
 ## Por qué Astro
 
 Se valoraron tres opciones: Astro, Hugo y HTML/CSS/JS sin framework. Las tres generan HTML estático,
