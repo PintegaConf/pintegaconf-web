@@ -79,7 +79,6 @@ Seguridad del proyecto: `.npmrc` con `ignore-scripts` y versiones exactas (no qu
 
 ## Pendiente (resumen — detalle en claude/docs/contexto-web.md)
 
-- Carrusel del equipo en móvil: arreglado en Chrome; **falta probar en Safari/iPhone**.
 - **Stripe como pasarela** de compra de entradas.
 - Web temporal "en obras" hecha en `web/temporal/`: falta confirmar dominio/email, añadir redes y publicarla.
 - Ilustraciones propias del resto del equipo (hechas: Jesús/Yisus y Matías; faltan Iria, Nacho, Tiziana, David, Carlos, que usan las de Yisus). Yisus = Jesús (sus ilustraciones son las de `web/web_assets/designs/yisus/`).
@@ -88,4 +87,4 @@ Seguridad del proyecto: `.npmrc` con `ignore-scripts` y versiones exactas (no qu
 - Agenda: detalles del pre-evento (viernes 9) y horario de charlas (sábado 10).
 - **Traducciones: inglés y gallego** además del español (idioma por defecto). Plan técnico en `web/README.md` → Mejoras propuestas.
 - Páginas FAQ, aviso legal, privacidad y cookies: **hechas** (sep 2026). Las legales son BORRADOR: faltan titular (nombre, NIF, domicilio, registro si lo hay) y hosting en `web/site/src/data/legal.ts`, y una revisión legal. No inventar esos datos.
-- Web v2 en Astro hecha (sep 2026): **falta probar en Safari/iPhone/iPad**, y publicarla (el código ya está en el repo privado). Mejoras propuestas en `web/README.md` (accesibilidad, CI, RGPD del formulario, Stripe con Checkout, web temporal dentro de Astro).
+- Web v2 en Astro hecha y probada por Matías en Safari de Mac, iPhone e iPad (sep 2026). Falta publicarla (el código ya está en el repo privado). Mejoras propuestas en `web/README.md` (accesibilidad, CI, RGPD del formulario, Stripe con Checkout, web temporal dentro de Astro).

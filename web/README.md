@@ -89,4 +89,4 @@ Cómo se mitigan los contras de Astro:
    - **SEO:** `<html lang>` según el idioma, etiquetas `hreflang` entre versiones y la opción `i18n` de `@astrojs/sitemap`.
    - **Legales:** el aviso legal, la privacidad y las cookies también se traducen; la versión en español sigue siendo la de referencia.
    - El nombre "Píntega" se mantiene en todos los idiomas (es gallego).
-7. **Probar en Safari (Mac, iPhone, iPad).** Se ha verificado en Chrome; Safari ha dado bugs propios en la v1.
+7. ~~Probar en Safari (Mac, iPhone, iPad)~~ **Hecho** (sep 2026): Matías lo probó y el responsive va bien en los tres. Hay que seguir probando en Safari tras cada cambio importante.
