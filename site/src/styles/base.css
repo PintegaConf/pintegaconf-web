@@ -1,0 +1,74 @@
+/* ============================================================================
+   Base: reset mínimo y piezas compartidas por varias secciones
+   (contenedor, botones, títulos de sección, paneles y huecos de logo).
+   Lo específico de cada sección vive en su componente (.astro).
+   ============================================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--f-mono); font-size: 14px; line-height: 1.5; }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; }
+main { padding-bottom: 5rem; }
+section { scroll-margin-top: calc(var(--bar-h) + 1rem); }
+
+.wrap { width: min(var(--wrap), 100% - 3rem); margin: 0 auto; }
+
+/* Texto solo para lectores de pantalla */
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* ---------- Botones ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  font: 700 17px var(--f-head); text-decoration: none; padding: .8rem 1.5rem;
+  border-radius: 999px; border: 2px solid var(--ink);
+  transition: transform .15s var(--ease), background .2s, color .2s;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+.btn-gold { background: var(--gold); color: var(--ink); }
+.btn-ghost { background: transparent; color: var(--ink); }
+.btn-ghost:hover { background: var(--ink); color: var(--white); }
+.btn-sm { padding: .45rem 1.1rem; font-size: 16px; }
+
+/* ---------- Títulos de sección ---------- */
+.sec-title {
+  font-family: var(--f-head); font-weight: 400; font-size: 48px; line-height: 1.1;
+  color: var(--accent-text); text-align: center; margin: 5.5rem 0 3rem; letter-spacing: .01em;
+}
+
+/* ---------- Panel: borde dorado + cuadradito en la esquina inferior izquierda ---------- */
+.panel { position: relative; border: 1px solid var(--gold); background: linear-gradient(180deg, var(--panel-top), var(--panel-bottom)); }
+.panel::after { content: ""; position: absolute; left: -1px; bottom: -1px; width: 34px; height: 34px; background: var(--gold); }
+.panel p { margin: 0 0 1.2rem; }
+
+/* ---------- Rejilla de logos y huecos "Tu logo aquí" ---------- */
+.logos { display: grid; grid-template-columns: repeat(3, 315px); gap: 55px; justify-content: center; }
+.logo-slot {
+  height: 115px; display: grid; place-items: center;
+  background: var(--slot-bg); border: 1.5px dashed rgba(253, 195, 48, .45);
+  color: var(--slot-text); font-family: var(--f-sans); font-size: 13px; letter-spacing: .08em; text-transform: uppercase;
+  transition: border-color .25s, background .25s;
+}
+.logo-slot:hover { border-color: var(--gold); background: rgba(253, 195, 48, .05); }
+/* Los logos reales se ven en blanco (oscuro) o negro (claro) y recuperan su color al pasar el ratón */
+.logo-slot img { max-width: 78%; max-height: 66%; object-fit: contain; filter: var(--logo-filter); opacity: .85; transition: filter .3s, opacity .3s; }
+.logo-slot:hover img { filter: none; opacity: 1; }
+.logo-slot:has(img) { border-style: solid; border-color: var(--line); }
+
+@media (max-width: 1240px) {
+  .logos { grid-template-columns: repeat(3, minmax(0, 315px)); gap: 2rem; }
+}
+@media (max-width: 680px) {
+  .wrap { width: calc(100% - 3rem); }
+  .sec-title { font-size: 38px; margin: 4rem 0 2.4rem; }
+  .logos { grid-template-columns: 1fr; gap: 1rem; width: min(315px, 100%); margin: 0 auto; }
+}
+@media (max-width: 360px) {
+  .sec-title { font-size: 32px; }   /* "PATROCINADORES" a 38px no cabía en 320px */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .btn { transition: none; }
+}

@@ -1,0 +1,29 @@
+---
+// Entradas: diseño de la entrada + formulario de compra.
+import PaseWallet from "../entradas/PaseWallet.astro";
+import TicketClasico from "../entradas/TicketClasico.astro";
+import FormularioCompra from "../entradas/FormularioCompra.astro";
+
+// Diseño de la entrada: "wallet" (pase estilo Apple Wallet) o "clasico" (ticket mostaza original).
+const DISENO_ENTRADA: "wallet" | "clasico" = "wallet";
+---
+<section id="entradas">
+  <div class="wrap">
+    <h2 class="sec-title">ENTRADAS</h2>
+    <div class="tickets">
+      {DISENO_ENTRADA === "wallet" ? <PaseWallet /> : <TicketClasico />}
+      <FormularioCompra />
+    </div>
+  </div>
+</section>
+
+<script>
+  import "../../scripts/entradas/pase";
+  import "../../scripts/entradas/formulario";
+</script>
+
+<style>
+  .tickets { display: grid; grid-template-columns: 685px 315px; gap: 65px; justify-content: center; align-items: stretch; }
+  @media (max-width: 1240px) { .tickets { grid-template-columns: minmax(0, 1fr) 315px; gap: 2rem; } }
+  @media (max-width: 980px) { .tickets { grid-template-columns: 1fr; max-width: 685px; margin: 0 auto; } }
+</style>

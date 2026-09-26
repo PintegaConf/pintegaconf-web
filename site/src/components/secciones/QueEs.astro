@@ -1,0 +1,53 @@
+---
+import { evento } from "../../data/evento";
+const formato = [
+  { titulo: "Viernes 9 · Pre-evento", texto: `Para conocernos y abrir boca antes del gran día. Sin charlas. ${evento.preEvento.lugar ? `En ${evento.preEvento.lugar}.` : "Lugar por anunciar."}` },
+  { titulo: "Sábado 10 · El gran día", texto: `Charlas, ponentes, patrocinadores y networking en ${evento.charlas.lugarEnFrase}.` },
+  { titulo: "Para todos los perfiles", texto: "Gente de distintas edades, trayectorias y cargos, tanto en el público como entre los ponentes." },
+];
+---
+<section id="pintega">
+  <div class="wrap">
+    <div class="panel">
+      <div class="panel-grid">
+        <div class="txt">
+          <h2>PÍNTEGA CONF</h2>
+          <p>PÍNTEGA CONF es la evolución de Lareira Conf: un punto de encuentro para todos los apasionados por la tecnología.</p>
+          <p>Queremos reunir a los miembros de las distintas comunidades técnicas y a otros desarrolladores, estudiantes y profesionales IT en un espacio donde puedan aprender, compartir experiencias y conectar con otros lareireiros.</p>
+          <p>Queremos que descubras gente con la que puedas compartir conocimientos e inspiración, para seguir impulsando el sector IT. Únete y sé parte del comienzo de esta aventura.</p>
+        </div>
+        <div class="formato">
+          <h3>El formato</h3>
+          <ul>
+            {formato.map((f) => <li><b>{f.titulo}</b>{f.texto}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .panel { padding: 3.2rem 4.4rem 3.4rem; margin-top: 5.5rem; }
+  .panel-grid { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 3.5rem; }
+  h2 { font: 400 48px/1.1 var(--f-head); color: var(--accent-text); margin: 0 0 1.3rem; }
+  .txt p { font: 16px/1.65 var(--f-sans); color: var(--text-2); }
+  .formato { border-left: 1px solid rgba(253, 195, 48, .4); padding-left: 2.2rem; align-self: center; }
+  h3 { font: 700 13px var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--accent-text); margin: 0 0 1rem; }
+  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.1rem; }
+  li { font: 15px/1.5 var(--f-sans); color: var(--text-2); }
+  b { display: block; font: 400 24px var(--f-head); color: var(--text); }
+
+  @media (max-width: 980px) {
+    .panel { padding: 2.4rem 2rem 3rem; }
+    .panel-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .formato { border-left: 0; border-top: 1px solid rgba(253, 195, 48, .4); padding: 1.8rem 0 0; }
+  }
+  @media (max-width: 680px) {
+    h2 { font-size: 38px; }
+    .panel { margin-top: 3.5rem; padding: 2rem 1.4rem 2.8rem; }
+  }
+  @media (max-width: 360px) {
+    h2 { font-size: 32px; }
+  }
+</style>

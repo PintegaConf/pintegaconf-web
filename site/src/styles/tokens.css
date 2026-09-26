@@ -1,0 +1,80 @@
+/* ============================================================================
+   Tokens de diseño (manual de marca + diseño de Penpot) y tema claro/oscuro.
+
+   Tema: oscuro por defecto (el diseño original). El claro se aplica si el sistema lo pide
+   (prefers-color-scheme: light) o si el visitante lo elige con el botón (html[data-theme]).
+   La cabecera y la portada son blancas en los dos temas (el logo es negro).
+
+   Regla: los colores de las secciones van SIEMPRE por token, nunca en literal.
+
+   Puntos de corte (no hay variables de media query en CSS; se repiten a mano):
+     1240px tablet ancha · 1100px menú hamburguesa · 980px una columna
+     680px  móvil (carrusel del equipo) · 360px móviles muy estrechos
+   Las fuentes (--f-head, --f-mono, --f-sans) las define la API de fuentes de Astro (astro.config.mjs).
+   ============================================================================ */
+
+:root {
+  /* Marca */
+  --gold: #FDC330;          /* amarillo de la web (Penpot) — manual: #FDC822 */
+  --ink: #1C1C1B;           /* negro corporativo */
+  --white: #ffffff;
+
+  /* Tema oscuro (por defecto) */
+  color-scheme: dark;
+  --bg: #232323;
+  --panel-top: #1b1b1b;
+  --panel-bottom: #2d2d2d;
+  --text: #ffffff;              /* texto sobre las secciones */
+  --text-2: #d6d6d6;            /* párrafos */
+  --text-3: #b3b3b3;            /* notas, etiquetas secundarias */
+  --accent-text: var(--gold);   /* títulos y etiquetas en color de marca */
+  --form-bg: var(--ink);
+  --slot-bg: rgba(0, 0, 0, .28);
+  --slot-text: rgba(253, 195, 48, .7);
+  --line: rgba(255, 255, 255, .08);
+  --logo-filter: brightness(0) invert(1);   /* logos de patrocinadores en blanco */
+
+  /* Movimiento y maquetación */
+  --ease: cubic-bezier(.22, .9, .24, 1);
+  --dur: .5s;
+  --wrap: 1150px;
+  --bar-h: 78px;
+}
+
+/* Tema claro: mismos valores en los dos bloques (preferencia del sistema / elección manual). */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    color-scheme: light;
+    --bg: #f6f2e7;
+    --panel-top: #ffffff;
+    --panel-bottom: #fbf5e3;
+    --text: #1C1C1B;
+    --text-2: #3b3b39;
+    --text-3: #66645e;
+    --accent-text: #8a5b00;   /* el dorado no se lee sobre claro: ocre oscuro (contraste ≥ 5:1) */
+    --form-bg: #ffffff;
+    --slot-bg: rgba(28, 28, 27, .035);
+    --slot-text: #8a5b00;
+    --line: rgba(0, 0, 0, .08);
+    --logo-filter: brightness(0);
+  }
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f6f2e7;
+  --panel-top: #ffffff;
+  --panel-bottom: #fbf5e3;
+  --text: #1C1C1B;
+  --text-2: #3b3b39;
+  --text-3: #66645e;
+  --accent-text: #8a5b00;
+  --form-bg: #ffffff;
+  --slot-bg: rgba(28, 28, 27, .035);
+  --slot-text: #8a5b00;
+  --line: rgba(0, 0, 0, .08);
+  --logo-filter: brightness(0);
+}
+
+@media (max-width: 680px) {
+  :root { --bar-h: 64px; }
+}

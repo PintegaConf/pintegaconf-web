@@ -1,0 +1,38 @@
+---
+// Formulario de compra. SIN pasarela todavía: solo valida en el navegador y avisa de que la venta
+// abrirá pronto (no envía datos a ningún sitio). Con Stripe, el botón irá a Stripe Checkout.
+---
+<form class="buy" novalidate data-formulario-compra>
+  <p class="price"><span>Entrada general</span><strong>Precio por anunciar</strong></p>
+  <label for="f-nombre">Nombre</label>
+  <input id="f-nombre" name="nombre" autocomplete="given-name" maxlength="80" required />
+  <label for="f-apellidos">Apellidos</label>
+  <input id="f-apellidos" name="apellidos" autocomplete="family-name" maxlength="120" required />
+  <label for="f-email">Email</label>
+  <input id="f-email" name="email" type="email" autocomplete="email" maxlength="254" required />
+  <label for="f-trabajo">Trabajo en...</label>
+  <input id="f-trabajo" name="trabajo" autocomplete="organization" maxlength="120" />
+  <label for="f-cupon">Cupón</label>
+  <input id="f-cupon" name="cupon" autocomplete="off" maxlength="40" />
+  <button type="submit">COMPRAR</button>
+  <p class="note" aria-live="polite"></p>
+</form>
+
+<style>
+  .buy { border: 1px solid var(--gold); background: var(--form-bg); padding: 1.8rem 2.2rem; display: flex; flex-direction: column; gap: .35rem; font-family: var(--f-sans); }
+  .price { margin: 0 0 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(253, 195, 48, .35); display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+  .price span { font-size: 13px; color: var(--accent-text); text-transform: uppercase; letter-spacing: .03em; }
+  .price strong { font: 400 22px var(--f-head); color: var(--text); }
+  label { font-size: 13px; color: var(--accent-text); text-transform: uppercase; letter-spacing: .03em; }
+  input { width: 100%; background: transparent; border: 0; border-bottom: 1px solid rgba(253, 195, 48, .45); color: var(--text); font: 15px var(--f-sans); padding: .2rem 0 .35rem; margin-bottom: .35rem; outline: none; }
+  input:focus { border-bottom-color: var(--gold); }
+  input:focus-visible { box-shadow: 0 2px 0 var(--gold); }
+  button { align-self: center; margin-top: .8rem; background: var(--gold); color: var(--ink); border: 0; font: 600 16px var(--f-sans); padding: .55rem 1.1rem; cursor: pointer; }
+  button:hover { filter: brightness(1.06); }
+  button:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+  .note { font-size: 12px; color: var(--text-3); text-align: center; min-height: 1em; margin: .3rem 0 0; }
+  @media (max-width: 680px) {
+    .price { flex-direction: column; align-items: flex-start; gap: .2rem; }
+    .price strong { font-size: 19px; }
+  }
+</style>

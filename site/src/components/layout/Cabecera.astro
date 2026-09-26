@@ -1,0 +1,82 @@
+---
+// Cabecera fija (sticky en todos los tamaños): logo, navegación (≥1100px), botón Entradas,
+// botón de tema (≥681px; en móvil va dentro del menú) y hamburguesa (<1100px).
+import { Image } from "astro:assets";
+import logo from "../../assets/marca/logo-horizontal.svg";
+import { evento } from "../../data/evento";
+import { secciones, enlaceEntradas } from "../../data/navegacion";
+---
+<header class="site-header" id="top">
+  <div class="wrap bar">
+    <a class="brand" href="#inicio" aria-label={`${evento.nombre} — inicio`}>
+      <Image class="logo" src={logo} alt={evento.nombre} loading="eager" />
+    </a>
+    <nav class="topnav" aria-label="Principal">
+      {secciones.map((s) => <a href={`#${s.id}`}>{s.titulo}</a>)}
+    </nav>
+    <a class="btn btn-gold btn-sm" href={`#${enlaceEntradas.id}`}>{enlaceEntradas.titulo}</a>
+    <button class="theme-toggle" type="button" data-tema-boton aria-label="Cambiar a modo claro">
+      <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"></path></svg>
+      <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"></path></svg>
+    </button>
+    <button class="burger" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<script>
+  import "../../scripts/cabecera";
+</script>
+
+<style>
+  .site-header { position: sticky; top: 0; z-index: 150; background: var(--white); transition: box-shadow .3s var(--ease); }
+  .site-header.scrolled { box-shadow: 0 2px 0 rgba(0, 0, 0, .08), 0 8px 24px rgba(0, 0, 0, .18); }
+  .bar { height: var(--bar-h); display: flex; align-items: center; gap: 1.5rem; }
+  .brand { flex: none; display: block; }
+  .brand:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+  .logo { width: 220px; height: auto; }
+
+  .topnav { margin-left: auto; display: flex; gap: 1.6rem; }
+  .topnav a { font: 700 17px var(--f-head); color: var(--ink); text-decoration: none; padding: .35rem 0; border-bottom: 3px solid transparent; }
+  .topnav a:hover, .topnav a[aria-current="true"] { border-bottom-color: var(--gold); }
+  .topnav a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+
+  .theme-toggle {
+    flex: none; width: 40px; height: 40px; display: grid; place-items: center; padding: 0; cursor: pointer;
+    border: 2px solid var(--ink); border-radius: 50%; background: transparent; color: var(--ink);
+    transition: background .2s, color .2s;
+  }
+  .theme-toggle:hover { background: var(--ink); color: var(--gold); }
+  .theme-toggle:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+  .theme-toggle svg { width: 20px; height: 20px; }
+  .i-sun, :global([data-effective-theme="light"]) .i-moon { display: none; }
+  :global([data-effective-theme="light"]) .i-sun { display: block; }
+
+  .burger { display: none; flex: none; width: 44px; height: 44px; background: none; border: 0; padding: 10px 7px; cursor: pointer; flex-direction: column; justify-content: space-between; }
+  .burger span { display: block; height: 3px; background: var(--ink); border-radius: 2px; }
+  .burger:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+  @media (max-width: 1240px) {
+    .topnav { gap: 1.1rem; }
+    .topnav a { font-size: 16px; }
+  }
+  /* Menos de 1100px: la navegación pasa a la hamburguesa (la barra sigue fija) */
+  @media (max-width: 1100px) {
+    .topnav { display: none; }
+    .bar .btn-sm { margin-left: auto; }
+    .burger { display: flex; }
+    .theme-toggle { width: 36px; height: 36px; }
+  }
+  @media (max-width: 680px) {
+    .bar { gap: .8rem; }
+    .logo { width: min(170px, 44vw); }
+    .theme-toggle { display: none; }   /* no cabe: va en el menú */
+    .btn-sm { padding: .38rem .9rem; font-size: 15px; }
+  }
+  /* Móviles muy estrechos: sin esto la hamburguesa se salía 12px en 320px */
+  @media (max-width: 360px) {
+    .bar { gap: .5rem; }
+    .logo { width: 124px; }
+    .bar .btn-sm { padding: .32rem .7rem; font-size: 14px; }
+    .burger { width: 40px; }
+  }
+</style>

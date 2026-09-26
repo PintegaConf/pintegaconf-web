@@ -1,0 +1,47 @@
+---
+// Line-up. Mientras no haya ponentes, tarjetas "Próximamente" con el "?" dorado (decisión del usuario).
+import { Image } from "astro:assets";
+import { ponentes, HUECOS_PONENTES } from "../../data/ponentes";
+
+const tarjetas = ponentes.length
+  ? ponentes
+  : Array.from({ length: HUECOS_PONENTES }, () => ({ nombre: "Próximamente", charla: "Ponente por anunciar", foto: undefined }));
+---
+<section id="ponentes">
+  <div class="wrap">
+    <h2 class="sec-title">PONENTES</h2>
+    <div class="cards">
+      {tarjetas.map((p) => (
+        <article class="card">
+          <div class="avatar">
+            {p.foto ? <Image src={p.foto} alt="" width={195} height={195} /> : <span class="q" aria-hidden="true">?</span>}
+          </div>
+          <h3>{p.nombre}</h3>
+          <p>{p.charla}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4.5rem 3.4rem; padding-top: 1rem; }
+  .card { position: relative; border: 1px solid var(--gold); background: linear-gradient(180deg, var(--panel-top), var(--panel-bottom)); min-height: 440px; padding: 12.5rem 1.6rem 2rem; text-align: center; }
+  .avatar {
+    position: absolute; left: 50%; top: -14px; width: 195px; aspect-ratio: 1; transform: translateX(-50%); border-radius: 50%; overflow: hidden;
+    background: radial-gradient(circle at 50% 42%, #2f2f2f, #151515 70%); border: 2px solid var(--gold);
+  }
+  .avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .q { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font: 700 84px/1 var(--f-head); color: var(--gold); opacity: .85; animation: q-glow 3.2s ease-in-out infinite; }
+  .card:hover .q { opacity: 1; animation-duration: 1.4s; }
+  @keyframes q-glow {
+    0%, 100% { opacity: .55; text-shadow: none; }
+    50% { opacity: 1; text-shadow: 0 0 18px rgba(253, 195, 48, .55); }
+  }
+  h3 { font: 400 26px var(--f-head); color: var(--accent-text); margin: 0 0 .5rem; }
+  p { margin: 0; color: var(--text-2); }
+
+  @media (max-width: 980px) { .cards { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 680px) { .cards { grid-template-columns: 1fr; gap: 4rem; } }
+  @media (prefers-reduced-motion: reduce) { .q { animation: none; } }
+</style>

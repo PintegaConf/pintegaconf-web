@@ -1,0 +1,12 @@
+---
+import { enlacesPie } from "../../data/navegacion";
+---
+<footer class="site-footer">
+  {enlacesPie.map((e, i) => <>{i > 0 && " · "}<a href={e.href}>{e.titulo}</a></>)}
+</footer>
+
+<style>
+  .site-footer { background: var(--gold); color: var(--ink); text-align: center; font-family: var(--f-sans); font-size: 16px; padding: 1.1rem 1rem; }
+  a { text-decoration: none; }
+  a:hover { text-decoration: underline; }
+</style>

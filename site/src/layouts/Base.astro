@@ -1,0 +1,81 @@
+---
+// Esqueleto de cada página: <head> (SEO, redes, schema.org, fuentes, tema) y <body>.
+import { Font } from "astro:assets";
+import { evento } from "../data/evento";
+import "../styles/tokens.css";
+import "../styles/base.css";
+
+interface Props {
+  titulo?: string;
+  descripcion?: string;
+}
+const {
+  titulo = `${evento.nombre} · 10 de abril de 2027 · ${evento.ciudad}`,
+  descripcion = evento.descripcion,
+} = Astro.props;
+
+const url = new URL(Astro.url.pathname, Astro.site);
+const imagenSocial = new URL("/og.jpg", Astro.site);
+
+// Datos del evento para Google. Solo el día de charlas: el pre-evento es en otro sitio aún por decidir.
+const schemaEvento = {
+  "@context": "https://schema.org",
+  "@type": "Event",
+  name: evento.nombre,
+  description: "Conferencia tecnológica de las comunidades tech: charlas, ponentes y networking. Pre-evento el viernes 9 de abril (lugar por anunciar).",
+  startDate: evento.charlas.fecha,
+  endDate: evento.charlas.fecha,
+  eventStatus: "https://schema.org/EventScheduled",
+  eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+  location: {
+    "@type": "Place",
+    name: evento.charlas.lugarCompleto,
+    address: { "@type": "PostalAddress", addressLocality: evento.ciudad, addressCountry: "ES" },
+  },
+  image: imagenSocial.href,
+  organizer: { "@type": "Organization", name: "Píntega Conf", url: Astro.site?.href, email: evento.email },
+};
+// "<" escapado: un texto con "</script>" en los datos no podría cerrar la etiqueta
+const schemaJson = JSON.stringify(schemaEvento).replace(/</g, "\\u003c");
+---
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titulo}</title>
+    <meta name="description" content={descripcion} />
+    <meta name="theme-color" content="#FDC330" />
+    <link rel="canonical" href={url} />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Al compartir en redes -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content={evento.nombre} />
+    <meta property="og:title" content={titulo} />
+    <meta property="og:description" content={evento.descripcionCorta} />
+    <meta property="og:url" content={url} />
+    <meta property="og:image" content={imagenSocial} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${evento.nombre} · Sábado 10 de abril de 2027 · ${evento.charlas.lugar}, ${evento.ciudad}`} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json" is:inline set:html={schemaJson} />
+
+    <Font cssVariable="--f-head" preload />
+    <Font cssVariable="--f-mono" preload />
+    <Font cssVariable="--f-sans" />
+
+    <!-- Tema elegido por el visitante: se aplica antes de pintar para que no haya parpadeo.
+         Tiene que ir en línea (is:inline); lo demás del tema está en scripts/tema.ts. -->
+    <script is:inline>
+      try { const t = localStorage.getItem("theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,33 @@
+---
+import { evento } from "../../data/evento";
+// Cuando haya horario, cada día puede pasar a tener una lista de charlas.
+const dias = [
+  { titulo: "Día 1 · Viernes 9 de abril", texto: `Pre-evento: sin charlas, un primer encuentro para conocernos. ${evento.preEvento.lugar ? `En ${evento.preEvento.lugar}; muy pronto daremos los detalles.` : "Lugar por anunciar; muy pronto daremos los detalles."}` },
+  { titulo: "Día 2 · Sábado 10 de abril", texto: `El día de las charlas, en ${evento.charlas.lugarEnFrase}. Horario en preparación: muy pronto publicaremos ponentes y horarios.` },
+];
+---
+<section id="agenda">
+  <div class="wrap">
+    <h2 class="sec-title">AGENDA</h2>
+    <div class="panel">
+      <div class="dias">
+        {dias.map((d) => (
+          <div>
+            <h3 class="dia">{d.titulo}</h3>
+            <p>{d.texto}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .panel { padding: 3.4rem 3.4rem 4rem; min-height: 340px; }
+  .dias { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+  .dia { font: 700 18px var(--f-mono); color: var(--accent-text); margin: 0 0 1.4rem; }
+  @media (max-width: 680px) {
+    .panel { padding: 2rem 1.4rem 2.8rem; }
+    .dias { grid-template-columns: 1fr; gap: 1rem; }
+  }
+</style>

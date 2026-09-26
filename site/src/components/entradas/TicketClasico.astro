@@ -1,0 +1,28 @@
+---
+// Ticket mostaza original (antes de la versión Wallet). Se conserva a petición del usuario:
+// para usarlo, cambiar DISENO_ENTRADA a "clasico" en Entradas.astro.
+import { Image } from "astro:assets";
+import logoPc27 from "../../assets/marca/logo-pc27.svg";
+import { evento } from "../../data/evento";
+---
+<div class="ticket" role="img" aria-label={`Entrada ${evento.nombre}, 9 y 10 de abril de 2027`}>
+  <div class="ticket-main">
+    <Image src={logoPc27} alt="" />
+    <p class="ticket-date">9 · 10 ABRIL</p>
+  </div>
+  <div class="ticket-stub"><span>ENTRADA</span></div>
+</div>
+
+<style>
+  .ticket { position: relative; background: var(--gold); color: var(--ink); height: 320px; display: grid; grid-template-columns: 1fr 86px; }
+  .ticket-main { display: grid; place-items: center; align-content: center; gap: .6rem; padding: 1.4rem; }
+  .ticket-main img { width: 390px; max-width: 100%; height: auto; }
+  .ticket-date { font: 48px/1 var(--f-head); margin: 0; }
+  .ticket-stub { border-left: 4px dotted var(--ink); display: grid; place-items: center; }
+  .ticket-stub span { writing-mode: vertical-rl; transform: rotate(180deg); font: 48px var(--f-head); letter-spacing: .02em; }
+  @media (max-width: 680px) {
+    .ticket { height: auto; min-height: 220px; grid-template-columns: 1fr 58px; }
+    .ticket-main img { width: 100%; }
+    .ticket-date, .ticket-stub span { font-size: 30px; }
+  }
+</style>

@@ -1,0 +1,31 @@
+---
+import Base from "../layouts/Base.astro";
+import Cabecera from "../components/layout/Cabecera.astro";
+import Menu from "../components/layout/Menu.astro";
+import Pie from "../components/layout/Pie.astro";
+import Portada from "../components/secciones/Portada.astro";
+import QueEs from "../components/secciones/QueEs.astro";
+import Agenda from "../components/secciones/Agenda.astro";
+import Ponentes from "../components/secciones/Ponentes.astro";
+import Patrocinadores from "../components/secciones/Patrocinadores.astro";
+import Logos from "../components/secciones/Logos.astro";
+import Equipo from "../components/secciones/Equipo.astro";
+import Entradas from "../components/secciones/Entradas.astro";
+import { colaboradores, comunidades } from "../data/patrocinio";
+---
+<Base>
+  <Cabecera />
+  <Menu />
+  <main>
+    <Portada />
+    <QueEs />
+    <Agenda />
+    <Ponentes />
+    <Patrocinadores />
+    <Logos id="colaboradores" titulo="COLABORADORES" logos={colaboradores} textoHueco="Tu logo" />
+    <Equipo />
+    <Logos id="comunidades" titulo="COMUNIDADES" logos={comunidades} textoHueco="Comunidad" />
+    <Entradas />
+  </main>
+  <Pie />
+</Base>

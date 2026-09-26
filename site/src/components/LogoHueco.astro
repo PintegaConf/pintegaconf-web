@@ -1,0 +1,22 @@
+---
+// Un hueco de la rejilla de logos: el logo real (enlazado si tiene web) o el texto "Tu logo aquí".
+import { Image } from "astro:assets";
+import type { Logo } from "../data/patrocinio";
+
+interface Props {
+  logo?: Logo;
+  texto: string;
+}
+const { logo, texto } = Astro.props;
+---
+{logo ? (
+  logo.url ? (
+    <a class="logo-slot" href={logo.url} target="_blank" rel="noopener noreferrer">
+      <Image src={logo.src} alt={logo.alt} width={300} />
+    </a>
+  ) : (
+    <div class="logo-slot"><Image src={logo.src} alt={logo.alt} width={300} /></div>
+  )
+) : (
+  <div class="logo-slot">{texto}</div>
+)}

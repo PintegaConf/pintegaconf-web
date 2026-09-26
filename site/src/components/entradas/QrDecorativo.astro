@@ -1,0 +1,22 @@
+---
+// QR DECORATIVO (no es un código real): 3 marcas de posición + módulos pseudoaleatorios fijos.
+// Se genera al compilar, así que siempre sale igual y no hace falta JavaScript en el navegador.
+const N = 25;
+let semilla = 27;
+const aleatorio = () => (semilla = (semilla * 1103515245 + 12345) % 2147483648) / 2147483648;
+const enMarca = (x: number, y: number) => (x < 8 && y < 8) || (x > 16 && y < 8) || (x < 8 && y > 16);
+
+const modulos: { x: number; y: number }[] = [];
+for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) if (!enMarca(x, y) && aleatorio() < 0.48) modulos.push({ x, y });
+
+// Cada marca: cuadrado 7×7 oscuro, 5×5 claro, 3×3 oscuro
+const marcas = [[0, 0], [18, 0], [0, 18]].flatMap(([x, y]) => [
+  { x, y, lado: 7, oscuro: true },
+  { x: x + 1, y: y + 1, lado: 5, oscuro: false },
+  { x: x + 2, y: y + 2, lado: 3, oscuro: true },
+]);
+---
+<svg viewBox={`0 0 ${N} ${N}`} shape-rendering="crispEdges" aria-hidden="true">
+  <g fill="#1C1C1B">{modulos.map((m) => <rect x={m.x} y={m.y} width="1" height="1" />)}</g>
+  {marcas.map((m) => <rect x={m.x} y={m.y} width={m.lado} height={m.lado} fill={m.oscuro ? "#1C1C1B" : "#fff"} />)}
+</svg>

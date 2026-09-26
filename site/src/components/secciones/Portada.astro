@@ -1,0 +1,78 @@
+---
+// Portada: qué, cuándo, dónde y qué hago (entrada / agenda). Blanca en los dos temas.
+import { Image } from "astro:assets";
+import orbe from "../../assets/marca/orbe.png";
+import huellas from "../../assets/marca/huellas.svg";
+import { evento } from "../../data/evento";
+---
+<section class="hero" id="inicio">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">Conferencia tecnológica · {evento.ciudad}</p>
+      <h1>El punto de encuentro de las <em>comunidades tech</em></h1>
+      <p class="lede">
+        Un viernes de pre-evento para ir abriendo boca y un sábado lleno de charlas, networking y alguna que otra sorpresa.
+        Para todos los perfiles: estudiantes, desarrolladores, profesionales IT y cualquier persona con curiosidad por la tecnología.
+      </p>
+      <ul class="facts">
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M3.5 10h17M8 3v4M16 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
+          <span><strong>Sábado 10 de abril</strong>2027 · día de charlas</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path><circle cx="12" cy="9.5" r="2.5" fill="none" stroke="currentColor" stroke-width="2"></circle></svg>
+          <span><strong>{evento.charlas.lugar}</strong>{evento.ciudad}</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.1 6.9L21 12l-6.9 2.1L12 21l-2.1-6.9L3 12l6.9-2.1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path></svg>
+          <span><strong>Viernes 9 · pre-evento</strong>{evento.preEvento.lugar ?? "lugar por anunciar"}</span>
+        </li>
+      </ul>
+      <div class="cta">
+        <a class="btn btn-gold" href="#entradas">Consigue tu entrada</a>
+        <a class="btn btn-ghost" href="#agenda">Ver agenda</a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <!-- Orbe elegido por el equipo: salamandra enroscada sobre orbe dorado con llama -->
+      <Image class="orbe" src={orbe} alt="" width={840} widths={[300, 420, 840]} sizes="(max-width: 680px) 150px, (max-width: 980px) 300px, 420px" loading="eager" fetchpriority="high" />
+    </div>
+  </div>
+  <Image class="huellas" src={huellas} alt="" />
+</section>
+
+<style>
+  .hero { position: relative; background: var(--white); color: var(--ink); overflow: hidden; }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); align-items: center; gap: 2rem; padding: 3.5rem 0 5.5rem; }
+  .eyebrow { display: inline-flex; align-items: center; gap: .6rem; font: 700 13px var(--f-mono); letter-spacing: .14em; text-transform: uppercase; margin: 0 0 1.1rem; }
+  .eyebrow::before { content: ""; width: 12px; height: 12px; background: var(--gold); }
+  h1 { font: 700 clamp(40px, 5.2vw, 66px) / 1.02 var(--f-head); margin: 0 0 1.2rem; letter-spacing: -.01em; text-wrap: balance; }
+  h1 em { font-style: normal; background: linear-gradient(transparent 62%, var(--gold) 62%, var(--gold) 92%, transparent 92%); }
+  .lede { font: 18px/1.55 var(--f-sans); max-width: 34rem; margin: 0 0 1.8rem; color: #333; }
+  .facts { list-style: none; margin: 0 0 2.1rem; padding: 0; display: flex; flex-wrap: wrap; gap: .9rem 2rem; }
+  .facts li { display: flex; align-items: center; gap: .7rem; font: 15px/1.25 var(--f-sans); color: #444; }
+  .facts strong { display: block; font: 700 19px var(--f-head); color: var(--ink); }
+  .facts svg { flex: none; width: 40px; height: 40px; padding: 9px; border-radius: 50%; background: var(--ink); color: var(--gold); }
+  .cta { display: flex; flex-wrap: wrap; gap: .9rem; }
+  .hero-art { justify-self: center; width: min(420px, 100%); }
+  .orbe { width: 100%; height: auto; }
+  .huellas {
+    position: absolute; left: -30px; bottom: 16px; width: 520px; height: auto; opacity: .14; transform: rotate(-4deg); pointer-events: none;
+    -webkit-mask-image: linear-gradient(to right, #000 25%, transparent 95%); mask-image: linear-gradient(to right, #000 25%, transparent 95%);
+  }
+
+  @media (max-width: 980px) {
+    .hero-grid { grid-template-columns: 1fr; padding: 2rem 0 4.5rem; }
+    .hero-art { order: -1; width: min(300px, 70%); }
+  }
+  @media (max-width: 680px) {
+    .hero-grid { padding: 1.4rem 0 3.5rem; gap: 1rem; }
+    .hero-art { width: min(150px, 42%); }
+    /* los botones suben por encima de los datos para que se vean sin hacer scroll */
+    .hero-copy { display: flex; flex-direction: column; }
+    .cta { order: 4; margin-bottom: 1.8rem; }
+    .facts { order: 5; margin-bottom: 0; flex-direction: column; gap: .8rem; }
+    .lede { font-size: 16px; }
+    .cta .btn { flex: 1 1 100%; }
+  }
+</style>

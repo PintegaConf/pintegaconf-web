@@ -1,0 +1,24 @@
+{
+  "name": "pintega-conf-web",
+  "private": true,
+  "type": "module",
+  "version": "2.0.0",
+  "description": "Web de Píntega Conf '27 (Astro, salida estática)",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "audit": "npm audit --omit=dev"
+  },
+  "dependencies": {
+    "astro": "7.3.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.10",
+    "typescript": "6.0.3"
+  }
+}

@@ -1,0 +1,22 @@
+---
+// Sección de logos (colaboradores, comunidades): los que haya o tres huecos.
+import type { Logo } from "../../data/patrocinio";
+import LogoHueco from "../LogoHueco.astro";
+
+interface Props {
+  id: string;
+  titulo: string;
+  logos: Logo[];
+  textoHueco: string;
+}
+const { id, titulo, logos, textoHueco } = Astro.props;
+const huecos = Math.max(3, logos.length);
+---
+<section id={id}>
+  <div class="wrap">
+    <h2 class="sec-title">{titulo}</h2>
+    <div class="logos">
+      {Array.from({ length: huecos }, (_, i) => <LogoHueco logo={logos[i]} texto={textoHueco} />)}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,67 @@
+---
+// Cada nivel es un panel con su medallón asomando por arriba. La importancia se marca con los
+// logos por fila y el tamaño del medallón (valores por nivel en los estilos, [data-nivel]).
+import { Image } from "astro:assets";
+import { niveles } from "../../data/patrocinio";
+import { mailto } from "../../data/evento";
+import LogoHueco from "../LogoHueco.astro";
+---
+<section id="patrocinadores">
+  <div class="wrap">
+    <h2 class="sec-title">PATROCINADORES</h2>
+    <div class="tiers">
+      {niveles.map((n) => (
+        <article class="tier" data-nivel={n.id}>
+          <Image class="medal" src={n.medallon} alt="" width={420} widths={[210, 420]} sizes="210px" />
+          <h3 class="tier-name">{n.nombre}</h3>
+          <p class="tier-rank">{n.rango}</p>
+          <div class="logos">
+            {Array.from({ length: Math.max(n.huecos, n.logos.length) }, (_, i) => (
+              <LogoHueco logo={n.logos[i]} texto="Tu logo aquí" />
+            ))}
+          </div>
+        </article>
+      ))}
+    </div>
+    <div class="sponsor-cta">
+      <p>¿Quieres que tu empresa impulse la comunidad tech?</p>
+      <a class="btn btn-gold" href={mailto("Patrocinio Píntega Conf '27")}>Patrocina Píntega Conf</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Por nivel: --m medallón · --fs nombre · --cols/-t/-m columnas escritorio/tablet/móvil · --slot-h alto del hueco */
+  [data-nivel="dragon"]    { --m: 210px; --fs: 40px; --cols: 1; --cols-t: 1; --cols-m: 1; --slot-h: 150px; }
+  [data-nivel="basilisco"] { --m: 190px; --fs: 36px; --cols: 2; --cols-t: 2; --cols-m: 2; --slot-h: 120px; }
+  [data-nivel="triton"]    { --m: 170px; --fs: 32px; --cols: 3; --cols-t: 3; --cols-m: 3; --slot-h: 96px; }
+  [data-nivel="ajolote"]   { --m: 150px; --fs: 29px; --cols: 4; --cols-t: 4; --cols-m: 4; --slot-h: 80px; }
+
+  .tiers { display: grid; gap: 7.5rem; padding-top: 6.5rem; }
+  .tier {
+    position: relative; border: 1px solid var(--gold); background: linear-gradient(180deg, var(--panel-top), var(--panel-bottom));
+    padding: calc(var(--m) / 2 + 1.1rem) 2.4rem 2.6rem; text-align: center;
+  }
+  .tier::after { content: ""; position: absolute; left: -1px; bottom: -1px; width: 30px; height: 30px; background: var(--gold); }
+  .medal { position: absolute; left: 50%; top: 0; width: var(--m); height: auto; transform: translate(-50%, -50%); filter: drop-shadow(0 7px 0 rgba(0, 0, 0, .4)); }
+  .tier-name { font: 400 var(--fs) / 1.1 var(--f-head); color: var(--accent-text); margin: 0; }
+  .tier-rank { font: 700 12px var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--text-3); margin: .45rem 0 1.8rem; }
+  .tier .logos { grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); gap: 1.2rem; width: auto; max-width: 860px; margin: 0 auto; }
+  .tier :global(.logo-slot) { height: var(--slot-h); }
+
+  .sponsor-cta { margin-top: 5rem; text-align: center; }
+  .sponsor-cta p { font: 400 26px/1.3 var(--f-head); color: var(--text); margin: 0 0 1.3rem; }
+
+  @media (max-width: 1240px) { .tier .logos { gap: 1rem; } }
+  @media (max-width: 980px) { .tier .logos { grid-template-columns: repeat(var(--cols-t), minmax(0, 1fr)); } }
+  @media (max-width: 680px) {
+    .tiers { gap: 6rem; padding-top: 5rem; }
+    /* medallón al 80 %, nunca menos de 130px (si no, no se lee el texto del Ajolote) */
+    .tier { padding: calc(max(130px, var(--m) * .8) / 2 + 1rem) 1.1rem 2rem; }
+    .medal { width: max(130px, calc(var(--m) * .8)); }
+    .tier-name { font-size: calc(var(--fs) * .85); }
+    .tier .logos { grid-template-columns: repeat(var(--cols-m), minmax(0, 1fr)); gap: .7rem; width: 100%; }
+    .tier :global(.logo-slot) { height: calc(var(--slot-h) * .75); font-size: 11px; }
+    .sponsor-cta p { font-size: 21px; }
+  }
+</style>

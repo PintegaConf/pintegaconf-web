@@ -1,0 +1,167 @@
+---
+// EQUIPO ("Círculo Arcano"): figuras encapuchadas que se destapan.
+//
+// Escritorio: dos filas intercaladas (atrás 3, delante 4) con una rejilla CSS; hover por silueta
+//   (scripts/equipo/revelado.ts). Tablet táctil: un toque destapa.
+// Móvil (≤680px): carrusel con scroll-snap, flechas y revelado automático de la persona centrada
+//   (scripts/equipo/carrusel.ts).
+// El HTML va en el orden de `equipo`, que es también el del carrusel, el tabulador y los lectores de pantalla.
+//
+// Revelado: capucha → manos → rostro, con fundidos (nada de cortes secos). Las capas van apiladas:
+// capucha (arriba) > manos > rostro. El difuminado de hombros va incrustado en las imágenes.
+import { equipo, ilustracionPorDefecto } from "../../data/equipo";
+
+// Columna de la rejilla de escritorio: delante 1,3,5,7 · atrás 2,4,6 (medio paso desplazada)
+const cuenta = { atras: 0, delante: 0 };
+const miembros = equipo.map((m, indice) => {
+  const n = cuenta[m.fila]++;
+  const columna = m.fila === "delante" ? 1 + 2 * n : 2 + 2 * n;
+  return { ...m, indice, columna, ilu: m.ilustracion ?? ilustracionPorDefecto };
+});
+---
+<section id="equipo">
+  <div class="wrap">
+    <h2 class="sec-title">EQUIPO</h2>
+    <div class="formation">
+      <div class="formation-inner">
+        {miembros.map((m) => (
+          <div class="operative" data-fila={m.fila} data-col={m.columna} data-indice={m.indice}>
+            <div class="dossier" tabindex="0" aria-label={`${m.nombre}, ${m.rol}`}>
+              <div class="frame">
+                <div class="portrait">
+                  <img class="layer-hood" src={m.ilu.capucha.src} width={m.ilu.capucha.width} height={m.ilu.capucha.height} alt="" loading="lazy" decoding="async" draggable="false" />
+                  <img class="layer-hands" src={m.ilu.manos.src} width={m.ilu.manos.width} height={m.ilu.manos.height} alt="" loading="lazy" decoding="async" draggable="false" />
+                  <img class="layer-face" src={m.ilu.rostro.src} width={m.ilu.rostro.width} height={m.ilu.rostro.height} alt="" loading="lazy" decoding="async" draggable="false" />
+                </div>
+              </div>
+              <div class="info" aria-hidden="true"><p class="info-name">{m.nombre}</p><p class="info-role">{m.rol}</p></div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <button type="button" class="nav nav-prev" aria-label="Persona anterior"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5 L8 12 L15 19" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+      <button type="button" class="nav nav-next" aria-label="Persona siguiente"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 5 L16 12 L9 19" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+    </div>
+    <p class="swipe-hint">Desliza o usa las flechas para conocer al equipo</p>
+  </div>
+</section>
+
+<script>
+  import "../../scripts/equipo/revelado";
+  import "../../scripts/equipo/carrusel";
+</script>
+
+<style>
+  .sec-title { margin-bottom: 0; }
+  .formation { position: relative; padding: 6rem 0 0; }
+
+  /* ---------- Escritorio: dos filas intercaladas ----------
+     Figuras de 200px que se solapan 55px (paso de 145px): 4 × 200 − 3 × 55 = 635px de ancho.
+     Columnas de medio paso (72,5px): delante empieza en las impares, atrás en las pares.
+     Ancho explícito: Safari calculaba mal fit-content con los solapes y descentraba el grupo. */
+  .formation-inner {
+    display: grid; grid-template-columns: repeat(6, 72.5px) 200px; grid-template-rows: auto auto;
+    width: calc(4 * 200px - 3 * 55px); max-width: 100%; margin: 0 auto;
+  }
+  .operative { position: relative; z-index: 1; width: 200px; pointer-events: none; }
+  .operative[data-fila="atras"] { grid-row: 1; }
+  .operative[data-fila="delante"] { grid-row: 2; z-index: 2; margin-top: -137px; }   /* la fila de delante tapa la parte baja de la de atrás */
+  [data-col="1"] { grid-column: 1; } [data-col="2"] { grid-column: 2; } [data-col="3"] { grid-column: 3; }
+  [data-col="4"] { grid-column: 4; } [data-col="5"] { grid-column: 5; } [data-col="6"] { grid-column: 6; }
+  [data-col="7"] { grid-column: 7; }
+  /* Sin transición de z-index: la activa siempre encima; la que se va (was-active) aún por encima del resto */
+  .operative:is(:hover, :focus-within) { z-index: 50; }
+  .operative.was-active { z-index: 40; }
+  .operative.is-active { z-index: 60; }
+  .formation-inner.pointing { cursor: pointer; }
+
+  /* "Paso al frente". OJO: si cambian estos transform, cambiar también REST/ACTIVE en scripts/equipo/revelado.ts */
+  .dossier { position: relative; cursor: pointer; outline: none; pointer-events: none; display: flex; flex-direction: column; align-items: center; gap: .35rem; transition: transform var(--dur) var(--ease), filter var(--dur) var(--ease); }
+  [data-fila="atras"] .dossier { transform: scale(.8); filter: brightness(.82); }
+  [data-fila="atras"]:is(:hover, :focus-within, .is-active) .dossier { transform: translateY(64px) scale(1.06); filter: brightness(1); }
+  [data-fila="delante"]:is(:hover, :focus-within, .is-active) .dossier { transform: translateY(-8px) scale(1.06); }
+  .dossier:focus-visible .frame { outline: 2px solid var(--gold); outline-offset: 4px; }
+
+  .frame { position: relative; width: 100%; aspect-ratio: 1236 / 1272; }
+  .portrait { position: absolute; inset: 0; }
+  .portrait img { position: absolute; inset: 0; width: 100%; height: 100%; user-select: none; -webkit-user-drag: none; }
+
+  /* ---------- Revelado ----------
+     Entrar: la capucha espera 0.3s y se disuelve en 0.45s dejando ver las manos; las manos aguantan
+     0.2s y se disuelven (0.35s) hacia el rostro, que aparece debajo a los 0.9s (antes asomaría el pelo
+     por encima de la capucha). La ficha con el nombre entra también a los 0.9s.
+     Salir: vuelve la capucha y el rostro se funde a la vez (si esperase, el pelo que sobresale se vería encima). */
+  .layer-hood { z-index: 3; opacity: 1; transform: translateY(0) scale(1); transition: opacity .35s var(--ease), transform .6s var(--ease); }
+  .layer-hands { z-index: 2; opacity: 0; }
+  .layer-face { z-index: 1; opacity: 0; transform: translateY(6px) scale(1.04); transition: opacity .3s var(--ease) .05s, transform .6s var(--ease); }
+  .operative:is(:hover, :focus-within, .is-active) .layer-hood { opacity: 0; transform: translateY(-6px) scale(.98); transition: opacity .45s cubic-bezier(.45, 0, .35, 1) .3s, transform .6s cubic-bezier(.45, 0, .35, 1) .3s; }
+  .operative:is(:hover, :focus-within, .is-active) .layer-hands { animation: hands-off 1.3s linear both; }
+  .operative:is(:hover, :focus-within, .is-active) .layer-face { opacity: 1; transform: none; transition: opacity .08s linear .9s, transform .6s var(--ease); }
+  @keyframes hands-off {
+    0% { opacity: 1; }
+    73% { opacity: 1; animation-timing-function: cubic-bezier(.45, 0, .35, 1); }
+    100% { opacity: 0; }
+  }
+
+  .info {
+    position: absolute; left: 50%; bottom: calc(100% + 8px); transform: translate(-50%, 8px);
+    width: 190px; background: var(--ink); border: 1px solid var(--gold); padding: .15rem .9rem;
+    opacity: 0; visibility: hidden; pointer-events: none; z-index: 60; text-align: center;
+    transition: opacity .35s var(--ease), transform .45s var(--ease), visibility 0s linear .45s;
+  }
+  .info-name { font: 700 1.25rem var(--f-head); color: var(--gold); margin: .55rem 0 .1rem; }
+  .info-role { font-size: .72rem; letter-spacing: .04em; text-transform: uppercase; color: #d8d8d8; margin: 0 0 .6rem; }
+  .operative:is(:hover, :focus-within, .is-active) .info { opacity: 1; transform: translate(-50%, 0); visibility: visible; transition-delay: .9s, .9s, 0s; }
+
+  /* Foco: al destapar a alguien, el resto del grupo y de la página se desenfocan */
+  .formation-inner:has(.operative:is(:focus-within, .is-active)) .operative:not(:focus-within):not(.is-active) .dossier { filter: blur(3px) brightness(.7); }
+  :global(main > section:not(#equipo)), :global(.site-footer) { transition: filter .4s var(--ease), opacity .4s var(--ease); }
+  :global(body:has(.operative.is-active, .operative:focus-within) :is(main > section:not(#equipo), .site-footer)) { filter: blur(2px); opacity: .5; }
+
+  .swipe-hint, .nav { display: none; }
+
+  /* ---------- Móvil: carrusel ---------- */
+  @media (max-width: 680px) {
+    .formation { padding-top: 2.25rem; }
+    .formation-inner {
+      display: flex; width: auto; max-width: none; overflow-x: auto; scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none;
+      margin: 0 -1.5rem; padding: 2.5rem 1.5rem 0;
+      position: relative;   /* referencia de offsetLeft para las flechas */
+    }
+    .formation-inner::-webkit-scrollbar { display: none; }
+    .operative, .operative[data-fila="delante"] {
+      flex: 0 0 100%; width: auto; margin: 0; display: flex; justify-content: center;
+      scroll-snap-align: center; scroll-snap-stop: always; pointer-events: auto;
+    }
+    .dossier { width: min(62vw, 240px); pointer-events: auto; }
+    [data-fila="atras"] .dossier { transform: none; }
+    [data-fila]:is(:hover, :focus-within, .is-active) .dossier { transform: scale(1.04) translateY(-6px); }
+    .info { position: static; transform: translateY(6px); width: min(78vw, 280px); margin-top: .4rem; }
+    .operative:is(:hover, :focus-within, .is-active) .info { transform: none; }
+    /* en el carrusel no se desenfoca nada */
+    .formation-inner .dossier,
+    .formation-inner:has(.operative:is(:focus-within, .is-active)) .operative:not(:focus-within):not(.is-active) .dossier { filter: none; }
+    :global(body:has(.operative.is-active, .operative:focus-within) :is(main > section:not(#equipo), .site-footer)) { filter: none; opacity: 1; }
+
+    .nav {
+      display: flex; align-items: center; justify-content: center; position: absolute; z-index: 70;
+      top: calc(2.25rem + 2.5rem + min(62vw, 240px) * 1272 / 1236 / 2); transform: translateY(-50%);
+      width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%;
+      background: var(--gold); color: var(--ink); cursor: pointer;
+      transition: opacity .25s var(--ease), transform .15s var(--ease); -webkit-tap-highlight-color: transparent;
+    }
+    .nav:active { transform: translateY(-50%) scale(.92); }
+    .nav:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+    .nav[disabled] { opacity: .25; cursor: default; }
+    .nav-prev { left: 0; }
+    .nav-next { right: 0; }
+    .swipe-hint { display: block; text-align: center; font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--text-3); margin: .6rem 0 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .operative, .dossier, .layer-hood, .layer-face, .info, .nav { transition: none !important; }
+    .layer-hands { animation: none !important; opacity: 0 !important; }
+    :global(main > section), :global(.site-footer) { transition: none !important; }
+  }
+</style>
