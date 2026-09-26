@@ -1,0 +1,7 @@
+# Cómo avisar de un fallo de seguridad en la web de Píntega Conf (RFC 9116).
+# Renovar "Expires" antes de que caduque (como máximo, un año vista).
+Contact: mailto:info@pintegaconf.es
+Expires: 2027-09-26T23:59:59.000Z
+Preferred-Languages: es, en, gl
+Canonical: https://pintegaconf.es/.well-known/security.txt
+Policy: https://pintegaconf.es/seguridad/
