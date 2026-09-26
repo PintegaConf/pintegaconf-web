@@ -70,6 +70,6 @@ Cómo se mitigan los contras de Astro:
    - revisar el orden de foco del menú;
    - comprobar el contraste del modo claro con una herramienta;
    - probar con VoiceOver en iPhone y Mac.
-4. **Integración continua** (p. ej. GitHub Actions) que en cada cambio ejecute `npm ci`, `npm run build` y `npm audit`, más **Renovate/Dependabot** para las actualizaciones de seguridad.
+4. ~~Integración continua~~ **Hecho:** workflow `.github/workflows/web.yml` (tipos, build y `npm audit` en cada cambio de `web/site`) y **Dependabot** (`.github/dependabot.yml`), más alertas y correcciones automáticas de seguridad activadas en el repositorio.
 5. **Web temporal** como segunda página del proyecto Astro (hoy está suelta en `web-temporal/`), para compartir cabecera, fuentes y CSP.
 6. **Probar en Safari (Mac, iPhone, iPad).** Se ha verificado en Chrome; Safari ha dado bugs propios en la v1.

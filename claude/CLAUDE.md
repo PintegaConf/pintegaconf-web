@@ -50,6 +50,7 @@ web/
 **Solo en el equipo de Matías, NO en el repositorio** (pedírselos si hacen falta): `dossiers/` (ponentes y patrocinio, PDF), `contracts/` (**confidencial: no subir a ningún sitio**), `marca_and_rrss/` (manual de marca PDF, banners de LinkedIn/Twitter, colaboraciones con Lareira/Sysarmy, logos PNG con tilde), `Claude outputs/` (v1 antigua y dossier).
 
 **Importante:** la web se edita en `web/site/` (Astro). Node 24 LTS (en el Mac de Matías: `/opt/homebrew/opt/node@24/bin`, keg-only, hay que tenerlo en el PATH). Comandos: `npm ci`, `npm run dev`, `npm run build` (incluye `astro check`). Contenido en `src/data/`, secciones en `src/components/secciones/`, JS en `src/scripts/`, colores en `src/styles/tokens.css`.
+CI: `.github/workflows/web.yml` (GitHub Actions, ~30 s por ejecución, gratis en el plan Free) comprueba tipos, build y `npm audit` en cada cambio de `web/site`; debe quedar en verde. Dependabot (`.github/dependabot.yml`) abre PR semanales: revisar antes de fusionar. `.github/` está en la raíz porque GitHub solo lo busca ahí.
 Seguridad del proyecto: `.npmrc` con `ignore-scripts` y versiones exactas (no quitar), CSP en `astro.config.mjs` (no añadir orígenes externos sin motivo), fuentes autoalojadas (nunca volver a cargar de Google), nada de `innerHTML` con datos: renderizar en Astro o usar `textContent`.
 
 ## Marca / tokens

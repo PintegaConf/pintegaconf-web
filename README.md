@@ -6,6 +6,7 @@
 
 **Código, comunidad y futuro.** La conferencia tecnológica de las comunidades tech, sucesora de Lareira Conf.
 
+[![Web](https://github.com/PintegaConf/pintegaconf-web/actions/workflows/web.yml/badge.svg)](https://github.com/PintegaConf/pintegaconf-web/actions/workflows/web.yml)
 [![Astro](https://img.shields.io/badge/Astro-7.3.5-FDC330?logo=astro&logoColor=white&labelColor=1C1C1B)](https://astro.build)
 [![Node](https://img.shields.io/badge/Node-%E2%89%A5%2022.12-FDC330?logo=nodedotjs&logoColor=white&labelColor=1C1C1B)](https://nodejs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-estricto-FDC330?logo=typescript&logoColor=white&labelColor=1C1C1B)](web/site/tsconfig.json)
@@ -68,4 +69,5 @@ patrocinadores, ponentes o ilustraciones del equipo: [`web/site/README.md`](web/
 - 🔒 **El repositorio es privado** y debe seguir siéndolo.
 - ✂️ **Commits pequeños y bien explicados:** un cambio por commit, y el mensaje dice qué cambia, por qué y qué se probó.
 - ✅ **Antes de subir:** `npm run build` sin errores y el panel **Audit** sin avisos nuevos. Probar también en **Safari** (Mac e iPhone).
+- 🤖 **Integración continua:** cada cambio en `web/site` pasa por el workflow **Web** (tipos, build y `npm audit`); tiene que salir en verde. **Dependabot** abre PR con actualizaciones cada semana: revisar el changelog antes de fusionar.
 - 🗂️ Los dossiers, los contratos y el manual de marca **no** van en este repositorio.
