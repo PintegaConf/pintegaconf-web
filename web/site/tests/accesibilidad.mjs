@@ -19,7 +19,9 @@ import { join, extname, normalize } from "node:path";
 const PUERTO_WEB = 4399;
 const PUERTO_CDP = 9339;
 const BASE = `http://127.0.0.1:${PUERTO_WEB}`;
-const PAGINAS = ["/", "/faq/", "/aviso-legal/", "/privacidad/", "/cookies/"];
+// Otra web (p. ej. la temporal): A11Y_DIST=../temporal A11Y_PAGINAS=/ node tests/accesibilidad.mjs
+const PAGINAS = process.env.A11Y_PAGINAS?.split(",") ?? ["/", "/faq/", "/aviso-legal/", "/privacidad/", "/cookies/"];
+const WEB_PRINCIPAL = !process.env.A11Y_DIST;
 const PANTALLAS = [
   { nombre: "escritorio", width: 1440, height: 900, mobile: false },
   { nombre: "móvil", width: 375, height: 800, mobile: true },
@@ -39,7 +41,7 @@ const AXE = readFileSync(new URL("../node_modules/axe-core/axe.min.js", import.m
 const espera = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // ---------- Servidor estático mínimo de dist/ (sin depender de astro preview) ----------
-const DIST = new URL("../dist/", import.meta.url).pathname;
+const DIST = process.env.A11Y_DIST ? new URL(process.env.A11Y_DIST.replace(/\/?$/, "/"), `file://${process.cwd()}/`).pathname : new URL("../dist/", import.meta.url).pathname;
 const TIPOS = { ".html": "text/html; charset=utf-8", ".css": "text/css", ".js": "text/javascript", ".svg": "image/svg+xml", ".webp": "image/webp", ".png": "image/png", ".jpg": "image/jpeg", ".woff2": "font/woff2", ".xml": "application/xml", ".txt": "text/plain" };
 const servidor = createServer((req, res) => {
   let ruta = normalize(decodeURIComponent(new URL(req.url, BASE).pathname)).replace(/^(\.\.[/\\])+/, "");
@@ -243,7 +245,7 @@ try {
         await p.abrir(BASE + ruta, pantalla, tema);
         const fallos = await axe(p);
         let fallosMenu = [];
-        if (ruta === "/" && pantalla.mobile) {
+        if (WEB_PRINCIPAL && ruta === "/" && pantalla.mobile) {
           await p.evaluar(`document.querySelector(".burger").click()`);
           await espera(600);
           fallosMenu = (await axe(p)).map((v) => ({ ...v, ayuda: "[menú abierto] " + v.ayuda }));
@@ -263,9 +265,9 @@ try {
       if (process.env.A11Y_DETALLE) pasos.forEach((f, i) => console.log(`      ${i + 1}. ${f.id} «${f.nombre}»`));
     }
   }
-  const extra = await comportamientos(p);
+  const extra = WEB_PRINCIPAL ? await comportamientos(p) : [];
   totalProblemas += extra.length;
-  console.log(`${extra.length ? "✗" : "✓"} Comportamientos (Escape del equipo, flechas del carrusel, errores del formulario)${extra.length ? "" : " — correctos"}`);
+  if (WEB_PRINCIPAL) console.log(`${extra.length ? "✗" : "✓"} Comportamientos (Escape del equipo, flechas del carrusel, errores del formulario)${extra.length ? "" : " — correctos"}`);
   extra.forEach((x) => console.log("    " + x));
   ws.close();
 } catch (e) {
