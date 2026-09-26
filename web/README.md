@@ -1,5 +1,14 @@
 # Web de Píntega Conf '27
 
+[![Astro](https://img.shields.io/badge/Astro-7.3.5-FDC330?logo=astro&logoColor=white&labelColor=1C1C1B)](https://astro.build)
+[![Node](https://img.shields.io/badge/Node-%E2%89%A5%2022.12-FDC330?logo=nodedotjs&logoColor=white&labelColor=1C1C1B)](https://nodejs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-estricto-FDC330?logo=typescript&logoColor=white&labelColor=1C1C1B)](site/tsconfig.json)
+[![Web estática](https://img.shields.io/badge/salida-100%25%20est%C3%A1tica-FDC330?labelColor=1C1C1B)](site/astro.config.mjs)
+[![CSP](https://img.shields.io/badge/CSP-hashes%20%2B%20cabeceras-FDC330?labelColor=1C1C1B)](site/public/_headers)
+[![Fuentes](https://img.shields.io/badge/fuentes-autoalojadas%20%28RGPD%29-FDC330?labelColor=1C1C1B)](#análisis-de-seguridad-y-privacidad)
+
+Comandos, estructura del código y cómo añadir contenido: [`site/README.md`](site/README.md).
+
 ```
 web/
   site/          ← LA WEB (v2, Astro). Código fuente: se edita aquí. Guía práctica en site/README.md
@@ -13,11 +22,13 @@ La v1 (`backup/pintega-conf-web.v1.html`) era un único HTML de 867 KB y ~1.080 
 dentro: CSS, JavaScript y las imágenes en base64. La v2 es la misma web, visualmente idéntica,
 reorganizada en componentes. Se comparó captura a captura en escritorio y móvil.
 
-## Reglas del repositorio
+## Antes de subir un cambio de la web
 
-- **Commits pequeños y bien explicados.** Cada commit trata un solo cambio, y el mensaje dice qué cambia, por qué y qué se ha probado. Arreglos, reorganizaciones y contenido nuevo van en commits separados; mover archivos, en un commit propio. Nada de commits de mil cosas y miles de líneas.
-- **El repositorio es privado** y debe seguir siéndolo.
-- **Antes de subir:** `npm run build` sin errores y el panel **Audit** de `npm run dev` (barra inferior de Astro) sin avisos nuevos.
+- `npm run build` sin errores (lo mismo que comprueba la CI).
+- El panel **Audit** de `npm run dev` (barra inferior de Astro) sin avisos nuevos.
+- Probado también en **Safari** (Mac, iPhone y, si toca el equipo, iPad).
+
+Las reglas generales del repositorio (privado, commits pequeños) están en el [README principal](../README.md#reglas).
 
 ## Por qué Astro
 

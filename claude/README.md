@@ -22,7 +22,7 @@ npm run dev               # la web en http://localhost:4321
 ```
 
 Cómo funciona la web, dónde está cada cosa y cómo añadir contenido: `web/site/README.md`.
-Reglas del repositorio (commits pequeños y bien explicados, repo privado): `web/README.md`.
+Reglas del repositorio (privado, commits pequeños y bien explicados, CI en verde): `README.md` de la raíz.
 
 ## 3. Trabajar con Claude Code
 
