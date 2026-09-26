@@ -87,4 +87,5 @@ Seguridad del proyecto: `.npmrc` con `ignore-scripts` y versiones exactas (no qu
 - Agenda: detalles del pre-evento (viernes 9) y horario de charlas (sábado 10).
 - **Traducciones: inglés y gallego** además del español (idioma por defecto). Plan técnico en `web/README.md` → Mejoras propuestas.
 - Páginas FAQ, aviso legal, privacidad y cookies: **hechas** (sep 2026). Las legales son BORRADOR: faltan titular (nombre, NIF, domicilio, registro si lo hay) y hosting en `web/site/src/data/legal.ts`, y una revisión legal. No inventar esos datos.
-- Web v2 en Astro hecha y probada por Matías en Safari de Mac, iPhone e iPad (sep 2026). Falta publicarla (el código ya está en el repo privado). Mejoras propuestas en `web/README.md` (accesibilidad, CI, RGPD del formulario, Stripe con Checkout, web temporal dentro de Astro).
+- Web v2 en Astro hecha y probada por Matías en Safari de Mac, iPhone e iPad (sep 2026). Falta publicarla (el código ya está en el repo privado).
+- **Publicación (web temporal y completa), hosting y dominio: EN ESPERA.** No depende de Matías; no proponerla ni prepararla hasta que él lo diga. Mejoras propuestas en `web/README.md` (accesibilidad, CI, RGPD del formulario, Stripe con Checkout, web temporal dentro de Astro).
