@@ -2,24 +2,55 @@
 // Formulario de compra. SIN pasarela todavía: solo valida en el navegador y avisa de que la venta
 // abrirá pronto (no envía datos a ningún sitio). Con Stripe, el botón irá a Stripe Checkout.
 //
-// Debajo del botón va la "primera capa" de información del RGPD (quién, para qué, derechos) con enlace
-// a la política completa: es obligatoria ANTES de que alguien envíe sus datos.
+// Accesibilidad (WCAG 3.3.1, 3.3.2, 4.1.2): cada campo tiene su <label>; los obligatorios lo dicen en
+// la etiqueta; los errores salen junto a su campo, asociados con aria-describedby y marcados con
+// aria-invalid (scripts/entradas/formulario.ts). method="post": si no hay JavaScript, los datos no
+// viajan en la URL (quedarían en el historial y en los registros del servidor).
+//
+// Debajo del botón va la "primera capa" de información del RGPD con enlace a la política completa:
+// es obligatoria ANTES de que alguien envíe sus datos.
+import type { HTMLAttributes } from "astro/types";
 import { titular } from "../../data/legal";
+
+interface Campo {
+  id: string;
+  etiqueta: string;
+  autocomplete: HTMLAttributes<"input">["autocomplete"];
+  max: number;
+  obligatorio: boolean;
+  tipo?: "text" | "email";
+}
+
+const campos: Campo[] = [
+  { id: "nombre", etiqueta: "Nombre", autocomplete: "given-name", max: 80, obligatorio: true },
+  { id: "apellidos", etiqueta: "Apellidos", autocomplete: "family-name", max: 120, obligatorio: true },
+  { id: "email", etiqueta: "Email", autocomplete: "email", max: 254, obligatorio: true, tipo: "email" },
+  { id: "trabajo", etiqueta: "Trabajo en...", autocomplete: "organization", max: 120, obligatorio: false },
+  { id: "cupon", etiqueta: "Cupón", autocomplete: "off", max: 40, obligatorio: false },
+];
 ---
-<form class="buy" novalidate data-formulario-compra>
-  <p class="price"><span>Entrada general</span><strong>Precio por anunciar</strong></p>
-  <label for="f-nombre">Nombre</label>
-  <input id="f-nombre" name="nombre" autocomplete="given-name" maxlength="80" required />
-  <label for="f-apellidos">Apellidos</label>
-  <input id="f-apellidos" name="apellidos" autocomplete="family-name" maxlength="120" required />
-  <label for="f-email">Email</label>
-  <input id="f-email" name="email" type="email" autocomplete="email" maxlength="254" required />
-  <label for="f-trabajo">Trabajo en...</label>
-  <input id="f-trabajo" name="trabajo" autocomplete="organization" maxlength="120" />
-  <label for="f-cupon">Cupón</label>
-  <input id="f-cupon" name="cupon" autocomplete="off" maxlength="40" />
+<form class="buy" method="post" novalidate data-formulario-compra aria-labelledby="compra-titulo">
+  <p class="price" id="compra-titulo"><span>Entrada general</span><strong>Precio por anunciar</strong></p>
+  {campos.map((c) => (
+    <div class="campo">
+      <label for={`f-${c.id}`}>
+        {c.etiqueta}
+        {c.obligatorio && <span class="obligatorio"> (obligatorio)</span>}
+      </label>
+      <input
+        id={`f-${c.id}`}
+        name={c.id}
+        type={c.tipo ?? "text"}
+        autocomplete={c.autocomplete}
+        maxlength={c.max}
+        required={c.obligatorio}
+        aria-describedby={c.obligatorio ? `f-${c.id}-error` : undefined}
+      />
+      {c.obligatorio && <p class="error" id={`f-${c.id}-error`}></p>}
+    </div>
+  ))}
   <button type="submit">COMPRAR</button>
-  <p class="note" aria-live="polite"></p>
+  <p class="note" role="status"></p>
   <p class="privacidad">
     Usaremos tus datos solo para gestionar tu entrada. Responsable: {titular.nombre ?? "la organización de Píntega Conf"}.
     Puedes acceder a ellos, corregirlos o borrarlos escribiendo a <a href={`mailto:${titular.email}`}>{titular.email}</a>.
@@ -32,14 +63,27 @@ import { titular } from "../../data/legal";
   .price { margin: 0 0 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(253, 195, 48, .35); display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
   .price span { font-size: 13px; color: var(--accent-text); text-transform: uppercase; letter-spacing: .03em; }
   .price strong { font: 400 22px var(--f-head); color: var(--text); }
+  .campo { display: flex; flex-direction: column; gap: .2rem; margin-bottom: .35rem; }
   label { font-size: 13px; color: var(--accent-text); text-transform: uppercase; letter-spacing: .03em; }
-  input { width: 100%; background: transparent; border: 0; border-bottom: 1px solid rgba(253, 195, 48, .45); color: var(--text); font: 15px var(--f-sans); padding: .2rem 0 .35rem; margin-bottom: .35rem; }
-  input:focus { border-bottom-color: var(--gold); }
-  button { align-self: center; margin-top: .8rem; background: var(--gold); color: var(--ink); border: 0; font: 600 16px var(--f-sans); padding: .55rem 1.1rem; cursor: pointer; }
+  .obligatorio { text-transform: none; letter-spacing: 0; color: var(--text-3); }
+  /* Borde con contraste ≥ 3:1 en los dos temas (WCAG 1.4.11): 7,2:1 en oscuro y 3,9:1 en claro.
+     Antes, dorado al 45 %: 3,2:1 en oscuro y 1,25:1 en claro. */
+  input {
+    width: 100%; background: transparent; border: 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--accent-text) 80%, transparent);
+    color: var(--text); font: 15px var(--f-sans); padding: .2rem 0 .35rem;
+  }
+  input:focus { border-bottom-color: var(--accent-text); }
+  input[aria-invalid="true"] { border-bottom: 2px solid var(--error); }
+  .error { margin: 0; font-size: 13px; color: var(--error); }
+  .error:empty { display: none; }
+  button { align-self: center; margin-top: .8rem; background: var(--gold); color: var(--ink); border: 0; font: 600 16px var(--f-sans); padding: .55rem 1.1rem; min-height: 44px; cursor: pointer; }
   button:hover { filter: brightness(1.06); }
-  .privacidad { font-size: 11.5px; line-height: 1.5; color: var(--text-3); margin: .6rem 0 0; }
+  .privacidad { font-size: 12px; line-height: 1.5; color: var(--text-3); margin: .6rem 0 0; }
   .privacidad a { color: var(--accent-text); }
-  .note { font-size: 12px; color: var(--text-3); text-align: center; min-height: 1em; margin: .3rem 0 0; }
+  /* Zona role="status": NO se oculta cuando está vacía (si no existe en el árbol de accesibilidad antes
+     de cambiar, algunos lectores de pantalla no la anuncian) */
+  .note { font-size: 13px; color: var(--text-2); text-align: center; margin: .3rem 0 0; min-height: 1.2em; }
   @media (max-width: 680px) {
     .price { flex-direction: column; align-items: flex-start; gap: .2rem; }
     .price strong { font-size: 19px; }

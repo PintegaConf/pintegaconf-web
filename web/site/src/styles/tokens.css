@@ -33,6 +33,7 @@
   --slot-text: rgba(253, 195, 48, .7);
   --line: rgba(255, 255, 255, .08);
   --logo-filter: brightness(0) invert(1);   /* logos de patrocinadores en blanco */
+  --error: #ff8f85;             /* mensajes de error: 7,7:1 sobre el fondo del formulario */
 
   /* Movimiento y maquetación */
   --ease: cubic-bezier(.22, .9, .24, 1);
@@ -57,6 +58,7 @@
     --slot-text: #8a5b00;
     --line: rgba(0, 0, 0, .08);
     --logo-filter: brightness(0);
+    --error: #b3261e;
   }
 }
 :root[data-theme="light"] {
@@ -73,6 +75,7 @@
   --slot-text: #8a5b00;
   --line: rgba(0, 0, 0, .08);
   --logo-filter: brightness(0);
+  --error: #b3261e;             /* 6,6:1 sobre blanco */
 }
 
 @media (max-width: 680px) {
