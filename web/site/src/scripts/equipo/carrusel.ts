@@ -19,7 +19,10 @@ let visible = false;
 let espera: number | undefined;
 
 function destapar(el: HTMLElement | null): void {
-  figuras.forEach((f) => f.classList.toggle("is-active", f === el));
+  figuras.forEach((f) => {
+    f.classList.toggle("is-active", f === el);
+    f.classList.remove("cerrada"); // pasar a otra persona anula el Escape anterior
+  });
   // Si el foco estaba en otra persona, se quita (si no, :focus-within la dejaría destapada)
   const foco = document.activeElement;
   if (el && foco instanceof HTMLElement && foco.closest(".operative") && !el.contains(foco)) foco.blur();
@@ -78,14 +81,18 @@ function ir(direccion: -1 | 1): void {
   pista.scrollTo({ left: centroDe(figuras[i]) - pista.clientWidth / 2, behavior: "smooth" });
 }
 
+// Al llegar al principio o al final, la flecha se marca con aria-disabled (no con disabled): un botón
+// disabled pierde el foco y el usuario de teclado se quedaría "en ninguna parte" (WCAG 2.4.3).
+const desactivada = (b: HTMLButtonElement) => b.getAttribute("aria-disabled") === "true";
+
 function sincronizarFlechas(): void {
   const max = pista.scrollWidth - pista.clientWidth;
-  anterior.disabled = pista.scrollLeft <= 2;
-  siguiente.disabled = pista.scrollLeft >= max - 2;
+  anterior.setAttribute("aria-disabled", String(pista.scrollLeft <= 2));
+  siguiente.setAttribute("aria-disabled", String(pista.scrollLeft >= max - 2));
 }
 
-anterior.addEventListener("click", () => ir(-1));
-siguiente.addEventListener("click", () => ir(1));
+anterior.addEventListener("click", () => { if (!desactivada(anterior)) ir(-1); });
+siguiente.addEventListener("click", () => { if (!desactivada(siguiente)) ir(1); });
 pista.addEventListener("scroll", sincronizarFlechas, { passive: true });
 window.addEventListener("resize", sincronizarFlechas);
 sincronizarFlechas();

@@ -24,10 +24,12 @@ const miembros = equipo.map((m, indice) => {
   <div class="wrap">
     <h2 class="sec-title">EQUIPO</h2>
     <div class="formation">
-      <div class="formation-inner">
+      <div class="formation-inner" id="equipo-lista" role="list" aria-label="Miembros del equipo">
         {miembros.map((m) => (
-          <div class="operative" data-fila={m.fila} data-col={m.columna} data-indice={m.indice}>
-            <div class="dossier" tabindex="0" aria-label={`${m.nombre}, ${m.rol}`}>
+          <div class="operative" role="listitem" data-fila={m.fila} data-col={m.columna} data-indice={m.indice}>
+            {/* role="img": la figura es una imagen con nombre ("Jesús, Organización"). Es enfocable para que el
+                teclado pueda destaparla igual que el ratón (WCAG 2.1.1). */}
+            <div class="dossier" role="img" tabindex="0" aria-label={`${m.nombre}, ${m.rol}`}>
               <div class="frame">
                 <div class="portrait">
                   <Image class="layer-hood" src={m.ilu.capucha} alt="" width={480} quality={90} draggable="false" />
@@ -40,14 +42,15 @@ const miembros = equipo.map((m, indice) => {
           </div>
         ))}
       </div>
-      <button type="button" class="nav nav-prev" aria-label="Persona anterior"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5 L8 12 L15 19" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
-      <button type="button" class="nav nav-next" aria-label="Persona siguiente"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 5 L16 12 L9 19" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+      <button type="button" class="nav nav-prev" aria-label="Persona anterior" aria-controls="equipo-lista"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5 L8 12 L15 19" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+      <button type="button" class="nav nav-next" aria-label="Persona siguiente" aria-controls="equipo-lista"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 5 L16 12 L9 19" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
     </div>
     <p class="swipe-hint">Desliza o usa las flechas para conocer al equipo</p>
   </div>
 </section>
 
 <script>
+  import "../../scripts/equipo/escape";
   import "../../scripts/equipo/revelado";
   import "../../scripts/equipo/carrusel";
 </script>
@@ -79,8 +82,8 @@ const miembros = equipo.map((m, indice) => {
   /* "Paso al frente". OJO: si cambian estos transform, cambiar también REST/ACTIVE en scripts/equipo/revelado.ts */
   .dossier { position: relative; cursor: pointer; pointer-events: none; display: flex; flex-direction: column; align-items: center; gap: .35rem; transition: transform var(--dur) var(--ease), filter var(--dur) var(--ease); }
   [data-fila="atras"] .dossier { transform: scale(.8); filter: brightness(.82); }
-  [data-fila="atras"]:is(:hover, :focus-within, .is-active) .dossier { transform: translateY(64px) scale(1.06); filter: brightness(1); }
-  [data-fila="delante"]:is(:hover, :focus-within, .is-active) .dossier { transform: translateY(-8px) scale(1.06); }
+  [data-fila="atras"]:is(:hover, :focus-within, .is-active):not(.cerrada) .dossier { transform: translateY(64px) scale(1.06); filter: brightness(1); }
+  [data-fila="delante"]:is(:hover, :focus-within, .is-active):not(.cerrada) .dossier { transform: translateY(-8px) scale(1.06); }
 
   .frame { position: relative; width: 100%; aspect-ratio: 1236 / 1272; }
   .portrait { position: absolute; inset: 0; }
@@ -94,9 +97,9 @@ const miembros = equipo.map((m, indice) => {
   .layer-hood { z-index: 3; opacity: 1; transform: translateY(0) scale(1); transition: opacity .35s var(--ease), transform .6s var(--ease); }
   .layer-hands { z-index: 2; opacity: 0; }
   .layer-face { z-index: 1; opacity: 0; transform: translateY(6px) scale(1.04); transition: opacity .3s var(--ease) .05s, transform .6s var(--ease); }
-  .operative:is(:hover, :focus-within, .is-active) .layer-hood { opacity: 0; transform: translateY(-6px) scale(.98); transition: opacity .45s cubic-bezier(.45, 0, .35, 1) .3s, transform .6s cubic-bezier(.45, 0, .35, 1) .3s; }
-  .operative:is(:hover, :focus-within, .is-active) .layer-hands { animation: hands-off 1.3s linear both; }
-  .operative:is(:hover, :focus-within, .is-active) .layer-face { opacity: 1; transform: none; transition: opacity .08s linear .9s, transform .6s var(--ease); }
+  .operative:is(:hover, :focus-within, .is-active):not(.cerrada) .layer-hood { opacity: 0; transform: translateY(-6px) scale(.98); transition: opacity .45s cubic-bezier(.45, 0, .35, 1) .3s, transform .6s cubic-bezier(.45, 0, .35, 1) .3s; }
+  .operative:is(:hover, :focus-within, .is-active):not(.cerrada) .layer-hands { animation: hands-off 1.3s linear both; }
+  .operative:is(:hover, :focus-within, .is-active):not(.cerrada) .layer-face { opacity: 1; transform: none; transition: opacity .08s linear .9s, transform .6s var(--ease); }
   @keyframes hands-off {
     0% { opacity: 1; }
     73% { opacity: 1; animation-timing-function: cubic-bezier(.45, 0, .35, 1); }
@@ -111,12 +114,12 @@ const miembros = equipo.map((m, indice) => {
   }
   .info-name { font: 700 1.25rem var(--f-head); color: var(--gold); margin: .55rem 0 .1rem; }
   .info-role { font-size: .72rem; letter-spacing: .04em; text-transform: uppercase; color: #d8d8d8; margin: 0 0 .6rem; }
-  .operative:is(:hover, :focus-within, .is-active) .info { opacity: 1; transform: translate(-50%, 0); visibility: visible; transition-delay: .9s, .9s, 0s; }
+  .operative:is(:hover, :focus-within, .is-active):not(.cerrada) .info { opacity: 1; transform: translate(-50%, 0); visibility: visible; transition-delay: .9s, .9s, 0s; }
 
   /* Foco: al destapar a alguien, el resto del grupo y de la página se desenfocan */
-  .formation-inner:has(.operative:is(:focus-within, .is-active)) .operative:not(:focus-within):not(.is-active) .dossier { filter: blur(3px) brightness(.7); }
+  .formation-inner:has(.operative:is(:focus-within, .is-active):not(.cerrada)) .operative:not(:focus-within):not(.is-active) .dossier { filter: blur(3px) brightness(.7); }
   :global(main > section:not(#equipo)), :global(.site-footer) { transition: filter .4s var(--ease), opacity .4s var(--ease); }
-  :global(body:has(.operative.is-active, .operative:focus-within) :is(main > section:not(#equipo), .site-footer)) { filter: blur(2px); opacity: .5; }
+  :global(body:has(.operative.is-active:not(.cerrada), .operative:focus-within:not(.cerrada)) :is(main > section:not(#equipo), .site-footer)) { filter: blur(2px); opacity: .5; }
 
   .swipe-hint, .nav { display: none; }
 
@@ -136,13 +139,13 @@ const miembros = equipo.map((m, indice) => {
     }
     .dossier { width: min(62vw, 240px); pointer-events: auto; }
     [data-fila="atras"] .dossier { transform: none; }
-    [data-fila]:is(:hover, :focus-within, .is-active) .dossier { transform: scale(1.04) translateY(-6px); }
+    [data-fila]:is(:hover, :focus-within, .is-active):not(.cerrada) .dossier { transform: scale(1.04) translateY(-6px); }
     .info { position: static; transform: translateY(6px); width: min(78vw, 280px); margin-top: .4rem; }
-    .operative:is(:hover, :focus-within, .is-active) .info { transform: none; }
+    .operative:is(:hover, :focus-within, .is-active):not(.cerrada) .info { transform: none; }
     /* en el carrusel no se desenfoca nada */
     .formation-inner .dossier,
-    .formation-inner:has(.operative:is(:focus-within, .is-active)) .operative:not(:focus-within):not(.is-active) .dossier { filter: none; }
-    :global(body:has(.operative.is-active, .operative:focus-within) :is(main > section:not(#equipo), .site-footer)) { filter: none; opacity: 1; }
+    .formation-inner:has(.operative:is(:focus-within, .is-active):not(.cerrada)) .operative:not(:focus-within):not(.is-active) .dossier { filter: none; }
+    :global(body:has(.operative.is-active:not(.cerrada), .operative:focus-within:not(.cerrada)) :is(main > section:not(#equipo), .site-footer)) { filter: none; opacity: 1; }
 
     .nav {
       display: flex; align-items: center; justify-content: center; position: absolute; z-index: 70;
@@ -152,7 +155,7 @@ const miembros = equipo.map((m, indice) => {
       transition: opacity .25s var(--ease), transform .15s var(--ease); -webkit-tap-highlight-color: transparent;
     }
     .nav:active { transform: translateY(-50%) scale(.92); }
-    .nav[disabled] { opacity: .25; cursor: default; }
+    .nav[aria-disabled="true"] { opacity: .25; cursor: default; }
     .nav-prev { left: 0; }
     .nav-next { right: 0; }
     .swipe-hint { display: block; text-align: center; font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--text-3); margin: .6rem 0 0; }

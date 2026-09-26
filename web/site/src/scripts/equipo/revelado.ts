@@ -14,6 +14,7 @@ interface Mascara {
 
 interface Figura {
   el: HTMLElement;
+  info: HTMLElement;
   atras: boolean;
   indice: number;
   capucha: string;
@@ -61,6 +62,7 @@ const figuras: Figura[] = [...pista.querySelectorAll<HTMLElement>(".operative")]
   cargarMascara(rostro);
   return {
     el,
+    info: requerido<HTMLElement>(".info", el),
     atras: el.dataset.fila === "atras",
     indice: Number(el.dataset.indice),
     capucha,
@@ -111,6 +113,7 @@ const temporizadoresSalida = new WeakMap<HTMLElement, number>();
 
 function activar(f: Figura | null): void {
   if (f === activa) return;
+  figuras.forEach((x) => x.el.classList.remove("cerrada")); // destapar a otra persona anula el Escape anterior
   if (activa) {
     const saliente = activa.el;
     saliente.classList.remove("is-active");
@@ -127,9 +130,16 @@ function activar(f: Figura | null): void {
   pista.classList.toggle("pointing", Boolean(f));
 }
 
-/** Figura bajo el punto. La activa tiene preferencia (histéresis) para no saltar entre vecinas. */
+/** ¿El punto está sobre la ficha (nombre y rol) de la figura? */
+function sobreFicha(f: Figura, x: number, y: number): boolean {
+  const r = f.info.getBoundingClientRect();
+  return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom;
+}
+
+/** Figura bajo el punto. La activa tiene preferencia (histéresis) para no saltar entre vecinas, y también
+ *  si el puntero está sobre su ficha: se puede pasar el ratón por encima sin que desaparezca (WCAG 1.4.13). */
 function figuraEn(x: number, y: number): Figura | null {
-  if (activa && (toca(activa, x, y, true) || toca(activa, x, y, false, MARGEN[activa.atras ? "atras" : "delante"]))) return activa;
+  if (activa && (toca(activa, x, y, true) || toca(activa, x, y, false, MARGEN[activa.atras ? "atras" : "delante"]) || sobreFicha(activa, x, y))) return activa;
   return ordenPintado.find((f) => f !== activa && toca(f, x, y, false, MARGEN[f.atras ? "atras" : "delante"])) ?? null;
 }
 
