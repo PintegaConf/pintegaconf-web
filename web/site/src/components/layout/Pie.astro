@@ -1,12 +1,25 @@
 ---
+// Pie: enlaces a FAQ y páginas legales. Es un <nav> (los lectores de pantalla lo anuncian como
+// navegación) y el enlace de la página actual lleva aria-current="page".
 import { enlacesPie } from "../../data/navegacion";
+const actual = Astro.url.pathname;
 ---
 <footer class="site-footer">
-  {enlacesPie.map((e, i) => <>{i > 0 && " · "}{e.href ? <a href={e.href}>{e.titulo}</a> : <span>{e.titulo}</span>}</>)}
+  <nav aria-label="Información y legal">
+    {enlacesPie.map((e, i) => (
+      <>
+        {i > 0 && <span class="sep" aria-hidden="true">·</span>}
+        {e.href ? <a href={e.href} aria-current={e.href === actual ? "page" : undefined}>{e.titulo}</a> : <span>{e.titulo}</span>}
+      </>
+    ))}
+  </nav>
 </footer>
 
 <style>
-  .site-footer { background: var(--gold); color: var(--ink); text-align: center; font-family: var(--f-sans); font-size: 16px; padding: 1.1rem 1rem; }
-  a { text-decoration: none; }
-  a:hover { text-decoration: underline; }
+  .site-footer { background: var(--gold); color: var(--ink); text-align: center; font-family: var(--f-sans); font-size: 16px; padding: .75rem 1rem; }
+  nav { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; column-gap: .35rem; }
+  /* Objetivo táctil de al menos 24×24 px (WCAG 2.5.8) */
+  a { display: inline-block; min-height: 24px; padding: .35rem .3rem; text-decoration: none; border-radius: 4px; }
+  a:hover, a[aria-current="page"] { text-decoration: underline; text-underline-offset: 4px; }
+  .sep { user-select: none; }
 </style>
