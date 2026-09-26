@@ -1,8 +1,11 @@
-# Sistema
+# Este repositorio solo versiona dos carpetas: web/ (la web) y claude/ (contexto para Claude Code
+# y guía para montar el proyecto). El resto de la carpeta del proyecto (dossiers, marca, contratos,
+# Claude outputs...) se queda en el equipo de cada uno y NO se sube.
+/*
+!/web/
+!/claude/
+!/README.md
+!/CLAUDE.md
+!/.gitignore
+
 .DS_Store
-# Dependencias y artefactos de build (se regeneran con npm ci / npm run build)
-node_modules/
-dist/
-.astro/
-# Pruebas locales temporales
-.pruebas/
