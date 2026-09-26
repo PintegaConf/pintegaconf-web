@@ -1,0 +1,25 @@
+# Dependabot (gratuito, no consume minutos de Actions): abre pull requests con actualizaciones.
+# Cada PR pasa por el workflow "Web" antes de aceptarlo. Revisar el changelog antes de fusionar.
+version: 2
+updates:
+  # Dependencias de la web (Astro, TypeScript...)
+  - package-ecosystem: npm
+    directory: /web/site
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "web(deps)"
+    groups:
+      # Parches y versiones menores juntos en un solo PR; las versiones MAYORES, cada una en el suyo
+      menores:
+        update-types: [minor, patch]
+
+  # Las acciones del workflow (fijadas por hash)
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: "ci(deps)"
