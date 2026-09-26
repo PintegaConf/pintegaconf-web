@@ -1,17 +1,18 @@
 # Comprobación automática de la web en cada cambio: instala las dependencias exactas, verifica tipos,
-# compila y busca vulnerabilidades conocidas. Si algo falla, se ve en GitHub (y en el badge del README)
+# compila, busca vulnerabilidades conocidas y AUDITA LA ACCESIBILIDAD (axe + recorrido real con Tab,
+# ver web/site/tests/accesibilidad.mjs). Si algo falla, se ve en GitHub (y en el badge del README)
 # antes de publicar.
 #
 # Coste: el plan Free de la organización incluye 2.000 minutos/mes en repos privados y cada ejecución
-# tarda ~1 minuto. Solo se ejecuta cuando cambia algo de web/site (o este archivo).
+# tarda ~2,5 minutos. Solo se ejecuta cuando cambia algo de web/site, web/temporal o este archivo.
 name: Web
 
 on:
   push:
     branches: [main]
-    paths: ["web/site/**", ".github/workflows/web.yml"]
+    paths: ["web/site/**", "web/temporal/**", ".github/workflows/web.yml"]
   pull_request:
-    paths: ["web/site/**", ".github/workflows/web.yml"]
+    paths: ["web/site/**", "web/temporal/**", ".github/workflows/web.yml"]
   workflow_dispatch: # lanzarla a mano desde la pestaña Actions
 
 # Mínimo privilegio: el workflow solo puede leer el código
@@ -25,9 +26,9 @@ concurrency:
 
 jobs:
   build:
-    name: Tipos, build y audit
+    name: Tipos, build, audit y accesibilidad
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     defaults:
       run:
         working-directory: web/site
@@ -53,3 +54,13 @@ jobs:
 
       - name: Vulnerabilidades conocidas (npm audit)
         run: npm audit --omit=dev --audit-level=high
+
+      # Los runners de GitHub (ubuntu-latest) traen Google Chrome instalado en /usr/bin/google-chrome
+      - name: Accesibilidad de la web (WCAG 2.2 AA, teclado, comportamientos)
+        run: node tests/accesibilidad.mjs
+
+      - name: Accesibilidad de la web temporal
+        run: node tests/accesibilidad.mjs
+        env:
+          A11Y_DIST: ../temporal
+          A11Y_PAGINAS: /
