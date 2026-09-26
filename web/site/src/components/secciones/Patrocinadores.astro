@@ -15,6 +15,12 @@ import LogoHueco from "../LogoHueco.astro";
           <Image class="medal" src={n.medallon} alt="" width={420} widths={[210, 420]} sizes="210px" />
           <h3 class="tier-name">{n.nombre}</h3>
           <p class="tier-rank">{n.rango}</p>
+          {n.huecos > n.logos.length && (
+            <p class="sr-only">
+              {n.logos.length ? "" : "Todavía no hay patrocinadores en este nivel. "}
+              {n.huecos - n.logos.length === 1 ? "Queda 1 hueco libre." : `Quedan ${n.huecos - n.logos.length} huecos libres.`}
+            </p>
+          )}
           <div class="logos">
             {Array.from({ length: Math.max(n.huecos, n.logos.length) }, (_, i) => (
               <LogoHueco logo={n.logos[i]} texto="Tu logo aquí" />

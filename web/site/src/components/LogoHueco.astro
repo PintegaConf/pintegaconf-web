@@ -1,5 +1,7 @@
 ---
 // Un hueco de la rejilla de logos: el logo real (enlazado si tiene web) o el texto "Tu logo aquí".
+// Los huecos vacíos son aria-hidden: el lector de pantalla no los lee uno a uno (serían 19 "Tu logo
+// aquí" seguidos); en su lugar, cada sección dice cuántos huecos libres quedan (texto .sr-only).
 import { Image } from "astro:assets";
 import type { Logo } from "../data/patrocinio";
 
@@ -18,5 +20,5 @@ const { logo, texto } = Astro.props;
     <div class="logo-slot"><Image src={logo.src} alt={logo.alt} width={300} /></div>
   )
 ) : (
-  <div class="logo-slot">{texto}</div>
+  <div class="logo-slot" aria-hidden="true">{texto}</div>
 )}
