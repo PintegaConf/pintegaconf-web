@@ -10,6 +10,9 @@ export const secciones = [
 
 export const enlaceEntradas = { id: "entradas", titulo: "Entradas" } as const;
 
+/** Enlace a una sección de la portada que funciona desde cualquier página (FAQ, legales...). */
+export const enlaceSeccion = (id: string) => `/#${id}`;
+
 // Pie. `href: null` = la página aún no existe: se muestra el texto sin enlace (un enlace a "#"
 // es un enlace roto). Cuando se cree la página, poner su ruta, p. ej. "/privacidad".
 export const enlacesPie: { href: string | null; titulo: string }[] = [
