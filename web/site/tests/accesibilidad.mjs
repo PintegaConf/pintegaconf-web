@@ -128,8 +128,15 @@ class Pestana {
 async function axe(p) {
   const res = await p.evaluar(`(async () => {
     if (!window.axe) { ${AXE} }
-    const r = await axe.run(document, { runOnly: { type: "tag", values: ${JSON.stringify(ETIQUETAS_AXE)} }, resultTypes: ["violations"] });
-    return r.violations.map(v => ({ id: v.id, impacto: v.impact, ayuda: v.help, nodos: v.nodes.map(n => n.target.join(" ")).slice(0, 5), total: v.nodes.length }));
+    const r = await axe.run(document, { runOnly: { type: "tag", values: ${JSON.stringify(ETIQUETAS_AXE)} }, resultTypes: ["violations", "incomplete"] });
+    const m = v => ({ id: v.id, impacto: v.impact, ayuda: v.help, nodos: v.nodes.map(n => n.target.join(" ")).slice(0, 5), total: v.nodes.length });
+    // incompletos: el motivo de cada uno (p. ej. "fondo con degradado"), agrupado
+    window.__axeIncompletos = r.incomplete.map(v => {
+      const motivos = {};
+      v.nodes.forEach(n => { const c = n.any[0] || n.all[0] || {}; const k = c.data?.messageKey || c.messageKey || "otro"; motivos[k] = (motivos[k] || 0) + 1; });
+      return { ...m(v), ayuda: v.help + " — motivos: " + Object.entries(motivos).map(([k, c]) => k + "×" + c).join(", ") };
+    });
+    return r.violations.map(m);
   })()`);
   return res;
 }
@@ -174,6 +181,46 @@ async function recorridoTab(p) {
     if (fallos.length) problemas.push(`Tab ${pasos.length}: ${f.id} «${f.nombre}» → ${fallos.join(", ")}`);
   }
   return { pasos, problemas };
+}
+
+// Espaciado de texto de WCAG 1.4.12: con estos valores no debe quedar texto cortado
+const ESPACIADO = `*{line-height:1.5!important;letter-spacing:.12em!important;word-spacing:.16em!important}p{margin-bottom:2em!important}`;
+async function espaciadoTexto(p) {
+  return p.evaluar(`(async () => {
+    const st = document.createElement("style"); st.textContent = ${JSON.stringify(ESPACIADO)}; document.head.append(st);
+    await new Promise(r => setTimeout(r, 300));
+    const cortados = [];
+    for (const el of document.querySelectorAll("body *")) {
+      const cs = getComputedStyle(el);
+      if (!["hidden", "clip"].includes(cs.overflowX) && !["hidden", "clip"].includes(cs.overflowY)) continue;
+      if (el.closest("[aria-hidden=true], .sr-only, .formation-inner, .pass-strip")) continue; // decorativos o con scroll propio
+      if (!el.innerText?.trim()) continue;
+      // ¿Algún TEXTO visible sobresale del contenedor que recorta? (los decorativos que sobresalen no cuentan)
+      const caja = el.getBoundingClientRect();
+      const recorrido = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+      for (let n = recorrido.nextNode(); n; n = recorrido.nextNode()) {
+        if (!n.textContent.trim() || n.parentElement.closest("[aria-hidden=true], .sr-only")) continue;
+        const rango = document.createRange(); rango.selectNodeContents(n);
+        const r = rango.getBoundingClientRect();
+        if (r.width && (r.bottom > caja.bottom + 1 || r.right > caja.right + 1 || r.top < caja.top - 1 || r.left < caja.left - 1)) {
+          cortados.push(el.tagName.toLowerCase() + "." + [...el.classList].filter(c => !c.startsWith("astro-")).join(".") + " «" + n.textContent.trim().slice(0, 30) + "»");
+          break;
+        }
+      }
+    }
+    st.remove();
+    return cortados;
+  })()`);
+}
+
+// Con "reducir movimiento" no debe quedar ninguna animación ni transición en marcha
+async function movimientoReducido(p, url) {
+  await p.enviar("Emulation.setEmulatedMedia", { features: [{ name: "prefers-reduced-motion", value: "reduce" }] });
+  await p.abrir(url, PANTALLAS[0], "dark");
+  await espera(500);
+  const activas = await p.evaluar(`document.getAnimations().filter(a => a.playState === "running").map(a => (a.animationName || a.transitionProperty || "anim") + " en " + (a.effect?.target?.className || a.effect?.target?.tagName))`);
+  await p.enviar("Emulation.setEmulatedMedia", { features: [] });
+  return activas;
 }
 
 // ---------- Comportamientos concretos (lo que axe no puede comprobar) ----------
@@ -259,11 +306,21 @@ try {
           await espera(600);
           fallosMenu = (await axe(p)).map((v) => ({ ...v, ayuda: "[menú abierto] " + v.ayuda }));
         }
-        const todos = [...fallos, ...fallosMenu];
+        const cortados = pantalla.mobile && tema === "dark" ? await espaciadoTexto(p) : [];
+        const todos = [...fallos, ...fallosMenu, ...cortados.map((c) => ({ impacto: "serious", id: "text-spacing", ayuda: "Texto cortado con el espaciado de WCAG 1.4.12", total: 1, nodos: [c] }))];
+        if (process.env.A11Y_REVISAR) {
+          const inc = await p.evaluar("window.__axeIncompletos || []");
+          inc.forEach((v) => console.log(`    (revisar a mano) ${v.id}: ${v.ayuda} (${v.total}) → ${v.nodos.join(" | ")}`));
+        }
         totalProblemas += todos.length;
         const etiqueta = `${ruta} · ${pantalla.nombre} · ${tema === "dark" ? "oscuro" : "claro"}`;
         console.log(`${todos.length ? "✗" : "✓"} axe  ${etiqueta}${todos.length ? "" : " — sin incidencias"}`);
         for (const v of todos) console.log(`    [${v.impacto}] ${v.id}: ${v.ayuda} (${v.total}) → ${v.nodos.join(" | ")}`);
+      }
+      if (!pantalla.mobile) {
+        const activas = await movimientoReducido(p, BASE + ruta);
+        totalProblemas += activas.length;
+        console.log(`${activas.length ? "✗" : "✓"} Reducir movimiento  ${ruta}${activas.length ? ": siguen en marcha " + activas.join(", ") : " — nada en movimiento"}`);
       }
       // Recorrido con Tab (en tema oscuro; el orden y el foco no dependen del tema)
       await p.abrir(BASE + ruta, pantalla, "dark");
