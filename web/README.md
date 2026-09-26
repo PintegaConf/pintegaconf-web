@@ -5,6 +5,7 @@ web/
   site/          ← LA WEB (v2, Astro). Código fuente: se edita aquí. Guía práctica en site/README.md
   web_assets/    ← material original de diseño (ilustraciones, medallones, orbes). No se sirve tal cual.
   tools/         ← herramientas: procesar-equipo.py (prepara las ilustraciones del equipo)
+  temporal/      ← web provisional "en obras" (un solo HTML + assets/), para publicar mientras tanto
   backup/        ← copia de la v1 (archivo único) y de la web temporal, tal como estaban. Referencia; no se toca.
 ```
 
