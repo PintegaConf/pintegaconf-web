@@ -14,8 +14,12 @@ interface Props {
   actualizado?: string;
   /** Muestra el aviso de borrador (textos legales sin revisar o con datos pendientes). */
   borrador?: boolean;
+  /** Texto pequeño sobre el título, con el cuadradito dorado (como en la portada). */
+  antetitulo?: string;
+  /** "lectura" (760px, textos largos) o "amplio" (ancho de la web, para maquetaciones propias). */
+  ancho?: "lectura" | "amplio";
 }
-const { titulo, descripcion, actualizado, borrador = false } = Astro.props;
+const { titulo, descripcion, actualizado, borrador = false, antetitulo, ancho = "lectura" } = Astro.props;
 const fecha = actualizado
   ? new Date(actualizado).toLocaleDateString("es-ES", { day: "numeric", month: "long", year: "numeric" })
   : null;
@@ -23,7 +27,8 @@ const fecha = actualizado
 <Base titulo={`${titulo} · ${evento.nombre}`} descripcion={descripcion}>
   <Cabecera />
   <Menu />
-  <main class="wrap texto">
+  <main class="wrap texto" data-ancho={ancho}>
+    {antetitulo && <p class="antetitulo">{antetitulo}</p>}
     <h1>{titulo}</h1>
     {borrador && (
       <p class="borrador" role="note">
@@ -40,6 +45,9 @@ const fecha = actualizado
 <style>
   /* alto mínimo: en páginas cortas el pie queda abajo y no a media pantalla */
   .texto { max-width: 760px; min-height: calc(100vh - var(--bar-h) - 3.5rem); padding: 4rem 0 5rem; font: 16px/1.7 var(--f-sans); color: var(--text-2); }
+  .texto[data-ancho="amplio"] { max-width: var(--wrap); }
+  .antetitulo { display: flex; align-items: center; gap: .6rem; margin: 0 0 .9rem; font: 700 13px var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--text); }
+  .antetitulo::before { content: ""; width: 12px; height: 12px; background: var(--gold); }
   h1 { font: 400 clamp(36px, 5vw, 48px) / 1.1 var(--f-head); color: var(--accent-text); margin: 0 0 2rem; }
   .borrador { border: 1px dashed var(--gold); background: var(--slot-bg); color: var(--text); padding: .9rem 1.1rem; margin: 0 0 2rem; }
   .actualizado { margin-top: 3rem; font-size: 14px; color: var(--text-3); }
