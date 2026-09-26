@@ -1,0 +1,34 @@
+---
+// Política de cookies (LSSI-CE, art. 22.2). La web no usa cookies: solo guarda en el navegador la
+// preferencia de tema si el visitante pulsa el botón (almacenamiento técnico, sin consentimiento).
+// Si algún día se añade analítica, hay que actualizar esta página y poner un banner con opción de rechazar.
+import PaginaTexto from "../layouts/PaginaTexto.astro";
+import { ACTUALIZADO, datosLegalesCompletos } from "../data/legal";
+import { evento } from "../data/evento";
+---
+<PaginaTexto titulo="Política de cookies" descripcion={`La web de ${evento.nombre} no usa cookies. Qué guarda en tu navegador y por qué.`} actualizado={ACTUALIZADO} borrador={!datosLegalesCompletos}>
+  <h2>Esta web no usa cookies</h2>
+  <p>
+    No usamos cookies propias ni de terceros: ni de analítica, ni de publicidad, ni de redes sociales. Por eso no verás ningún banner
+    de cookies.
+  </p>
+
+  <h2>Lo único que guardamos en tu navegador</h2>
+  <p>
+    Si pulsas el botón de <strong>modo claro / modo oscuro</strong>, tu navegador guarda esa preferencia (en su almacenamiento local,
+    con el nombre <code>theme</code>) para mostrarte la web así en tus próximas visitas. No contiene datos personales, no sale de tu
+    navegador y no la usamos para nada más.
+  </p>
+  <p>
+    Al ser un almacenamiento técnico que tú mismo pides, no necesita consentimiento (art. 22.2 de la LSSI-CE). Puedes borrarlo cuando
+    quieras desde los ajustes de tu navegador (datos de sitios web).
+  </p>
+
+  <h2>Pago de las entradas</h2>
+  <p>
+    Cuando abra la venta, el pago se hará en la página de Stripe, que puede usar sus propias cookies para procesar el pago y
+    prevenir el fraude. Puedes consultarlo en su <a href="https://stripe.com/es/cookie-settings" rel="noopener noreferrer">política de cookies</a>.
+  </p>
+
+  <p>Más información: <a href="/privacidad">política de privacidad</a> y <a href="/aviso-legal">aviso legal</a>.</p>
+</PaginaTexto>

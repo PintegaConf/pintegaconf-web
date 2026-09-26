@@ -1,0 +1,48 @@
+---
+// Aviso legal (LSSI-CE, art. 10). BORRADOR: faltan los datos del titular (src/data/legal.ts) y la revisión legal.
+import PaginaTexto from "../layouts/PaginaTexto.astro";
+import Dato from "../components/Dato.astro";
+import { titular, ACTUALIZADO, datosLegalesCompletos } from "../data/legal";
+import { evento } from "../data/evento";
+---
+<PaginaTexto titulo="Aviso legal" descripcion={`Datos del titular y condiciones de uso de la web de ${evento.nombre}.`} actualizado={ACTUALIZADO} borrador={!datosLegalesCompletos}>
+  <h2>Titular de la web</h2>
+  <p>En cumplimiento de la Ley 34/2002, de servicios de la sociedad de la información y de comercio electrónico (LSSI-CE):</p>
+  <ul>
+    <li><strong>Titular:</strong> <Dato valor={titular.nombre} pendiente="nombre o razón social" /></li>
+    <li><strong>NIF:</strong> <Dato valor={titular.nif} pendiente="NIF" /></li>
+    <li><strong>Domicilio:</strong> <Dato valor={titular.domicilio} pendiente="domicilio" /></li>
+    {titular.registro && <li><strong>Registro:</strong> {titular.registro}</li>}
+    <li><strong>Contacto:</strong> <a href={`mailto:${titular.email}`}>{titular.email}</a></li>
+  </ul>
+
+  <h2>Objeto</h2>
+  <p>
+    Esta web informa sobre {evento.nombre}, una conferencia tecnológica que se celebra en {evento.ciudad}, y permitirá comprar
+    entradas cuando se abra la venta. Usarla implica aceptar este aviso legal.
+  </p>
+
+  <h2>Propiedad intelectual</h2>
+  <p>
+    El nombre y el logotipo de Píntega Conf, las ilustraciones, los textos y el diseño de esta web pertenecen a la organización o a
+    sus autores, y no pueden reproducirse sin permiso. Los logotipos de patrocinadores, colaboradores y comunidades pertenecen a sus
+    respectivos titulares.
+  </p>
+
+  <h2>Enlaces a otras webs</h2>
+  <p>
+    La web puede enlazar a páginas de terceros (patrocinadores, comunidades, la pasarela de pago). No somos responsables de su
+    contenido ni de sus políticas.
+  </p>
+
+  <h2>Responsabilidad</h2>
+  <p>
+    Procuramos que la información sea correcta y esté al día, pero datos como el programa, los ponentes o los horarios pueden
+    cambiar. La información definitiva es la que se publique más cerca del evento.
+  </p>
+
+  <h2>Ley aplicable</h2>
+  <p>Este aviso legal se rige por la legislación española.</p>
+
+  <p>Más información: <a href="/privacidad">política de privacidad</a> y <a href="/cookies">política de cookies</a>.</p>
+</PaginaTexto>

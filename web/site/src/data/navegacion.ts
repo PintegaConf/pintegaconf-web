@@ -17,7 +17,7 @@ export const enlaceSeccion = (id: string) => `/#${id}`;
 // es un enlace roto). Cuando se cree la página, poner su ruta, p. ej. "/privacidad".
 export const enlacesPie: { href: string | null; titulo: string }[] = [
   { href: "/faq", titulo: "FAQS" },
-  { href: null, titulo: "AVISO LEGAL" },
-  { href: null, titulo: "POLÍTICA DE PRIVACIDAD" },
-  { href: null, titulo: "POLÍTICA DE COOKIES" },
+  { href: "/aviso-legal", titulo: "AVISO LEGAL" },
+  { href: "/privacidad", titulo: "POLÍTICA DE PRIVACIDAD" },
+  { href: "/cookies", titulo: "POLÍTICA DE COOKIES" },
 ];

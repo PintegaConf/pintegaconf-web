@@ -1,0 +1,73 @@
+---
+// Política de privacidad (RGPD, art. 13, y LOPDGDD). BORRADOR: faltan datos del titular y del
+// alojamiento (src/data/legal.ts) y la revisión legal.
+import PaginaTexto from "../layouts/PaginaTexto.astro";
+import Dato from "../components/Dato.astro";
+import { titular, alojamiento, ACTUALIZADO, datosLegalesCompletos } from "../data/legal";
+import { evento } from "../data/evento";
+---
+<PaginaTexto titulo="Política de privacidad" descripcion={`Qué datos tratamos en la web de ${evento.nombre}, para qué y cuáles son tus derechos.`} actualizado={ACTUALIZADO} borrador={!datosLegalesCompletos}>
+  <h2>Responsable</h2>
+  <p>
+    <Dato valor={titular.nombre} pendiente="nombre o razón social" />, con NIF <Dato valor={titular.nif} pendiente="NIF" /> y
+    domicilio en <Dato valor={titular.domicilio} pendiente="domicilio" />. Contacto:{" "}
+    <a href={`mailto:${titular.email}`}>{titular.email}</a>.
+  </p>
+
+  <h2>Qué datos tratamos y para qué</h2>
+  <h3>Compra de entradas</h3>
+  <p>
+    Cuando abra la venta, el formulario de entradas pedirá tu <strong>nombre, apellidos y email</strong>, y de forma opcional tu{" "}
+    <strong>empresa</strong> y un <strong>cupón</strong>. Los usaremos para gestionar tu compra y tu entrada (confirmación,
+    acreditación y avisos prácticos sobre el evento).
+  </p>
+  <ul>
+    <li><strong>Base legal:</strong> la ejecución del contrato de compra de la entrada (art. 6.1.b RGPD).</li>
+    <li><strong>Conservación:</strong> durante la organización del evento y, después, los plazos que exija la ley (por ejemplo, hasta seis años por obligaciones contables y fiscales).</li>
+  </ul>
+  <p>Mientras la venta no esté abierta, el formulario de esta web no envía tus datos a ningún sitio.</p>
+
+  <h3>Emails que nos envías</h3>
+  <p>
+    Si nos escribes (para dar una charla, patrocinar o cualquier consulta), usaremos tu email y lo que nos cuentes solo para
+    responderte y gestionar lo que nos pidas.
+  </p>
+  <ul>
+    <li><strong>Base legal:</strong> tu consentimiento al escribirnos y nuestro interés legítimo en atender tu consulta (art. 6.1.a y 6.1.f RGPD).</li>
+    <li><strong>Conservación:</strong> el tiempo necesario para atender la consulta y, como máximo, hasta el final de la edición del evento, salvo que haya una relación posterior (por ejemplo, como ponente o patrocinador).</li>
+  </ul>
+
+  <h3>Lo que no hacemos</h3>
+  <p>
+    No usamos analítica ni publicidad, no vendemos tus datos y no te enviaremos comunicaciones comerciales sin tu consentimiento.
+    Las fuentes tipográficas se sirven desde nuestro propio dominio, así que visitar la web no envía tu IP a terceros como Google.
+  </p>
+
+  <h2>Quién más accede a tus datos</h2>
+  <ul>
+    <li>
+      <strong>Stripe</strong> (Stripe Payments Europe, Ltd., Irlanda) procesará el pago de las entradas en su propia página: los datos
+      de tu tarjeta los recibe Stripe, nunca esta web. Stripe puede transferir datos fuera del Espacio Económico Europeo con las
+      garantías que exige el RGPD. Más información en su <a href="https://stripe.com/es/privacy" rel="noopener noreferrer">política de privacidad</a>.
+    </li>
+    <li>
+      <strong>Alojamiento de la web:</strong> <Dato valor={alojamiento} pendiente="proveedor de hosting" />, que guarda los registros
+      técnicos del servidor (como la dirección IP) necesarios para servir la web y protegerla.
+    </li>
+  </ul>
+  <p>No cedemos tus datos a nadie más, salvo obligación legal.</p>
+
+  <h2>Tus derechos</h2>
+  <p>
+    Puedes pedir acceder a tus datos, rectificarlos, suprimirlos, oponerte a su tratamiento, limitarlo o llevártelos a otro
+    responsable (portabilidad) escribiendo a <a href={`mailto:${titular.email}`}>{titular.email}</a>. Si has dado tu consentimiento,
+    puedes retirarlo cuando quieras.
+  </p>
+  <p>
+    Si crees que no hemos tratado bien tus datos, puedes reclamar ante la Agencia Española de Protección de Datos
+    (<a href="https://www.aepd.es" rel="noopener noreferrer">aepd.es</a>).
+  </p>
+
+  <h2>Menores</h2>
+  <p>Si tienes menos de 14 años, necesitas el consentimiento de tu madre, padre o tutor para facilitarnos tus datos.</p>
+</PaginaTexto>

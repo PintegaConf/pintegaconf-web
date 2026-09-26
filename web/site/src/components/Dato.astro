@@ -1,0 +1,9 @@
+---
+// Muestra un dato legal o, si aún no está, un hueco resaltado "pendiente: ...".
+interface Props {
+  valor: string | null;
+  pendiente: string;
+}
+const { valor, pendiente } = Astro.props;
+---
+{valor ?? <span class="pendiente">pendiente: {pendiente}</span>}
