@@ -76,6 +76,8 @@ const schemaJson = JSON.stringify(schemaEvento).replace(/</g, "\\u003c");
     </script>
   </head>
   <body>
+    <!-- Primer elemento enfocable: salta la cabecera y el menú (WCAG 2.4.1). El destino es <main id="contenido">. -->
+    <a class="saltar" href="#contenido">Saltar al contenido</a>
     <slot />
   </body>
 </html>

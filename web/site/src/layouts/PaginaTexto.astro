@@ -27,7 +27,7 @@ const fecha = actualizado
 <Base titulo={`${titulo} · ${evento.nombre}`} descripcion={descripcion}>
   <Cabecera />
   <Menu />
-  <main class="wrap texto" data-ancho={ancho}>
+  <main id="contenido" tabindex="-1" class="wrap texto" data-ancho={ancho}>
     {antetitulo && <p class="antetitulo">{antetitulo}</p>}
     <h1>{titulo}</h1>
     {borrador && (

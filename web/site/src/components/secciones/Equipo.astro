@@ -77,11 +77,10 @@ const miembros = equipo.map((m, indice) => {
   .formation-inner.pointing { cursor: pointer; }
 
   /* "Paso al frente". OJO: si cambian estos transform, cambiar también REST/ACTIVE en scripts/equipo/revelado.ts */
-  .dossier { position: relative; cursor: pointer; outline: none; pointer-events: none; display: flex; flex-direction: column; align-items: center; gap: .35rem; transition: transform var(--dur) var(--ease), filter var(--dur) var(--ease); }
+  .dossier { position: relative; cursor: pointer; pointer-events: none; display: flex; flex-direction: column; align-items: center; gap: .35rem; transition: transform var(--dur) var(--ease), filter var(--dur) var(--ease); }
   [data-fila="atras"] .dossier { transform: scale(.8); filter: brightness(.82); }
   [data-fila="atras"]:is(:hover, :focus-within, .is-active) .dossier { transform: translateY(64px) scale(1.06); filter: brightness(1); }
   [data-fila="delante"]:is(:hover, :focus-within, .is-active) .dossier { transform: translateY(-8px) scale(1.06); }
-  .dossier:focus-visible .frame { outline: 2px solid var(--gold); outline-offset: 4px; }
 
   .frame { position: relative; width: 100%; aspect-ratio: 1236 / 1272; }
   .portrait { position: absolute; inset: 0; }
@@ -153,7 +152,6 @@ const miembros = equipo.map((m, indice) => {
       transition: opacity .25s var(--ease), transform .15s var(--ease); -webkit-tap-highlight-color: transparent;
     }
     .nav:active { transform: translateY(-50%) scale(.92); }
-    .nav:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
     .nav[disabled] { opacity: .25; cursor: default; }
     .nav-prev { left: 0; }
     .nav-next { right: 0; }

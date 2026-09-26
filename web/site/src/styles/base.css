@@ -5,7 +5,12 @@
    ============================================================================ */
 
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+html {
+  scroll-behavior: smooth; -webkit-text-size-adjust: 100%;
+  /* La cabecera es fija: al desplazarse hasta un ancla o hasta el elemento enfocado con Tab, que no
+     quede debajo de ella (WCAG 2.4.11, foco no tapado) */
+  scroll-padding-top: calc(var(--bar-h) + 1rem);
+}
 body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--f-mono); font-size: 14px; line-height: 1.5; }
 img, svg { display: block; max-width: 100%; }
 a { color: inherit; }
@@ -13,6 +18,28 @@ main { padding-bottom: 5rem; }
 section { scroll-margin-top: calc(var(--bar-h) + 1rem); }
 
 .wrap { width: min(var(--wrap), 100% - 3rem); margin: 0 auto; }
+
+/* ---------- Foco visible en TODO lo interactivo (WCAG 2.4.7) ----------
+   Anillo de dos tonos (técnica C40 de WCAG): negro pegado al elemento y dorado por fuera. Se ve sobre
+   cualquier fondo (cabecera blanca, secciones oscuras, tema claro, botones dorados). Solo con teclado
+   (:focus-visible), no al hacer clic con el ratón. No añadir estilos de foco por componente. */
+:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 3px var(--ink);
+}
+
+/* Enlace "Saltar al contenido" (WCAG 2.4.1): primer elemento enfocable; solo se ve al enfocarlo */
+.saltar {
+  position: fixed; top: .6rem; left: .6rem; z-index: 300;
+  padding: .7rem 1.1rem; border-radius: 999px; background: var(--ink); color: var(--gold);
+  font: 700 16px var(--f-sans); text-decoration: none;
+  transform: translateY(-200%);
+}
+.saltar:focus-visible { transform: none; }
+
+/* El <main> recibe el foco al usar "Saltar al contenido" (tabindex="-1"): sin anillo, no es un control */
+main:focus { outline: none; box-shadow: none; }
 
 /* Texto solo para lectores de pantalla */
 .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
@@ -25,7 +52,6 @@ section { scroll-margin-top: calc(var(--bar-h) + 1rem); }
   transition: transform .15s var(--ease), background .2s, color .2s;
 }
 .btn:hover { transform: translateY(-2px); }
-.btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
 .btn-gold { background: var(--gold); color: var(--ink); }
 .btn-ghost { background: transparent; color: var(--ink); }
 .btn-ghost:hover { background: var(--ink); color: var(--white); }
