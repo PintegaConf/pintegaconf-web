@@ -204,6 +204,24 @@ async function comportamientos(p) {
       depuracion: "centrada=" + centro + " scrollLeft=" + Math.round(t.scrollLeft) + " max=" + (t.scrollWidth - t.clientWidth) }; })()`);
   if (!final.foco) problemas.push("Carrusel: la flecha «siguiente» pierde el foco al llegar al final");
   if (final.aria !== "true") problemas.push(`Carrusel: al final, «siguiente» debería tener aria-disabled="true" (tiene ${final.aria}; ${final.depuracion})`);
+  // 3. Formulario: enviarlo vacío marca los obligatorios, asocia el error y lleva el foco al primero
+  for (const tema of TEMAS) {
+    await p.abrir(BASE + "/", PANTALLAS[0], tema);
+    await p.evaluar(`document.querySelector("[data-formulario-compra] button[type=submit]").focus()`);
+    await p.tecla("Enter", "Enter", 13);
+    await espera(300);
+    const f = await p.evaluar(`(() => { const f = document.querySelector("[data-formulario-compra]");
+      const ob = [...f.querySelectorAll("input[required]")];
+      return { metodo: f.getAttribute("method"), foco: document.activeElement?.id,
+        invalidos: ob.filter(i => i.getAttribute("aria-invalid") === "true").map(i => i.id),
+        conMensaje: ob.filter(i => document.getElementById(i.getAttribute("aria-describedby"))?.textContent.trim()).map(i => i.id) }; })()`);
+    if (f.metodo !== "post") problemas.push(`Formulario: method debería ser post (tiene ${f.metodo})`);
+    if (f.invalidos.length !== 3) problemas.push(`Formulario (${tema}): enviado vacío, marca ${f.invalidos.length} campos inválidos en vez de 3`);
+    if (f.conMensaje.length !== 3) problemas.push(`Formulario (${tema}): ${f.conMensaje.length} de 3 errores tienen mensaje asociado`);
+    if (f.foco !== "f-nombre") problemas.push(`Formulario (${tema}): el foco va a ${f.foco} en vez de al primer error`);
+    const fallos = await axe(p); // con los mensajes de error a la vista (contraste, etc.)
+    fallos.forEach((v) => problemas.push(`Formulario con errores (${tema}): [${v.impacto}] ${v.id}: ${v.ayuda} → ${v.nodos.join(" | ")}`));
+  }
   return problemas;
 }
 
@@ -247,7 +265,7 @@ try {
   }
   const extra = await comportamientos(p);
   totalProblemas += extra.length;
-  console.log(`${extra.length ? "✗" : "✓"} Comportamientos del equipo (Escape, flechas del carrusel)${extra.length ? "" : " — correctos"}`);
+  console.log(`${extra.length ? "✗" : "✓"} Comportamientos (Escape del equipo, flechas del carrusel, errores del formulario)${extra.length ? "" : " — correctos"}`);
   extra.forEach((x) => console.log("    " + x));
   ws.close();
 } catch (e) {
