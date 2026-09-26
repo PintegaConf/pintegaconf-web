@@ -12,7 +12,7 @@
 // Sale con código 1 si hay algún problema (para la CI).
 import { spawn } from "node:child_process";
 import { createServer } from "node:http";
-import { readFileSync, mkdtempSync, rmSync, existsSync, statSync } from "node:fs";
+import { readFileSync, mkdtempSync, rmSync, existsSync, statSync, readdirSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, extname, normalize } from "node:path";
 
@@ -20,7 +20,7 @@ const PUERTO_WEB = 4399;
 const PUERTO_CDP = 9339;
 const BASE = `http://127.0.0.1:${PUERTO_WEB}`;
 // Otra web (p. ej. la temporal): A11Y_DIST=../temporal A11Y_PAGINAS=/ node tests/accesibilidad.mjs
-const PAGINAS = process.env.A11Y_PAGINAS?.split(",") ?? ["/", "/faq/", "/aviso-legal/", "/privacidad/", "/cookies/"];
+const PAGINAS = process.env.A11Y_PAGINAS?.split(",") ?? ["/", "/faq/", "/aviso-legal/", "/privacidad/", "/cookies/", "/accesibilidad/", "/seguridad/"];
 const WEB_PRINCIPAL = !process.env.A11Y_DIST;
 const PANTALLAS = [
   { nombre: "escritorio", width: 1440, height: 900, mobile: false },
@@ -283,6 +283,28 @@ async function comportamientos(p) {
   return problemas;
 }
 
+// Palabras pegadas a un enlace o a un énfasis ("escríbenos ainfo@..."): pasa cuando una línea de texto
+// termina justo antes de una etiqueta en línea y Astro se come el salto. El lector de pantalla leería
+// "ainfo" como una sola palabra. Se busca en el HTML compilado, sin <script> ni <style>.
+function palabrasPegadas() {
+  const problemas = [];
+  const html = (dir) => readdirSync(dir, { withFileTypes: true }).flatMap((e) =>
+    e.isDirectory() ? html(join(dir, e.name)) : e.name.endsWith(".html") ? [join(dir, e.name)] : []);
+  const EN_LINEA = "a|strong|em|code|span|b|i";
+  // …letra justo antes de la etiqueta Y su contenido empieza también por letra (si empieza por espacio, bien)
+  const antes = new RegExp(`[\\p{L}\\d:,;](<(?:${EN_LINEA})\\b[^>]*>)(?=[\\p{L}\\d])`, "gu");
+  const despues = new RegExp(`(</(?:${EN_LINEA})>)[\\p{L}\\d]`, "gu");
+  for (const archivo of html(DIST)) {
+    const texto = readFileSync(archivo, "utf8").replace(/<(script|style)[\s\S]*?<\/\1>/g, "");
+    for (const re of [antes, despues])
+      for (const m of texto.matchAll(re)) {
+        const contexto = texto.slice(Math.max(0, m.index - 25), m.index + 40).replace(/<[^>]+>/g, "").replace(/\s+/g, " ");
+        problemas.push(`${archivo.slice(DIST.length - 1)}: «…${contexto}…»`);
+      }
+  }
+  return problemas;
+}
+
 // ---------- Ejecución ----------
 let totalProblemas = 0;
 try {
@@ -331,6 +353,10 @@ try {
       if (process.env.A11Y_DETALLE) pasos.forEach((f, i) => console.log(`      ${i + 1}. ${f.id} «${f.nombre}»`));
     }
   }
+  const pegadas = palabrasPegadas();
+  totalProblemas += pegadas.length;
+  console.log(`${pegadas.length ? "✗" : "✓"} Palabras pegadas a enlaces o énfasis${pegadas.length ? "" : " — ninguna"}`);
+  pegadas.forEach((x) => console.log("    " + x));
   const extra = WEB_PRINCIPAL ? await comportamientos(p) : [];
   totalProblemas += extra.length;
   if (WEB_PRINCIPAL) console.log(`${extra.length ? "✗" : "✓"} Comportamientos (Escape del equipo, flechas del carrusel, menú, errores del formulario)${extra.length ? "" : " — correctos"}`);
