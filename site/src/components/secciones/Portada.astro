@@ -2,7 +2,6 @@
 // Portada: qué, cuándo, dónde y qué hago (entrada / agenda). Blanca en los dos temas.
 import { Image } from "astro:assets";
 import orbe from "../../assets/marca/orbe.png";
-import huellas from "../../assets/marca/huellas.svg";
 import { evento } from "../../data/evento";
 ---
 <section class="hero" id="inicio">
@@ -38,7 +37,6 @@ import { evento } from "../../data/evento";
       <Image class="orbe" src={orbe} alt="" width={840} widths={[300, 420, 840]} sizes="(max-width: 680px) 150px, (max-width: 980px) 300px, 420px" loading="eager" fetchpriority="high" />
     </div>
   </div>
-  <Image class="huellas" src={huellas} alt="" />
 </section>
 
 <style>
@@ -56,8 +54,11 @@ import { evento } from "../../data/evento";
   .cta { display: flex; flex-wrap: wrap; gap: .9rem; }
   .hero-art { justify-self: center; width: min(420px, 100%); }
   .orbe { width: 100%; height: auto; }
-  .huellas {
-    position: absolute; left: -30px; bottom: 16px; width: 520px; height: auto; opacity: .14; transform: rotate(-4deg); pointer-events: none;
+  /* Huellas decorativas: fondo CSS (no <img>): no son contenido y así no compiten en la carga */
+  .hero::after {
+    content: ""; position: absolute; left: -30px; bottom: 16px; width: 520px; aspect-ratio: 558 / 96;
+    background: url("../../assets/marca/huellas.svg") no-repeat center / contain;
+    opacity: .14; transform: rotate(-4deg); pointer-events: none;
     -webkit-mask-image: linear-gradient(to right, #000 25%, transparent 95%); mask-image: linear-gradient(to right, #000 25%, transparent 95%);
   }
 
