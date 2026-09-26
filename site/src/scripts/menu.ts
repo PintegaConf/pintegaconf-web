@@ -8,6 +8,7 @@ const estaAbierto = () => menu.classList.contains("open");
 
 function abrir(abierto: boolean): void {
   menu.classList.toggle("open", abierto);
+  menu.inert = !abierto; // cerrado: no recibe foco ni lo leen los lectores de pantalla
   hamburguesa.setAttribute("aria-expanded", String(abierto));
   hamburguesa.setAttribute("aria-label", abierto ? "Cerrar menú" : "Abrir menú");
   if (abierto) menu.querySelector("a")?.focus({ preventScroll: true });
