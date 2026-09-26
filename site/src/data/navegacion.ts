@@ -10,10 +10,11 @@ export const secciones = [
 
 export const enlaceEntradas = { id: "entradas", titulo: "Entradas" } as const;
 
-// Pie: las páginas legales y la FAQ aún no existen (pendiente).
-export const enlacesPie = [
-  { href: "#", titulo: "FAQS" },
-  { href: "#", titulo: "AVISO LEGAL" },
-  { href: "#", titulo: "POLÍTICA DE PRIVACIDAD" },
-  { href: "#", titulo: "POLÍTICA DE COOKIES" },
-] as const;
+// Pie. `href: null` = la página aún no existe: se muestra el texto sin enlace (un enlace a "#"
+// es un enlace roto). Cuando se cree la página, poner su ruta, p. ej. "/privacidad".
+export const enlacesPie: { href: string | null; titulo: string }[] = [
+  { href: null, titulo: "FAQS" },
+  { href: null, titulo: "AVISO LEGAL" },
+  { href: null, titulo: "POLÍTICA DE PRIVACIDAD" },
+  { href: null, titulo: "POLÍTICA DE COOKIES" },
+];

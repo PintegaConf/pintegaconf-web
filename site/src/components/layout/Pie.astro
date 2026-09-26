@@ -2,7 +2,7 @@
 import { enlacesPie } from "../../data/navegacion";
 ---
 <footer class="site-footer">
-  {enlacesPie.map((e, i) => <>{i > 0 && " · "}<a href={e.href}>{e.titulo}</a></>)}
+  {enlacesPie.map((e, i) => <>{i > 0 && " · "}{e.href ? <a href={e.href}>{e.titulo}</a> : <span>{e.titulo}</span>}</>)}
 </footer>
 
 <style>
