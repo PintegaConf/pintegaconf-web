@@ -7,5 +7,7 @@
 !/README.md
 !/CLAUDE.md
 !/.gitignore
+# Configuración de GitHub (workflows, Dependabot): GitHub solo la busca en la raíz
+!/.github/
 
 .DS_Store
