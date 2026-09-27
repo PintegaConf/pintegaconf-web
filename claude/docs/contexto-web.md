@@ -119,7 +119,8 @@ Decisión, seguridad y mejoras: `web/README.md`. Guía de uso: `web/site/README.
 
 ### Web temporal ("en obras")
 - [x] **Página provisional hecha** (sep 2026): `web-temporal/index.html` + `web-temporal/assets/` (logo, orbe y huellas sacados de la web; `og.jpg` 1200×630 a partir del banner de Twitter; favicon). Portada mostaza con logo, lema "Código, comunidad y futuro", fecha/lugar/track y orbe; bloque "qué es"; tres llamadas (entradas "Avísame", ponentes, patrocinio) con `mailto:info@pintegaconf.es` (email tomado del banner); franja "web en obras". Open Graph y schema.org `Event` apuntan a `https://pintegaconf.es/` (dominio supuesto por el email). Sin scroll horizontal a 320/375/768/1024.
-  - [ ] Confirmar dominio y email, y añadir enlaces a redes (Instagram, LinkedIn…) cuando se sepan los perfiles.
+  - [x] Enlaces a redes (sep 2026) en el pie de la web temporal y de la web Astro: LinkedIn `linkedin.com/company/pintega-conf`, Instagram y X `@pintegaconf`. En Astro los perfiles están en `evento.redes` (`src/data/evento.ts`) y se pintan con `components/layout/Redes.astro`; también van en schema.org (`sameAs`) y `twitter:site`. Enlaces normales, sin widgets ni rastreo.
+  - [ ] Confirmar dominio y email.
   - [ ] Probar en Safari/iPhone y publicar.
 
 ### Entradas

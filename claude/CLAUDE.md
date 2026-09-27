@@ -5,7 +5,7 @@ Idioma de trabajo: **español**. El usuario es Matías (organización, sistemas/
 
 ## Datos del evento (confirmados)
 
-- **Contacto:** info@pintegaconf.es (también para patrocinio). Dominio previsto: pintegaconf.es (sin confirmar).
+- **Contacto:** info@pintegaconf.es (también para patrocinio). **Redes:** LinkedIn `linkedin.com/company/pintega-conf`, Instagram y X `@pintegaconf` (enlazadas en el pie de las dos webs). Dominio previsto: pintegaconf.es (sin confirmar).
 
 - **Fecha:** 9 y 10 de abril de 2027 (viernes y sábado). Ojo: el diseño de Penpot decía "21 de marzo" y la descripción antigua del proyecto "9-10 de marzo"; ambas están desfasadas.
 - **Programa:** viernes 9 = **pre-evento** (sin charlas, en **otro sitio aún por decidir**, no en el Rectorado); sábado 10 = **día principal** (charlas, ponentes, patrocinadores, networking).
@@ -81,7 +81,7 @@ Seguridad del proyecto: `.npmrc` con `ignore-scripts` y versiones exactas (no qu
 ## Pendiente (resumen — detalle en claude/docs/contexto-web.md)
 
 - **Stripe como pasarela** de compra de entradas.
-- Web temporal "en obras" hecha en `web/temporal/`: falta confirmar dominio/email, añadir redes y publicarla.
+- Web temporal "en obras" hecha en `web/temporal/`: falta confirmar dominio/email y publicarla (redes ya añadidas).
 - Ilustraciones propias del resto del equipo (hechas: Jesús/Yisus y Matías; faltan Iria, Nacho, Tiziana, David, Carlos, que usan las de Yisus). Yisus = Jesús (sus ilustraciones son las de `web/web_assets/designs/yisus/`).
 - Line-up de ponentes, logos de patrocinadores (`logos` de cada nivel en `web/site/src/data/patrocinio.ts`), colaboradores y comunidades.
 - Precio de entrada + integración con Stripe.
