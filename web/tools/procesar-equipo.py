@@ -12,9 +12,9 @@ transparencia) y genera en web/site/src/assets/equipo/ las tres capas del revela
 Cada capa se reduce a 480×494 y lleva el difuminado de hombros INCRUSTADO en el canal alfa
 (no se hace con máscara CSS: Safari pintaba líneas claras en los hombros durante la animación).
 
-Además genera <slug>-cuerpo.webp: el encapuchado SIN difuminar. Lo usa la fila de atrás en reposo,
-debajo de la capucha: su parte baja queda escondida tras la fila de delante, y así el cuello y el
-pecho no se desvanecen en los huecos entre las capuchas de delante.
+Además genera <slug>-cuerpo.webp: el encapuchado sin el difuminado de abajo (solo suaviza los lados).
+Lo usa el grupo del escritorio en reposo, debajo de la capucha: los cuerpos se tapan unos a otros sin
+huecos y un único degradado de la sección («suelo») funde la parte baja de todo el grupo a la vez.
 
 Uso:
     pip3 install --user pillow numpy
@@ -61,6 +61,19 @@ def mascara_hombros(ancho: int, alto: int) -> np.ndarray:
     return np.clip((fin - y) / banda, 0, 1)
 
 
+def mascara_lados(ancho: int, alto: int) -> np.ndarray:
+    """Para <slug>-cuerpo.webp: solo difumina los lados (8 %) en la parte baja, sin tocar el borde de abajo.
+
+    En el grupo del escritorio los cuerpos se solapan y los tapa por abajo el «suelo» (un degradado de
+    la sección); así solo hace falta suavizar los lados de las figuras de los extremos.
+    """
+    y = np.arange(alto)[:, None] / alto
+    x = np.arange(ancho)[None, :] / ancho
+    lados = np.minimum(np.clip(x / .08, 0, 1), np.clip((1 - x) / .08, 0, 1))
+    peso = np.interp(y, [0, .55, .7, 1], [0, 0, 1, 1])
+    return np.broadcast_to(1 - (1 - lados) * peso, (alto, ancho))
+
+
 def procesar(slug: str) -> None:
     mascara = mascara_hombros(*SALIDA)
     for capa in CAPAS:
@@ -69,7 +82,9 @@ def procesar(slug: str) -> None:
         img = img.resize(SALIDA, Image.LANCZOS)
         rgba = np.array(img).astype(float)
         if capa == "capucha":
-            guardar(rgba, f"{slug}-cuerpo.webp")   # sin difuminar, para la fila de atrás
+            cuerpo = rgba.copy()
+            cuerpo[..., 3] *= mascara_lados(*SALIDA)
+            guardar(cuerpo, f"{slug}-cuerpo.webp")   # para el grupo en reposo (escritorio)
         rgba[..., 3] *= mascara
         guardar(rgba, f"{slug}-{capa}.webp")
 
