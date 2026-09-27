@@ -17,6 +17,7 @@ export const enlaceSeccion = (id: string) => `/#${id}`;
 // es un enlace roto). Cuando se cree la página, poner su ruta, p. ej. "/privacidad/" (con barra final, como las URL que genera Astro).
 export const enlacesPie: { href: string | null; titulo: string }[] = [
   { href: "/faq/", titulo: "FAQS" },
+  { href: "/codigo-de-conducta/", titulo: "CÓDIGO DE CONDUCTA" },
   { href: "/aviso-legal/", titulo: "AVISO LEGAL" },
   { href: "/privacidad/", titulo: "POLÍTICA DE PRIVACIDAD" },
   { href: "/cookies/", titulo: "POLÍTICA DE COOKIES" },

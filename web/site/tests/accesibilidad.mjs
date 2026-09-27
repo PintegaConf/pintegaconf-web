@@ -20,7 +20,7 @@ const PUERTO_WEB = 4399;
 const PUERTO_CDP = 9339;
 const BASE = `http://127.0.0.1:${PUERTO_WEB}`;
 // Otra web (p. ej. la temporal): A11Y_DIST=../temporal A11Y_PAGINAS=/ node tests/accesibilidad.mjs
-const PAGINAS = process.env.A11Y_PAGINAS?.split(",") ?? ["/", "/faq/", "/aviso-legal/", "/privacidad/", "/cookies/", "/accesibilidad/", "/seguridad/"];
+const PAGINAS = process.env.A11Y_PAGINAS?.split(",") ?? ["/", "/faq/", "/codigo-de-conducta/", "/aviso-legal/", "/privacidad/", "/cookies/", "/accesibilidad/", "/seguridad/"];
 const WEB_PRINCIPAL = !process.env.A11Y_DIST;
 const PANTALLAS = [
   { nombre: "escritorio", width: 1440, height: 900, mobile: false },

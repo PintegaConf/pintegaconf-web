@@ -1,0 +1,77 @@
+---
+// Código de conducta. Basado en el de Lareira Conf (lareiraconf.es), que organiza la misma asociación.
+// Las denuncias van al email de la asociación (titular.email) o a las personas de src/data/conducta.ts.
+import PaginaTexto from "../layouts/PaginaTexto.astro";
+import { titular } from "../data/legal";
+import { evento } from "../data/evento";
+import { contactosConducta, CONDUCTA_ACTUALIZADO } from "../data/conducta";
+---
+<PaginaTexto titulo="Código de conducta" descripcion={`Normas de convivencia de ${evento.nombre} y cómo denunciar cualquier acoso.`} actualizado={CONDUCTA_ACTUALIZADO}>
+  <p><strong>Sé respetuoso. No toleramos ninguna forma de acoso.</strong></p>
+  <p>
+    Desde la organización de Píntega Conf ({titular.nombre}) creemos que todas las personas que participan tienen derecho a hacerlo
+    en un entorno seguro y amigable.
+  </p>
+
+  <h2>Qué es acoso</h2>
+  <p>
+    El acoso incluye, entre otros: comentarios verbales o escritos ofensivos relacionados con el género, la edad, la orientación
+    sexual, la discapacidad, el aspecto físico, el tamaño corporal, la raza, la religión, la clase social o la situación económica;
+    imágenes sexuales; intimidación deliberada; acecho o seguimiento; fotografías o grabaciones que hostiguen; interrumpir de forma
+    continuada charlas u otras actividades; contacto físico inapropiado y atención sexual no deseada. Si lo que haces incomoda a
+    alguien, eso cuenta como acoso y es motivo suficiente para dejar de hacerlo.
+  </p>
+  <p>Si alguien te pide que dejes un comportamiento acosador, tienes que parar de inmediato.</p>
+
+  <h2>A quién se aplica</h2>
+  <p>
+    A todo el mundo: asistentes, ponentes, patrocinadores, voluntariado, organización y cualquier otra persona presente. El personal
+    de los stands (voluntariado incluido) no debe llevar ropa, uniformes ni disfraces sexualizados, ni crear un ambiente sexualizado.
+  </p>
+  <p>
+    Se aplica en todos los espacios del evento (también el pre-evento), en las interacciones en línea relacionadas con él, en los
+    eventos sociales asociados y en cualquier situación relacionada con el evento.
+  </p>
+
+  <h2>Consecuencias</h2>
+  <p>
+    Si alguien acosa, la organización puede tomar las medidas que considere adecuadas, desde advertirle hasta expulsarle del evento
+    sin derecho a reembolso, devolución ni regalos de ningún tipo.
+  </p>
+  <p>
+    Si sufres acoso, ves que otra persona lo sufre o tienes cualquier otra preocupación, avísanos con alguno de los medios de abajo.
+    Te ayudaremos a contactar con la seguridad del recinto o con la policía local, te acompañaremos o te ayudaremos de cualquier otra
+    forma para que te sientas segura o seguro durante el evento.
+  </p>
+
+  <h2>Cómo denunciarlo</h2>
+  <p>
+    Si algo te incomoda o crees que se está incumpliendo el código de conducta, cuéntanoslo cuanto antes. Puedes hacerlo de forma
+    anónima.
+  </p>
+  <ul>
+    <li>
+      <strong>Por email</strong> a <a href={`mailto:${titular.email}`}>{titular.email}</a>: lo recibe la organización. Si quieres
+      mantener el anonimato, escríbenos desde un servicio de correo anónimo o una cuenta temporal.
+    </li>
+    <li>
+      <strong>Directamente</strong> a cualquiera de estas personas de la organización, por Telegram:
+      <ul>
+        {contactosConducta.map((c) => (
+          <li>{c.nombre}: <a href={`https://t.me/${c.telegram}`} rel="noopener noreferrer">@{c.telegram}</a></li>
+        ))}
+      </ul>
+    </li>
+  </ul>
+
+  <h2>Cambios</h2>
+  <p>
+    Este código de conducta puede cambiar. Publicaremos cualquier cambio en esta página y, si es importante, también lo avisaremos por
+    otros medios (por ejemplo, por email).
+  </p>
+
+  <h2>Contacto</h2>
+  <p>
+    Si tienes cualquier pregunta sobre el código de conducta, escríbenos a <a href={`mailto:${titular.email}`}>{titular.email}</a>.
+  </p>
+</PaginaTexto>
