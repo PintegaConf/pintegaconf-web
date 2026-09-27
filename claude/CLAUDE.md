@@ -5,7 +5,7 @@ Idioma de trabajo: **español**. El usuario es Matías (organización, sistemas/
 
 ## Datos del evento (confirmados)
 
-- **Contacto:** info@pintegaconf.es (también para patrocinio). **Redes:** LinkedIn `linkedin.com/company/pintega-conf`, Instagram y X `@pintegaconf` (enlazadas en el pie de las dos webs). Dominio previsto: pintegaconf.es (sin confirmar).
+- **Contacto:** info@pintegaconf.es (también para patrocinio). **Redes:** LinkedIn `linkedin.com/company/pintega-conf`, Instagram y X `@pintegaconf` (enlazadas en el pie de las dos webs). **En la web temporal tienen que verse a simple vista en la portada** (bloque "Síguenos" bajo la fecha y el lugar, visible sin bajar también en móvil): mientras no esté la web completa son la única vía para enterarse de las novedades. Dominio previsto: pintegaconf.es (sin confirmar).
 
 - **Fecha:** 9 y 10 de abril de 2027 (viernes y sábado). Ojo: el diseño de Penpot decía "21 de marzo" y la descripción antigua del proyecto "9-10 de marzo"; ambas están desfasadas.
 - **Programa:** viernes 9 = **pre-evento** (sin charlas, en **otro sitio aún por decidir**, no en el Rectorado); sábado 10 = **día principal** (charlas, ponentes, patrocinadores, networking).
