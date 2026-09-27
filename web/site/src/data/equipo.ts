@@ -3,24 +3,31 @@ import type { ImageMetadata } from "astro";
 import yisusCapucha from "../assets/equipo/yisus-capucha.webp";
 import yisusManos from "../assets/equipo/yisus-manos.webp";
 import yisusRostro from "../assets/equipo/yisus-rostro.webp";
+import yisusCuerpo from "../assets/equipo/yisus-cuerpo.webp";
 import iriaCapucha from "../assets/equipo/iria-capucha.webp";
 import iriaManos from "../assets/equipo/iria-manos.webp";
 import iriaRostro from "../assets/equipo/iria-rostro.webp";
+import iriaCuerpo from "../assets/equipo/iria-cuerpo.webp";
 import matiasCapucha from "../assets/equipo/matias-capucha.webp";
 import matiasManos from "../assets/equipo/matias-manos.webp";
 import matiasRostro from "../assets/equipo/matias-rostro.webp";
+import matiasCuerpo from "../assets/equipo/matias-cuerpo.webp";
 import danielCapucha from "../assets/equipo/daniel-capucha.webp";
 import danielManos from "../assets/equipo/daniel-manos.webp";
 import danielRostro from "../assets/equipo/daniel-rostro.webp";
+import danielCuerpo from "../assets/equipo/daniel-cuerpo.webp";
 import carlosCapucha from "../assets/equipo/carlos-capucha.webp";
 import carlosManos from "../assets/equipo/carlos-manos.webp";
 import carlosRostro from "../assets/equipo/carlos-rostro.webp";
+import carlosCuerpo from "../assets/equipo/carlos-cuerpo.webp";
 
 /** Las tres capas del revelado: encapuchado → manos quitándose la capucha → rostro. */
 export interface Ilustracion {
   capucha: ImageMetadata;
   manos: ImageMetadata;
   rostro: ImageMetadata;
+  /** Encapuchado sin difuminar: lo usa la fila de atrás en reposo para no dejar huecos. */
+  cuerpo: ImageMetadata;
 }
 
 export interface Miembro {
@@ -35,11 +42,11 @@ export interface Miembro {
 // Para añadir las ilustraciones de alguien: procesarlas con web/tools/procesar-equipo.py,
 // importarlas aquí arriba y ponerlas en su `ilustracion`.
 const ilustraciones = {
-  yisus: { capucha: yisusCapucha, manos: yisusManos, rostro: yisusRostro },
-  iria: { capucha: iriaCapucha, manos: iriaManos, rostro: iriaRostro },
-  matias: { capucha: matiasCapucha, manos: matiasManos, rostro: matiasRostro },
-  daniel: { capucha: danielCapucha, manos: danielManos, rostro: danielRostro },
-  carlos: { capucha: carlosCapucha, manos: carlosManos, rostro: carlosRostro },
+  yisus: { capucha: yisusCapucha, manos: yisusManos, rostro: yisusRostro, cuerpo: yisusCuerpo },
+  iria: { capucha: iriaCapucha, manos: iriaManos, rostro: iriaRostro, cuerpo: iriaCuerpo },
+  matias: { capucha: matiasCapucha, manos: matiasManos, rostro: matiasRostro, cuerpo: matiasCuerpo },
+  daniel: { capucha: danielCapucha, manos: danielManos, rostro: danielRostro, cuerpo: danielCuerpo },
+  carlos: { capucha: carlosCapucha, manos: carlosManos, rostro: carlosRostro, cuerpo: carlosCuerpo },
 } satisfies Record<string, Ilustracion>;
 
 export const ilustracionPorDefecto: Ilustracion = ilustraciones.yisus;

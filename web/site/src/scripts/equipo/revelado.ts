@@ -24,7 +24,7 @@ interface Figura {
 }
 
 // Mismos valores que el CSS de Equipo.astro (si cambias allí el "paso al frente", cámbialo aquí)
-const REPOSO = { atras: { ty: 0, s: 0.8 }, delante: { ty: 0, s: 1 } };
+const REPOSO = { atras: { ty: 12, s: 0.8 }, delante: { ty: 0, s: 1 } };
 const ACTIVA = { atras: { ty: 64, s: 1.06 }, delante: { ty: -8, s: 1.06 } };
 // Margen extra por arriba (fracción de la altura) para que el borde de la capucha no parpadee
 const MARGEN = { atras: 0.12, delante: 0.03 };

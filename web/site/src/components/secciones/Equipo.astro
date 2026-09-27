@@ -9,6 +9,7 @@
 //
 // Revelado: capucha → manos → rostro, con fundidos (nada de cortes secos). Las capas van apiladas:
 // capucha (arriba) > manos > rostro. El difuminado de hombros va incrustado en las imágenes.
+// La fila de atrás lleva debajo una capa más, el cuerpo sin difuminar (ver .layer-body).
 import { Image } from "astro:assets";
 import { equipo, ilustracionPorDefecto } from "../../data/equipo";
 
@@ -32,6 +33,7 @@ const miembros = equipo.map((m, indice) => {
             <div class="dossier" role="img" tabindex="0" aria-label={`${m.nombre}, ${m.rol}`}>
               <div class="frame">
                 <div class="portrait">
+                  {m.fila === "atras" && <Image class="layer-body" src={m.ilu.cuerpo} alt="" width={480} quality={90} draggable="false" />}
                   <Image class="layer-hood" src={m.ilu.capucha} alt="" width={480} quality={90} draggable="false" />
                   <Image class="layer-hands" src={m.ilu.manos} alt="" width={480} quality={90} draggable="false" />
                   <Image class="layer-face" src={m.ilu.rostro} alt="" width={480} quality={90} draggable="false" />
@@ -81,7 +83,7 @@ const miembros = equipo.map((m, indice) => {
 
   /* "Paso al frente". OJO: si cambian estos transform, cambiar también REST/ACTIVE en scripts/equipo/revelado.ts */
   .dossier { position: relative; cursor: pointer; pointer-events: none; display: flex; flex-direction: column; align-items: center; gap: .35rem; transition: transform var(--dur) var(--ease), filter var(--dur) var(--ease); }
-  [data-fila="atras"] .dossier { transform: scale(.8); filter: brightness(.82); }
+  [data-fila="atras"] .dossier { transform: translateY(12px) scale(.8); filter: brightness(.82); }
   [data-fila="atras"]:is(:hover, :focus-within, .is-active):not(.cerrada) .dossier { transform: translateY(64px) scale(1.06); filter: brightness(1); }
   [data-fila="delante"]:is(:hover, :focus-within, .is-active):not(.cerrada) .dossier { transform: translateY(-8px) scale(1.06); }
 
@@ -100,6 +102,13 @@ const miembros = equipo.map((m, indice) => {
   .operative:is(:hover, :focus-within, .is-active):not(.cerrada) .layer-hood { opacity: 0; transform: translateY(-6px) scale(.98); transition: opacity .45s cubic-bezier(.45, 0, .35, 1) .3s, transform .6s cubic-bezier(.45, 0, .35, 1) .3s; }
   .operative:is(:hover, :focus-within, .is-active):not(.cerrada) .layer-hands { animation: hands-off 1.3s linear both; }
   .operative:is(:hover, :focus-within, .is-active):not(.cerrada) .layer-face { opacity: 1; transform: none; transition: opacity .08s linear .9s, transform .6s var(--ease); }
+  /* Fila de atrás en reposo: debajo de la capucha (difuminada) va el cuerpo SIN difuminar, para que el
+     cuello y el pecho no se desvanezcan en los huecos entre las capuchas de delante. Su borde inferior,
+     recto, queda tapado por los hombros de delante (por eso la fila baja 12px). Al destaparse desaparece
+     con la capucha; al taparse vuelve cuando la figura ya ha regresado a su sitio (si no, se vería el
+     borde recto por encima de la fila de delante). */
+  .layer-body { z-index: 0; opacity: 1; transition: opacity .3s var(--ease) .45s; }
+  .operative:is(:hover, :focus-within, .is-active):not(.cerrada) .layer-body { opacity: 0; transition: opacity .45s cubic-bezier(.45, 0, .35, 1) .3s; }
   @keyframes hands-off {
     0% { opacity: 1; }
     73% { opacity: 1; animation-timing-function: cubic-bezier(.45, 0, .35, 1); }
@@ -139,6 +148,7 @@ const miembros = equipo.map((m, indice) => {
     }
     .dossier { width: min(62vw, 240px); pointer-events: auto; }
     [data-fila="atras"] .dossier { transform: none; }
+    .layer-body { display: none; }   /* en el carrusel todos van de frente, con el difuminado */
     [data-fila]:is(:hover, :focus-within, .is-active):not(.cerrada) .dossier { transform: scale(1.04) translateY(-6px); }
     .info { position: static; transform: translateY(6px); width: min(78vw, 280px); margin-top: .4rem; }
     .operative:is(:hover, :focus-within, .is-active):not(.cerrada) .info { transform: none; }
@@ -162,7 +172,7 @@ const miembros = equipo.map((m, indice) => {
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .operative, .dossier, .layer-hood, .layer-face, .info, .nav { transition: none !important; }
+    .operative, .dossier, .layer-body, .layer-hood, .layer-face, .info, .nav { transition: none !important; }
     .layer-hands { animation: none !important; opacity: 0 !important; }
     :global(main > section), :global(.site-footer) { transition: none !important; }
   }
