@@ -35,6 +35,11 @@
   --logo-filter: brightness(0) invert(1);   /* logos de patrocinadores en blanco */
   --error: #ff8f85;             /* mensajes de error: 7,7:1 sobre el fondo del formulario */
 
+  /* Sección EQUIPO: escenario oscuro con el orbe, igual en los dos temas */
+  --equipo-fondo: var(--ink);
+  --equipo-suelo: #121211;
+  --equipo-halo: rgba(253, 195, 48, .16);
+
   /* Movimiento y maquetación */
   --ease: cubic-bezier(.22, .9, .24, 1);
   --dur: .5s;
@@ -76,6 +81,16 @@
   --line: rgba(0, 0, 0, .08);
   --logo-filter: brightness(0);
   --error: #b3261e;             /* 6,6:1 sobre blanco */
+}
+
+/* Zona que es oscura en los dos temas (p. ej. el escenario del EQUIPO): recupera los tokens de texto
+   del tema oscuro aunque la página esté en claro. */
+.zona-oscura {
+  color-scheme: dark;
+  --text: #ffffff;
+  --text-2: #d6d6d6;
+  --text-3: #b3b3b3;
+  --accent-text: var(--gold);
 }
 
 @media (max-width: 680px) {
