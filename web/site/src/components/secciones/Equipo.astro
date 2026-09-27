@@ -11,7 +11,7 @@
 // capucha (arriba) > manos > rostro. El difuminado de hombros va incrustado en las imágenes.
 // La fila de atrás lleva debajo una capa más, el cuerpo sin difuminar (ver .layer-body).
 //
-// Fondo: escenario oscuro (en los dos temas) con el orbe dorado y su corona de llamas girando detrás
+// Fondo: escenario (oscuro en el tema oscuro, crema cálido en el claro) con el orbe dorado y su corona de llamas girando detrás
 // del grupo (components/equipo/OrbeCorona.astro). El giro se pausa con el botón del final
 // (scripts/equipo/pausa-orbe.ts); con «reducir movimiento» no gira y el botón no aparece.
 import { Image } from "astro:assets";
@@ -26,7 +26,7 @@ const miembros = equipo.map((m, indice) => {
   return { ...m, indice, columna, ilu: m.ilustracion ?? ilustracionPorDefecto };
 });
 ---
-<section id="equipo" class="zona-oscura">
+<section id="equipo">
   <div class="wrap">
     <h2 class="sec-title">EQUIPO</h2>
     <div class="formation">
@@ -70,12 +70,11 @@ const miembros = equipo.map((m, indice) => {
 </script>
 
 <style>
-  /* ---------- Escenario: panel oscuro con el orbe detrás del grupo ----------
-     Las figuras se apoyan en el borde inferior: el difuminado de los hombros se funde con el «suelo»
-     oscuro y parecen salir de la sombra, en vez de desvanecerse en mitad de la página. */
-  /* Arriba y abajo, un fundido con el fondo de la página (--fundido) para que el panel no corte en seco.
-     Arriba cabe en el margen del título: «EQUIPO» queda siempre sobre oscuro (en claro, el dorado sobre
-     crema no tendría contraste). Abajo, el padding deja sitio al fundido bajo las figuras. */
+  /* ---------- Escenario: panel con el orbe detrás del grupo ----------
+     Colores por token (--equipo-*): oscuro en el tema oscuro, crema cálido en el claro. Las figuras se
+     apoyan en el borde inferior, sobre un «suelo» algo más intenso.
+     Arriba y abajo, un fundido con el fondo de la página (--fundido) para que el panel no corte en seco;
+     abajo, el padding deja sitio al fundido bajo las figuras. */
   #equipo {
     --fundido: 4.5rem;
     position: relative; overflow: hidden; display: flow-root; padding-bottom: var(--fundido);
@@ -104,7 +103,7 @@ const miembros = equipo.map((m, indice) => {
     position: absolute; right: 1.5rem; bottom: calc(var(--fundido) + 1rem); z-index: 2;
     display: inline-flex; align-items: center; gap: .45rem; min-height: 36px; padding: .35rem .8rem;
     font: 600 .72rem var(--f-mono); letter-spacing: .04em; text-transform: uppercase;
-    color: var(--accent-text); background: var(--equipo-fondo); border: 1px solid var(--gold); border-radius: 999px; cursor: pointer;
+    color: var(--accent-text); background: var(--equipo-fondo); border: 1px solid var(--accent-text); border-radius: 999px; cursor: pointer;
   }
   .pausa-orbe:hover { background: var(--gold); color: var(--ink); }
   .icono-seguir { display: none; }
@@ -216,7 +215,7 @@ const miembros = equipo.map((m, indice) => {
       display: flex; align-items: center; justify-content: center; position: absolute; z-index: 70;
       top: calc(2.25rem + 2.5rem + min(62vw, 240px) * 1272 / 1236 / 2); transform: translateY(-50%);
       width: 44px; height: 44px; padding: 0; border: 2px solid transparent; border-radius: 50%;   /* contorno en alto contraste */
-      box-shadow: 0 0 0 2px var(--equipo-fondo);   /* separa la flecha dorada del orbe dorado (contraste 3:1) */
+      box-shadow: 0 0 0 2px var(--ink);   /* separa la flecha dorada del orbe dorado (contraste 3:1) */
       background: var(--gold); color: var(--ink); cursor: pointer;
       transition: opacity .25s var(--ease), transform .15s var(--ease); -webkit-tap-highlight-color: transparent;
     }
