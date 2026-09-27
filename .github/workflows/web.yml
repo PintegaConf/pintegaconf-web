@@ -107,7 +107,8 @@ jobs:
   # alguien con permiso de escritura), que no sean borrador ni de Dependabot. --match-head-commit:
   # solo se fusiona el commit que se ha comprobado; si llega otro push entretanto, se espera a su CI.
   # --rebase conserva los commits de la PR tal cual (uno por cambio) y deja el historial lineal.
-  # La rama se borra sola al fusionar (ajuste "Automatically delete head branches" del repositorio).
+  # --delete-branch borra la rama después (el ajuste "Automatically delete head branches" de GitHub
+  # no actúa cuando la fusión la hace el propio workflow).
   fusionar:
     name: Fusionar en main
     needs: [cambios, build]
@@ -130,4 +131,4 @@ jobs:
           PR: ${{ github.event.pull_request.number }}
           SHA: ${{ github.event.pull_request.head.sha }}
           REPO: ${{ github.repository }}
-        run: gh pr merge "$PR" --repo "$REPO" --rebase --match-head-commit "$SHA"
+        run: gh pr merge "$PR" --repo "$REPO" --rebase --match-head-commit "$SHA" --delete-branch
