@@ -3,6 +3,9 @@ import type { ImageMetadata } from "astro";
 import yisusCapucha from "../assets/equipo/yisus-capucha.webp";
 import yisusManos from "../assets/equipo/yisus-manos.webp";
 import yisusRostro from "../assets/equipo/yisus-rostro.webp";
+import iriaCapucha from "../assets/equipo/iria-capucha.webp";
+import iriaManos from "../assets/equipo/iria-manos.webp";
+import iriaRostro from "../assets/equipo/iria-rostro.webp";
 import matiasCapucha from "../assets/equipo/matias-capucha.webp";
 import matiasManos from "../assets/equipo/matias-manos.webp";
 import matiasRostro from "../assets/equipo/matias-rostro.webp";
@@ -33,6 +36,7 @@ export interface Miembro {
 // importarlas aquí arriba y ponerlas en su `ilustracion`.
 const ilustraciones = {
   yisus: { capucha: yisusCapucha, manos: yisusManos, rostro: yisusRostro },
+  iria: { capucha: iriaCapucha, manos: iriaManos, rostro: iriaRostro },
   matias: { capucha: matiasCapucha, manos: matiasManos, rostro: matiasRostro },
   daniel: { capucha: danielCapucha, manos: danielManos, rostro: danielRostro },
   carlos: { capucha: carlosCapucha, manos: carlosManos, rostro: carlosRostro },
@@ -43,7 +47,7 @@ export const ilustracionPorDefecto: Ilustracion = ilustraciones.yisus;
 // Orden de la sección EQUIPO (también el del carrusel en móvil). Yisus = Jesús.
 export const equipo: Miembro[] = [
   { nombre: "Jesús", rol: "Organización", fila: "atras", ilustracion: ilustraciones.yisus },
-  { nombre: "Iria", rol: "Organización", fila: "delante" },
+  { nombre: "Iria", rol: "Organización", fila: "delante", ilustracion: ilustraciones.iria },
   { nombre: "Matías", rol: "Organización", fila: "atras", ilustracion: ilustraciones.matias },
   { nombre: "Nacho", rol: "Organización", fila: "delante" },
   { nombre: "Tiziana", rol: "Organización", fila: "delante" },
