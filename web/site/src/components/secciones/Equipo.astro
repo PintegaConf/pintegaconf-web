@@ -187,7 +187,7 @@ const miembros = equipo.map((m, indice) => {
     .formation { padding-top: 2.25rem; }
     #equipo { --fundido: 3rem; padding-bottom: calc(var(--fundido) + 4rem); }   /* fundido más corto: el título tiene 4rem de margen; sitio para el botón de pausa */
     .sec-title { margin-bottom: 1.5rem; }
-    .fondo-orbe { --orbe: min(84vw, 340px); top: calc(2.25rem + 2.5rem + min(62vw, 240px) * .36 - var(--orbe) / 2); }
+    .fondo-orbe { --orbe: min(84vw, 340px); top: calc(2.25rem + 2.5rem + min(62vw, 240px) * .36 - var(--orbe) / 2 - 14px); }
     .formation::after { height: 45%; }
     .pausa-orbe { right: 50%; transform: translateX(50%); bottom: calc(var(--fundido) + .75rem); }
     .formation-inner {
