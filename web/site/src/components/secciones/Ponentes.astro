@@ -2,6 +2,7 @@
 // Line-up. Mientras no haya ponentes, tarjetas "Próximamente" con el "?" dorado (decisión del usuario).
 import { Image } from "astro:assets";
 import { ponentes, HUECOS_PONENTES } from "../../data/ponentes";
+import { evento } from "../../data/evento";
 
 const tarjetas = ponentes.length
   ? ponentes
@@ -20,6 +21,10 @@ const tarjetas = ponentes.length
           <p>{p.charla}</p>
         </article>
       ))}
+    </div>
+    <div class="speaker-cta">
+      <p>¿Quieres dar una charla en Píntega Conf?</p>
+      <a class="btn btn-gold" href={evento.formularioPonentes}>Quiero ser ponente</a>
     </div>
   </div>
 </section>
@@ -43,7 +48,10 @@ const tarjetas = ponentes.length
   h3 { font: 400 26px var(--f-head); color: var(--accent-text); margin: 0 0 .5rem; }
   p { margin: 0; color: var(--text-2); }
 
+  .speaker-cta { margin-top: 5rem; text-align: center; }
+  .speaker-cta p { font: 400 26px/1.3 var(--f-head); color: var(--text); margin: 0 0 1.3rem; }
+
   @media (max-width: 980px) { .cards { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 680px) { .cards { grid-template-columns: 1fr; gap: 4rem; } }
+  @media (max-width: 680px) { .cards { grid-template-columns: 1fr; gap: 4rem; } .speaker-cta p { font-size: 21px; } }
   @media (prefers-reduced-motion: reduce) { .q { animation: none; } }
 </style>
