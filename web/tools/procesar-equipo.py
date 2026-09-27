@@ -47,6 +47,16 @@ PERSONAS = {
         "manos": "Matias capucha manos.png",
         "rostro": "Matias.png",
     }),
+    "daniel": ("daniel", {
+        "capucha": "Daniel capucha_1.png",
+        "manos": "Daniel capucha manos.png",
+        "rostro": "Daniel.png",
+    }),
+    "carlos": ("carlos", {
+        "capucha": "Cebtryck capucha.png",   # sic: errata en la entrega (Centryck)
+        "manos": "Centryck capucha manos.png",
+        "rostro": "Centryck.png",
+    }),
 }
 
 

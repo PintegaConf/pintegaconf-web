@@ -6,6 +6,12 @@ import yisusRostro from "../assets/equipo/yisus-rostro.webp";
 import matiasCapucha from "../assets/equipo/matias-capucha.webp";
 import matiasManos from "../assets/equipo/matias-manos.webp";
 import matiasRostro from "../assets/equipo/matias-rostro.webp";
+import danielCapucha from "../assets/equipo/daniel-capucha.webp";
+import danielManos from "../assets/equipo/daniel-manos.webp";
+import danielRostro from "../assets/equipo/daniel-rostro.webp";
+import carlosCapucha from "../assets/equipo/carlos-capucha.webp";
+import carlosManos from "../assets/equipo/carlos-manos.webp";
+import carlosRostro from "../assets/equipo/carlos-rostro.webp";
 
 /** Las tres capas del revelado: encapuchado → manos quitándose la capucha → rostro. */
 export interface Ilustracion {
@@ -28,6 +34,8 @@ export interface Miembro {
 const ilustraciones = {
   yisus: { capucha: yisusCapucha, manos: yisusManos, rostro: yisusRostro },
   matias: { capucha: matiasCapucha, manos: matiasManos, rostro: matiasRostro },
+  daniel: { capucha: danielCapucha, manos: danielManos, rostro: danielRostro },
+  carlos: { capucha: carlosCapucha, manos: carlosManos, rostro: carlosRostro },
 } satisfies Record<string, Ilustracion>;
 
 export const ilustracionPorDefecto: Ilustracion = ilustraciones.yisus;
@@ -39,6 +47,6 @@ export const equipo: Miembro[] = [
   { nombre: "Matías", rol: "Organización", fila: "atras", ilustracion: ilustraciones.matias },
   { nombre: "Nacho", rol: "Organización", fila: "delante" },
   { nombre: "Tiziana", rol: "Organización", fila: "delante" },
-  { nombre: "Daniel", rol: "Organización", fila: "atras" },
-  { nombre: "Carlos", rol: "Organización", fila: "delante" },
+  { nombre: "Daniel", rol: "Organización", fila: "atras", ilustracion: ilustraciones.daniel },
+  { nombre: "Carlos", rol: "Organización", fila: "delante", ilustracion: ilustraciones.carlos },
 ];
