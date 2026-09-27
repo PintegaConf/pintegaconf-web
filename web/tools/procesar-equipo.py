@@ -46,19 +46,19 @@ CAPAS = ("capucha", "manos", "rostro")
 
 
 def mascara_hombros(ancho: int, alto: int) -> np.ndarray:
-    """Opacidad (0..1) por píxel para difuminar la parte baja de la figura.
+    """Opacidad (0..1) por píxel para difuminar la parte baja de la figura, en forma de busto.
 
-    - Vertical: opaco hasta el 94 % de la altura y llega a 0 en el 99,5 %.
-    - Lados: 4 % de cada borde, solo en la parte baja (entra entre el 80 % y el 88 %).
-    Es solo un borde fino: con el de la v1 (72 % → 98,5 %, lados 13 % desde el 55 %) el pecho quedaba
-    semitransparente y se veía el orbe del fondo a través de las figuras.
+    La túnica llega hasta los bordes del dibujo, así que un difuminado recto dejaba abajo un rectángulo
+    con los bordes borrosos. Ahora el final del difuminado sigue una curva en U: en el centro solo se
+    difumina un borde fino abajo (del 92,5 % al 99,5 % de la altura) y hacia los lados la curva sube
+    (en el borde, del 63 % al 70 %), así que no quedan esquinas rectas. El cuerpo sigue opaco: nada de
+    ver el orbe del fondo a través de las figuras.
     """
     y = np.arange(alto)[:, None] / alto
-    x = np.arange(ancho)[None, :] / ancho
-    vertical = np.interp(y, [0, .94, .995, 1], [1, 1, 0, 0])
-    lados = np.minimum(np.clip(x / .04, 0, 1), np.clip((1 - x) / .04, 0, 1))
-    peso_lados = np.interp(y, [0, .80, .88, 1], [0, 0, 1, 1])
-    return vertical * (1 - (1 - lados) * peso_lados)
+    u = np.abs(np.arange(ancho)[None, :] / ancho - .5) / .5     # 0 en el centro, 1 en los lados
+    fin = .995 - .295 * u ** 2.4                                 # donde la opacidad llega a 0
+    banda = .07                                                  # anchura del fundido
+    return np.clip((fin - y) / banda, 0, 1)
 
 
 def procesar(slug: str) -> None:
