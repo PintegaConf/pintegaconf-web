@@ -53,7 +53,7 @@ Un componente web para la página de **Pintega Conf**: una fila de personas ocul
 ## Web completa (pintega-conf-web.html) — sep 2026
 
 - Formato basado en el diseño de **Penpot** (archivo PINTEGA CONF, tablero HOME 1440×6486 + "Menú desplegado"). El Círculo Arcano vive en la sección **EQUIPO**.
-- **Equipo** (7, en este orden): Jesús, Iria, Matías, Nacho, Tiziana, David, Carlos — rol "Organización".
+- **Equipo** (7, en este orden): Jesús, Iria, Matías, Nacho, Tiziana, Daniel, Carlos — rol "Organización".
 - **Estructura**: cabecera · PINTEGA CONF (panel con borde dorado, degradado oscuro, cuadradito dorado abajo-izq) · AGENDA · PONENTES (3×2) · PATROCINADORES · COLABORADORES · EQUIPO · COMUNIDADES · ENTRADAS (ticket amarillo + formulario nombre/apellidos/email/trabajo/cupón/COMPRAR) · footer dorado (FAQS · código de conducta · aviso legal · privacidad · cookies). Menú: panel dorado a la derecha.
 - **Tokens**: dorado web #FDC330 (manual #FDC822), negro #1C1C1B, fondo #232323. Arima (títulos 48px), Roboto Mono (texto 14px), Source Sans 3 (formulario/footer).
 - **Assets**: logo horizontal, logo PC27, salamandra y huellas sacados en vectorial del PDF `marca_and_rrss/imagen corporativa pintega conf.pdf` (manual de marca, págs. 16, 14, 14 y 1). Las descargas directas de Penpot estaban bloqueadas por la red.
@@ -96,7 +96,7 @@ Decisión, seguridad y mejoras: `web/README.md`. Guía de uso: `web/site/README.
 ### Animación del equipo
 - [x] **Fotograma intermedio "quitándose la capucha con las manos"** (sep 2026): capa `.layer-hands` entre capucha y rostro, con animación `hands-off` (1.3s). El rostro aparece a los 0.9s (si no, el pelo de Matías asomaba por encima de la capucha en la fase de manos). Con `prefers-reduced-motion` se salta las manos. La máscara del hover sigue usando capucha (reposo) y rostro (activo).
 - [x] Matías con ilustraciones propias (capucha, manos, rostro). Yisus con fotograma de manos.
-- [ ] Ilustraciones del resto (Iria, Nacho, Tiziana, David, Carlos) — hoy usan las de Yisus por defecto.
+- [ ] Ilustraciones del resto (Iria, Nacho, Tiziana, Daniel, Carlos) — hoy usan las de Yisus por defecto.
 - [x] **Carrusel del equipo en móvil arreglado** (sep 2026). Las flechas saltaban desordenadas (Jesús → Nacho → Matías…) si la página se cargaba en escritorio y luego se estrechaba o giraba: `cards` se ordenaba una sola vez al cargar. Ahora:
   - En móvil un script saca las tarjetas de `.row-back`/`.row-front` y las pone directamente en `.formation-inner` en el orden de `equipo`; al volver a escritorio las devuelve a su fila. Así el DOM coincide con lo que se ve (flechas, tabulador, lectores de pantalla). Escucha `change` del media query **y** `resize` (el `change` no siempre llega).
   - Las flechas recalculan el orden en cada toque.

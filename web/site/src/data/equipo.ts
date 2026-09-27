@@ -39,6 +39,6 @@ export const equipo: Miembro[] = [
   { nombre: "Matías", rol: "Organización", fila: "atras", ilustracion: ilustraciones.matias },
   { nombre: "Nacho", rol: "Organización", fila: "delante" },
   { nombre: "Tiziana", rol: "Organización", fila: "delante" },
-  { nombre: "David", rol: "Organización", fila: "atras" },
+  { nombre: "Daniel", rol: "Organización", fila: "atras" },
   { nombre: "Carlos", rol: "Organización", fila: "delante" },
 ];

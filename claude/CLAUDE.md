@@ -15,7 +15,7 @@ Idioma de trabajo: **español**. El usuario es Matías (organización, sistemas/
 - **Nombre con tilde: "Píntega Conf" / "PÍNTEGA CONF"** en todos los textos visibles, títulos, metadatos y asuntos de email. Sin tilde solo en identificadores técnicos (dominio `pintegaconf.es`, email, ids `#pintega`, nombres de archivo). En el logo la tilde es la llamita encima de la salamandra (manual actualizado sep 2026).
 - Sucesora de **Lareira Conf**. La cuenta de Instagram de Lareira (~1000 seguidores, con su propio CM) se usa para promocionar Pintega, pero su CM solo publica contenido con la estética pixel-art/hoguera de Lareira.
 - **Mascota:** la píntega (salamandra de fuego negra con manchas amarillas, la del logo). "Píntega" = salamandra en gallego. **No reutilizar a Lumi** (mascota de Lareira, diseñada por otra persona).
-- **Equipo** (orden de la sección EQUIPO): Jesús, Iria, Matías, Nacho, Tiziana, David, Carlos — rol "Organización".
+- **Equipo** (orden de la sección EQUIPO): Jesús, Iria, Matías, Nacho, Tiziana, Daniel, Carlos — rol "Organización".
 - **Entradas:** nada de Eventbrite/Weezevent (comisiones altas). Se usará **Stripe** (ya hay cuenta y TPV físico de Stripe). Precio aún por anunciar.
 - **Oferta a ponentes:** viaje y hotel cubiertos, entrada full-pass, cena en el post-evento (no hay cena solo de ponentes), grabación de la charla + difusión en web/redes, regalo de ponente.
 - **Charlas:** 30–45 min de media, duraciones variadas (no slot fijo). La agenda la organizará Matías más adelante.
@@ -82,7 +82,7 @@ Seguridad del proyecto: `.npmrc` con `ignore-scripts` y versiones exactas (no qu
 
 - **Stripe como pasarela** de compra de entradas.
 - Web temporal "en obras" hecha en `web/temporal/`: falta confirmar dominio/email y publicarla (redes ya añadidas).
-- Ilustraciones propias del resto del equipo (hechas: Jesús/Yisus y Matías; faltan Iria, Nacho, Tiziana, David, Carlos, que usan las de Yisus). Yisus = Jesús (sus ilustraciones son las de `web/web_assets/designs/yisus/`).
+- Ilustraciones propias del resto del equipo (hechas: Jesús/Yisus y Matías; faltan Iria, Nacho, Tiziana, Daniel, Carlos, que usan las de Yisus). Yisus = Jesús (sus ilustraciones son las de `web/web_assets/designs/yisus/`).
 - Line-up de ponentes, logos de patrocinadores (`logos` de cada nivel en `web/site/src/data/patrocinio.ts`), colaboradores y comunidades.
 - Precio de entrada + integración con Stripe.
 - Agenda: detalles del pre-evento (viernes 9) y horario de charlas (sábado 10).
