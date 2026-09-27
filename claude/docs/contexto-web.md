@@ -98,6 +98,7 @@ Decisión, seguridad y mejoras: `web/README.md`. Guía de uso: `web/site/README.
 - [x] Matías con ilustraciones propias (capucha, manos, rostro). Yisus con fotograma de manos.
 - [x] Daniel y Carlos ("Centryck") con ilustraciones propias; Yisus y Matías retocados (27 sep 2026).
 - [x] Iria con ilustraciones propias (27 sep 2026).
+- [x] **Fila de atrás sin huecos** (27 sep 2026): con el difuminado, a los de atrás se les desvanecía el cuerpo bajo la cara y se veía el fondo entre las capuchas de delante. Ahora llevan una capa `.layer-body` (encapuchado sin difuminar, `<slug>-cuerpo.webp` que genera procesar-equipo.py) que desaparece al destaparse y vuelve con 0,45s de retraso al taparse; la fila baja 12px en reposo para esconder su borde recto.
 - [ ] Ilustraciones del resto (Nacho, Tiziana) — hoy usan las de Yisus por defecto.
 - [x] **Carrusel del equipo en móvil arreglado** (sep 2026). Las flechas saltaban desordenadas (Jesús → Nacho → Matías…) si la página se cargaba en escritorio y luego se estrechaba o giraba: `cards` se ordenaba una sola vez al cargar. Ahora:
   - En móvil un script saca las tarjetas de `.row-back`/`.row-front` y las pone directamente en `.formation-inner` en el orden de `equipo`; al volver a escritorio las devuelve a su fila. Así el DOM coincide con lo que se ve (flechas, tabulador, lectores de pantalla). Escucha `change` del media query **y** `resize` (el `change` no siempre llega).
