@@ -33,9 +33,17 @@ const schemaEvento = {
     address: { "@type": "PostalAddress", addressLocality: evento.ciudad, addressCountry: "ES" },
   },
   image: imagenSocial.href,
-  organizer: { "@type": "Organization", name: "Píntega Conf", url: Astro.site?.href, email: evento.email },
+  organizer: {
+    "@type": "Organization",
+    name: "Píntega Conf",
+    url: Astro.site?.href,
+    email: evento.email,
+    sameAs: evento.redes.map((r) => r.url),
+  },
 };
 // "<" escapado: un texto con "</script>" en los datos no podría cerrar la etiqueta
+const perfilX = evento.redes.find((r) => r.nombre === "X");
+const usuarioX = perfilX && "usuario" in perfilX ? perfilX.usuario : undefined;
 const schemaJson = JSON.stringify(schemaEvento).replace(/</g, "\\u003c");
 ---
 <!doctype html>
@@ -62,6 +70,7 @@ const schemaJson = JSON.stringify(schemaEvento).replace(/</g, "\\u003c");
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content={`${evento.nombre} · Sábado 10 de abril de 2027 · ${evento.charlas.lugar}, ${evento.ciudad}`} />
     <meta name="twitter:card" content="summary_large_image" />
+    {usuarioX && <meta name="twitter:site" content={usuarioX} />}
 
     <script type="application/ld+json" is:inline set:html={schemaJson} />
 

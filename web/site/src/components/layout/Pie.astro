@@ -1,11 +1,13 @@
 ---
-// Pie: enlaces a FAQ y páginas legales. Es un <nav> (los lectores de pantalla lo anuncian como
+// Pie: redes sociales, distintivos y enlaces a FAQ y páginas legales. Es un <nav> (los lectores de pantalla lo anuncian como
 // navegación) y el enlace de la página actual lleva aria-current="page".
 import { enlacesPie } from "../../data/navegacion";
 import Distintivos from "./Distintivos.astro";
+import Redes from "./Redes.astro";
 const actual = Astro.url.pathname;
 ---
 <footer class="site-footer">
+  <Redes />
   <Distintivos />
   <nav aria-label="Información y legal">
     {enlacesPie.map((e, i) => (

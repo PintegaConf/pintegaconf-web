@@ -1,0 +1,38 @@
+---
+// Enlaces a las redes de Píntega Conf (pie). Son enlaces normales, no widgets: no cargan nada de
+// LinkedIn, Instagram ni X hasta que se pulsan (ni cookies ni rastreo, ver /seguridad/).
+// Icono + nombre visible: el nombre accesible es el mismo texto que se ve (WCAG 2.5.3).
+// Se abren en la misma pestaña, como cualquier otro enlace (sin cambios de contexto inesperados).
+import { evento } from "../../data/evento";
+
+// Iconos propios (constantes, no datos externos), dibujados en 24×24.
+const iconos: Record<string, string> = {
+  LinkedIn:
+    '<rect x="3" y="3" width="18" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 10.5V17M8 7.2v.1M12 17v-6.5M12 13.5a2.5 2.5 0 0 1 5 0V17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>',
+  Instagram:
+    '<rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/>',
+  X: '<path fill="currentColor" d="M17.8 3h3.1l-6.8 7.8L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.3-8.3L2 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.4 4.7H5.6z"/>',
+};
+---
+<ul class="redes" aria-label="Píntega Conf en redes sociales">
+  {evento.redes.map((r) => (
+    <li>
+      <a href={r.url} rel="me noopener">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" set:html={iconos[r.nombre]} />
+        <span>{r.nombre}</span>
+      </a>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .redes { list-style: none; margin: 0 0 .6rem; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; }
+  a {
+    display: inline-flex; align-items: center; gap: .45rem; min-height: 32px; padding: .3rem .85rem .3rem .65rem;
+    border-radius: 999px; border: 1.5px solid var(--ink); color: var(--ink);
+    font: 600 14px/1.2 var(--f-sans); text-decoration: none; transition: background .2s, color .2s;
+  }
+  a:hover { background: var(--ink); color: var(--gold); }
+  svg { flex: none; }
+  @media (prefers-reduced-motion: reduce) { a { transition: none; } }
+</style>

@@ -6,6 +6,13 @@ export const evento = {
   ciudad: "A Coruña",
   email: "info@pintegaconf.es",
 
+  // Perfiles oficiales. Salen en el pie y en schema.org (sameAs); `usuario` de X va en twitter:site.
+  redes: [
+    { nombre: "LinkedIn", url: "https://www.linkedin.com/company/pintega-conf" },
+    { nombre: "Instagram", url: "https://www.instagram.com/pintegaconf/" },
+    { nombre: "X", url: "https://x.com/pintegaconf", usuario: "@pintegaconf" },
+  ],
+
   // Viernes 9: pre-evento, SIN charlas, en otro sitio aún por decidir (no es el Rectorado).
   preEvento: { fecha: "2027-04-09", lugar: null as string | null },
   // Sábado 10: el día principal (charlas, ponentes, patrocinadores, networking).
