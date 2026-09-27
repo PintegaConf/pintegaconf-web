@@ -12,6 +12,10 @@ transparencia) y genera en web/site/src/assets/equipo/ las tres capas del revela
 Cada capa se reduce a 480×494 y lleva el difuminado de hombros INCRUSTADO en el canal alfa
 (no se hace con máscara CSS: Safari pintaba líneas claras en los hombros durante la animación).
 
+Además genera <slug>-cuerpo.webp: el encapuchado SIN difuminar. Lo usa la fila de atrás en reposo,
+debajo de la capucha: su parte baja queda escondida tras la fila de delante, y así el cuello y el
+pecho no se desvanecen en los huecos entre las capuchas de delante.
+
 Uso:
     pip3 install --user pillow numpy
     python3 web/tools/procesar-equipo.py            # procesa todas las personas de PERSONAS
@@ -63,10 +67,16 @@ def procesar(slug: str) -> None:
         img = img.crop((0, 0, *LIENZO))   # algún original viene con 1 px de más (1237 de ancho)
         img = img.resize(SALIDA, Image.LANCZOS)
         rgba = np.array(img).astype(float)
+        if capa == "capucha":
+            guardar(rgba, f"{slug}-cuerpo.webp")   # sin difuminar, para la fila de atrás
         rgba[..., 3] *= mascara
-        salida = DESTINO / f"{slug}-{capa}.webp"
-        Image.fromarray(rgba.round().astype("uint8")).save(salida, "WEBP", quality=CALIDAD_WEBP, method=6)
-        print(f"  {salida.relative_to(RAIZ)}  ({salida.stat().st_size // 1024} KB)")
+        guardar(rgba, f"{slug}-{capa}.webp")
+
+
+def guardar(rgba: np.ndarray, nombre: str) -> None:
+    salida = DESTINO / nombre
+    Image.fromarray(rgba.round().astype("uint8")).save(salida, "WEBP", quality=CALIDAD_WEBP, method=6)
+    print(f"  {salida.relative_to(RAIZ)}  ({salida.stat().st_size // 1024} KB)")
 
 
 def main() -> None:
