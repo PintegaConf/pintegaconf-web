@@ -44,7 +44,7 @@ web/
     orbes/                     ← propuestas de orbe + orbe-elegido-transparente.png (el de la portada)
     designs/<persona>/         ← ilustraciones del equipo (lienzo 1236×1272), una carpeta por persona con nombres fijos:
                                  <persona>-capucha.png, -manos.png (quitándose la capucha), -rostro.png y -capucha-sola.png (no se usa).
-                                 Hechas: yisus, matias, daniel, carlos (Carlos = "Centryck"). Al recibir dibujos nuevos, renombrarlos así.
+                                 Hechas: yisus, iria, matias, daniel, carlos (Carlos = "Centryck"). Al recibir dibujos nuevos, renombrarlos así.
     equipo/                    ← versiones web antiguas (las actuales las genera tools/procesar-equipo.py)
 ```
 
@@ -84,7 +84,7 @@ Seguridad del proyecto: `.npmrc` con `ignore-scripts` y versiones exactas (no qu
 
 - **Stripe como pasarela** de compra de entradas.
 - Web temporal "en obras" hecha en `web/temporal/`: falta confirmar dominio/email y publicarla (redes ya añadidas).
-- Ilustraciones propias del resto del equipo (hechas: Jesús/Yisus, Matías, Daniel y Carlos; faltan Iria, Nacho y Tiziana, que usan las de Yisus). Yisus = Jesús (sus ilustraciones son las de `web/web_assets/designs/yisus/`).
+- Ilustraciones propias del resto del equipo (hechas: Jesús/Yisus, Iria, Matías, Daniel y Carlos; faltan Nacho y Tiziana, que usan las de Yisus). Yisus = Jesús (sus ilustraciones son las de `web/web_assets/designs/yisus/`).
 - Line-up de ponentes, logos de patrocinadores (`logos` de cada nivel en `web/site/src/data/patrocinio.ts`), colaboradores y comunidades.
 - Precio de entrada + integración con Stripe.
 - Agenda: detalles del pre-evento (viernes 9) y horario de charlas (sábado 10).
