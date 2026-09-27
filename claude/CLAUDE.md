@@ -43,7 +43,8 @@ web/
     TIERS/{SVG,PNG,WEBP,JPG}/  ← medallones de patrocinio: dragón, basilisco, tritón, ajolote
     orbes/                     ← propuestas de orbe + orbe-elegido-transparente.png (el de la portada)
     designs/<persona>/         ← ilustraciones del equipo (lienzo 1236×1272): capucha, manos quitándose la capucha, rostro, capucha sola.
-                                 yisus/: "Yisus capucha.png", "Mesa de trabajo 16.png" (manos), "Yisus sin capucha (1).png". matias/: "Matías con capucha.png", "Matias capucha manos.png", "Matias.png".
+                                 yisus/: "Yisus capucha.png", "Yisus capucha manos.png", "Yisus sin capucha.png". matias/: "Matías con capucha.png", "Matias capucha manos.png", "Matias.png".
+                                 daniel/: "Daniel capucha_1.png", "Daniel capucha manos.png", "Daniel.png". carlos/ (Centryck): "Cebtryck capucha.png" (sic), "Centryck capucha manos.png", "Centryck.png".
     equipo/                    ← versiones web antiguas (las actuales las genera tools/procesar-equipo.py)
 ```
 
@@ -82,7 +83,7 @@ Seguridad del proyecto: `.npmrc` con `ignore-scripts` y versiones exactas (no qu
 
 - **Stripe como pasarela** de compra de entradas.
 - Web temporal "en obras" hecha en `web/temporal/`: falta confirmar dominio/email y publicarla (redes ya añadidas).
-- Ilustraciones propias del resto del equipo (hechas: Jesús/Yisus y Matías; faltan Iria, Nacho, Tiziana, Daniel, Carlos, que usan las de Yisus). Yisus = Jesús (sus ilustraciones son las de `web/web_assets/designs/yisus/`).
+- Ilustraciones propias del resto del equipo (hechas: Jesús/Yisus, Matías, Daniel y Carlos; faltan Iria, Nacho y Tiziana, que usan las de Yisus). Yisus = Jesús (sus ilustraciones son las de `web/web_assets/designs/yisus/`).
 - Line-up de ponentes, logos de patrocinadores (`logos` de cada nivel en `web/site/src/data/patrocinio.ts`), colaboradores y comunidades.
 - Precio de entrada + integración con Stripe.
 - Agenda: detalles del pre-evento (viernes 9) y horario de charlas (sábado 10).
