@@ -182,7 +182,8 @@
 
   @media (max-width: 900px) {
     .hero-grid { grid-template-columns: 1fr; min-height: 0; padding: 2.5rem 0 3.5rem; gap: 1rem; }
-    .hero-art { grid-row: 1; width: min(250px, 62vw); }
+    /* El orbe va debajo del texto: así las redes (la vía de noticias mientras no esté la web completa) se ven sin bajar */
+    .hero-art { width: min(220px, 55vw); margin-top: 1.5rem; }
     .logo { width: min(360px, 100%); }
     .kicker { margin-top: 1.5rem; }
     .about-grid { grid-template-columns: 1fr; gap: 2rem; }
