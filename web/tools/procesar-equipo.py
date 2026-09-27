@@ -48,15 +48,16 @@ CAPAS = ("capucha", "manos", "rostro")
 def mascara_hombros(ancho: int, alto: int) -> np.ndarray:
     """Opacidad (0..1) por píxel para difuminar la parte baja de la figura.
 
-    - Vertical: opaco hasta el 72 % de la altura, baja al 66 % en el 86 % y llega a 0 en el 98,5 %.
-    - Lados: 13 % de cada borde, que solo actúa en la parte baja (entra entre el 55 % y el 65 %).
-    Son los mismos valores que tenían las imágenes de la v1.
+    - Vertical: opaco hasta el 94 % de la altura y llega a 0 en el 99,5 %.
+    - Lados: 4 % de cada borde, solo en la parte baja (entra entre el 80 % y el 88 %).
+    Es solo un borde fino: con el de la v1 (72 % → 98,5 %, lados 13 % desde el 55 %) el pecho quedaba
+    semitransparente y se veía el orbe del fondo a través de las figuras.
     """
     y = np.arange(alto)[:, None] / alto
     x = np.arange(ancho)[None, :] / ancho
-    vertical = np.interp(y, [0, .72, .86, .985, 1], [1, 1, .66, 0, 0])
-    lados = np.minimum(np.clip(x / .133, 0, 1), np.clip((1 - x) / .133, 0, 1))
-    peso_lados = np.interp(y, [0, .55, .65, 1], [0, 0, 1, 1])
+    vertical = np.interp(y, [0, .94, .995, 1], [1, 1, 0, 0])
+    lados = np.minimum(np.clip(x / .04, 0, 1), np.clip((1 - x) / .04, 0, 1))
+    peso_lados = np.interp(y, [0, .80, .88, 1], [0, 0, 1, 1])
     return vertical * (1 - (1 - lados) * peso_lados)
 
 
