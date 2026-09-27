@@ -3,16 +3,23 @@
 # ver web/site/tests/accesibilidad.mjs). Si algo falla, se ve en GitHub (y en el badge del README)
 # antes de publicar.
 #
-# Coste: el plan Free de la organización incluye 2.000 minutos/mes en repos privados y cada ejecución
-# tarda unos 3 minutos. Solo se ejecuta cuando cambia algo de web/site, web/temporal o este archivo.
+# Los cambios entran en main por pull request: cuando la PR pasa las comprobaciones, el último job la
+# fusiona solo (sin tener que darle a "Merge"). En el plan Free, GitHub no deja proteger main en un
+# repositorio privado ni usar su auto-merge, así que la fusión la hace este workflow. Excepciones:
+# las PR en borrador (draft) y las de Dependabot no se fusionan solas, para revisarlas antes.
+#
+# Coste: el plan Free de la organización incluye 2.000 minutos/mes en repos privados. La comprobación
+# completa tarda unos 3 minutos y solo se hace si cambia algo de web/site, web/temporal o este archivo;
+# en las demás PR solo corren los dos jobs cortos (mirar los archivos y fusionar).
 name: Web
 
 on:
   push:
     branches: [main]
     paths: ["web/site/**", "web/temporal/**", ".github/workflows/web.yml"]
+  # Todas las PR, sin filtro de rutas: la fusión automática tiene que ejecutarse aunque no toquen la web
   pull_request:
-    paths: ["web/site/**", "web/temporal/**", ".github/workflows/web.yml"]
+    types: [opened, synchronize, reopened, ready_for_review]
   workflow_dispatch: # lanzarla a mano desde la pestaña Actions
 
 # Mínimo privilegio: el workflow solo puede leer el código
@@ -25,8 +32,39 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # En una PR, mira si cambia algo de la web; si no, la comprobación completa se salta
+  cambios:
+    name: ¿Cambia la web?
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      pull-requests: read
+    outputs:
+      web: ${{ steps.mirar.outputs.web }}
+    steps:
+      - id: mirar
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENTO: ${{ github.event_name }}
+          PR: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          if [ "$EVENTO" != "pull_request" ]; then
+            echo "web=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          # Nombre actual y anterior (si se ha movido) de cada archivo de la PR
+          ARCHIVOS=$(gh api "repos/$REPO/pulls/$PR/files" --paginate --jq '.[] | .filename, (.previous_filename // empty)')
+          if grep -qE '^(web/site/|web/temporal/|\.github/workflows/web\.yml$)' <<< "$ARCHIVOS"; then
+            echo "web=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "web=false" >> "$GITHUB_OUTPUT"
+          fi
+
   build:
     name: Tipos, build, audit y accesibilidad
+    needs: cambios
+    if: needs.cambios.outputs.web == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     defaults:
@@ -64,3 +102,32 @@ jobs:
         env:
           A11Y_DIST: ../temporal
           A11Y_PAGINAS: /
+
+  # Fusiona la PR en main cuando todo ha ido bien. Solo PR de ramas de este repositorio (las abre
+  # alguien con permiso de escritura), que no sean borrador ni de Dependabot. --match-head-commit:
+  # solo se fusiona el commit que se ha comprobado; si llega otro push entretanto, se espera a su CI.
+  # --rebase conserva los commits de la PR tal cual (uno por cambio) y deja el historial lineal.
+  # La rama se borra sola al fusionar (ajuste "Automatically delete head branches" del repositorio).
+  fusionar:
+    name: Fusionar en main
+    needs: [cambios, build]
+    if: >-
+      !cancelled() &&
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      !github.event.pull_request.draft &&
+      github.event.pull_request.user.login != 'dependabot[bot]' &&
+      needs.cambios.result == 'success' &&
+      (needs.build.result == 'success' || needs.build.result == 'skipped')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+          SHA: ${{ github.event.pull_request.head.sha }}
+          REPO: ${{ github.repository }}
+        run: gh pr merge "$PR" --repo "$REPO" --rebase --match-head-commit "$SHA"
