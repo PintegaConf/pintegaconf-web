@@ -1,73 +1,165 @@
 ---
-// Política de privacidad (RGPD, art. 13, y LOPDGDD). BORRADOR: faltan datos del titular y del
-// alojamiento (src/data/legal.ts) y la revisión legal.
+// Política de privacidad (RGPD, art. 13, y LOPDGDD). Basada en la de Lareira Conf (lareiraconf.es), que
+// organiza la misma asociación, adaptada a esta web (sin cookies, fuentes propias, pago con Stripe).
+// BORRADOR: falta el alojamiento (src/data/legal.ts) y la revisión legal.
 import PaginaTexto from "../layouts/PaginaTexto.astro";
 import Dato from "../components/Dato.astro";
 import { titular, alojamiento, ACTUALIZADO, datosLegalesCompletos } from "../data/legal";
 import { evento } from "../data/evento";
 ---
-<PaginaTexto titulo="Política de privacidad" descripcion={`Qué datos tratamos en la web de ${evento.nombre}, para qué y cuáles son tus derechos.`} actualizado={ACTUALIZADO} borrador={!datosLegalesCompletos}>
-  <h2>Responsable</h2>
+<PaginaTexto titulo="Política de privacidad" descripcion={`Qué datos tratamos en ${evento.nombre}, para qué y cuáles son tus derechos.`} actualizado={ACTUALIZADO} borrador={!datosLegalesCompletos}>
+  <p>En cumplimiento de la normativa de protección de datos personales (RGPD y LOPDGDD), te informamos de lo siguiente.</p>
+
+  <h2>Responsable del tratamiento</h2>
   <p>
-    <Dato valor={titular.nombre} pendiente="nombre o razón social" />, con NIF <Dato valor={titular.nif} pendiente="NIF" /> y
-    domicilio en <Dato valor={titular.domicilio} pendiente="domicilio" />. Contacto:{" "}
-    <a href={`mailto:${titular.email}`}>{titular.email}</a>.
+    La <Dato valor={titular.nombre} pendiente="nombre o razón social" />, con NIF <Dato valor={titular.nif} pendiente="NIF" /> y
+    domicilio en <Dato valor={titular.domicilio} pendiente="domicilio" />, organiza {evento.nombre} y es la responsable del
+    tratamiento de tus datos personales.
+  </p>
+  <p>
+    Puedes escribirnos a esa dirección postal o a <a href={`mailto:${titular.email}`}>{titular.email}</a> para cualquier consulta,
+    solicitud o aclaración sobre el tratamiento de tus datos.
   </p>
 
-  <h2>Qué datos tratamos y para qué</h2>
-  <h3>Compra de entradas</h3>
-  <p>
-    Cuando abra la venta, el formulario de entradas pedirá tu <strong>nombre, apellidos y email</strong>, y de forma opcional tu{" "}
-    <strong>empresa</strong> y un <strong>cupón</strong>. Los usaremos para gestionar tu compra y tu entrada (confirmación,
-    acreditación y avisos prácticos sobre el evento).
-  </p>
+  <h2>Qué datos tratamos y de dónde salen</h2>
+  <p>Tratamos:</p>
   <ul>
-    <li><strong>Base legal:</strong> la ejecución del contrato de compra de la entrada (art. 6.1.b RGPD).</li>
-    <li><strong>Conservación:</strong> durante la organización del evento y, después, los plazos que exija la ley (por ejemplo, hasta seis años por obligaciones contables y fiscales).</li>
+    <li>Los datos que nos das tú, al comprar una entrada, al escribirnos o al participar como ponente o patrocinador.</li>
+    <li>Los que se generan después al gestionar lo que nos has pedido (por ejemplo, los mensajes que intercambiamos).</li>
+    <li>Los que nos facilites por redes sociales para atender tus consultas, según la configuración de privacidad de cada red.</li>
   </ul>
-  <p>Mientras la venta no esté abierta, el formulario de esta web no envía tus datos a ningún sitio.</p>
+
+  <h3>Si asistes</h3>
+  <ul>
+    <li><strong>Identificativos:</strong> nombre y apellidos.</li>
+    <li><strong>De contacto:</strong> email.</li>
+    <li><strong>Profesionales (opcional):</strong> empresa.</li>
+    <li><strong>Salud (opcional):</strong> alergias e intolerancias alimentarias, solo si nos las indicas para la comida.</li>
+    <li><strong>Imágenes y vídeos:</strong> fotos o vídeos tomados durante el evento en los que puedas aparecer.</li>
+  </ul>
+  <p>Mientras la venta no esté abierta, el formulario de entradas de esta web no envía tus datos a ningún sitio.</p>
+
+  <h3>Si eres ponente</h3>
+  <ul>
+    <li><strong>Identificativos:</strong> nombre, apellidos y cargo actual.</li>
+    <li><strong>De contacto:</strong> email profesional, teléfono y perfil en redes profesionales (por ejemplo, LinkedIn).</li>
+    <li><strong>Profesionales:</strong> biografía, temas de especialidad, título de la charla y sus materiales (presentaciones, vídeos, etc.).</li>
+    <li><strong>Salud (opcional):</strong> alergias e intolerancias alimentarias.</li>
+    <li><strong>Imágenes y vídeos:</strong> fotos o vídeos tomados durante el evento, incluida la grabación de tu charla.</li>
+  </ul>
+
+  <h3>Si representas a un patrocinador</h3>
+  <ul>
+    <li><strong>Identificativos:</strong> nombre y apellidos de la persona de contacto o del personal del patrocinador.</li>
+    <li><strong>De contacto profesionales:</strong> email corporativo, empresa y puesto.</li>
+    <li><strong>Salud (opcional):</strong> alergias e intolerancias alimentarias.</li>
+    <li><strong>Imágenes y vídeos:</strong> fotos o vídeos tomados durante el evento en los que puedas aparecer.</li>
+  </ul>
+
+  <h2>Para qué los usamos y con qué base legal</h2>
+  <h3>Compra de entradas y asistencia</h3>
+  <p>
+    Para gestionar tu compra y tu entrada: confirmación, acreditación y avisos prácticos sobre el evento. Base legal: la ejecución
+    del contrato de compra de la entrada (art. 6.1.b RGPD).
+  </p>
+  <p>
+    También podremos enviarte información sobre próximas ediciones y actividades de la asociación parecidas a la que ya has
+    contratado, por nuestro interés legítimo (art. 6.1.f RGPD y art. 21.2 LSSI-CE). Puedes oponerte en cualquier momento, en cada
+    email o escribiendo a <a href={`mailto:${titular.email}`}>{titular.email}</a>.
+  </p>
+
+  <h3>Ponentes</h3>
+  <ul>
+    <li><strong>Gestión del evento:</strong> preparar y organizar las charlas, comunicarte la logística y coordinar tu participación (viaje, alojamiento, agenda).</li>
+    <li><strong>Promoción:</strong> usar tu nombre, imagen y los datos de tu charla en la web, las redes sociales y las comunicaciones de prensa del evento.</li>
+    <li><strong>Difusión:</strong> publicar las grabaciones y materiales de las charlas para compartir conocimiento y documentar el evento.</li>
+  </ul>
+  <p>Base legal: el acuerdo de participación como ponente (art. 6.1.b RGPD) y, para imágenes y grabaciones, tu consentimiento expreso.</p>
+
+  <h3>Patrocinadores</h3>
+  <p>
+    Solo para mantener la relación comercial, contractual o de colaboración con la empresa para la que trabajas. Base legal: nuestro
+    interés legítimo en mantener esa relación (art. 6.1.f RGPD).
+  </p>
 
   <h3>Emails que nos envías</h3>
   <p>
     Si nos escribes (para dar una charla, patrocinar o cualquier consulta), usaremos tu email y lo que nos cuentes solo para
-    responderte y gestionar lo que nos pidas.
+    responderte y gestionar lo que nos pidas. Base legal: tu consentimiento al escribirnos y nuestro interés legítimo en atender tu
+    consulta (art. 6.1.a y 6.1.f RGPD).
   </p>
-  <ul>
-    <li><strong>Base legal:</strong> tu consentimiento al escribirnos y nuestro interés legítimo en atender tu consulta (art. 6.1.a y 6.1.f RGPD).</li>
-    <li><strong>Conservación:</strong> el tiempo necesario para atender la consulta y, como máximo, hasta el final de la edición del evento, salvo que haya una relación posterior (por ejemplo, como ponente o patrocinador).</li>
-  </ul>
+
+  <h3>Imágenes y vídeos</h3>
+  <p>Solo mostramos, emitimos o publicamos imágenes y vídeos en los que aparezcas con tu consentimiento expreso (art. 6.1.a RGPD).</p>
+
+  <h3>Alergias e intolerancias</h3>
+  <p>
+    Las usamos únicamente para organizar el servicio de comida, y solo si nos das tu consentimiento expreso al indicarlas
+    (art. 9.2.a RGPD).
+  </p>
 
   <h3>Lo que no hacemos</h3>
   <p>
-    No usamos analítica ni publicidad, no vendemos tus datos y no te enviaremos comunicaciones comerciales sin tu consentimiento.
-    Las fuentes tipográficas se sirven desde nuestro propio dominio, así que visitar la web no envía tu IP a terceros como Google.
+    No usamos analítica ni publicidad en esta web y no vendemos tus datos. Las fuentes tipográficas se sirven desde nuestro propio
+    dominio, así que visitar la web no envía tu IP a terceros como Google.
   </p>
 
-  <h2>Quién más accede a tus datos</h2>
+  <h2>A quién podemos comunicar tus datos</h2>
   <ul>
+    <li><strong>Administraciones públicas:</strong> para cumplir obligaciones legales.</li>
+    <li><strong>Firmas de auditoría contable:</strong> para cumplir las obligaciones legales de auditoría.</li>
+    <li><strong>Fuerzas y cuerpos de seguridad:</strong> cuando lo exija una obligación legal.</li>
     <li>
-      <strong>Stripe</strong> (Stripe Payments Europe, Ltd., Irlanda) procesará el pago de las entradas en su propia página: los datos
-      de tu tarjeta los recibe Stripe, nunca esta web. Stripe puede transferir datos fuera del Espacio Económico Europeo con las
-      garantías que exige el RGPD. Más información en su <a href="https://stripe.com/es/privacy" rel="noopener noreferrer">política de privacidad</a>.
-    </li>
-    <li>
-      <strong>Alojamiento de la web:</strong> <Dato valor={alojamiento} pendiente="proveedor de hosting" />, que guarda los registros
-      técnicos del servidor (como la dirección IP) necesarios para servir la web y protegerla.
+      <strong>Proveedores</strong> que necesitan tus datos para prestarnos los servicios que les hemos contratado, entre ellos:
+      <ul>
+        <li>
+          <strong>Stripe</strong> (Stripe Payments Europe, Ltd., Irlanda), que procesará el pago de las entradas en su propia página:
+          los datos de tu tarjeta los recibe Stripe, nunca esta web. Más información en su{" "}
+          <a href="https://stripe.com/es/privacy" rel="noopener noreferrer">política de privacidad</a>.
+        </li>
+        <li>
+          <strong>Alojamiento de la web:</strong> <Dato valor={alojamiento} pendiente="proveedor de hosting" />, que guarda los
+          registros técnicos del servidor (como la dirección IP) necesarios para servir la web y protegerla.
+        </li>
+      </ul>
     </li>
   </ul>
-  <p>No cedemos tus datos a nadie más, salvo obligación legal.</p>
+  <p>No cedemos tus datos a nadie más.</p>
+
+  <h2>Transferencias internacionales</h2>
+  <p>
+    No trabajamos con proveedores situados en países sin una protección de datos equivalente a la europea, con una excepción: Stripe
+    puede transferir datos de pago fuera del Espacio Económico Europeo con las garantías que exige el RGPD (como las cláusulas
+    contractuales tipo de la Comisión Europea).
+  </p>
+
+  <h2>Cuánto tiempo guardamos tus datos</h2>
+  <ul>
+    <li><strong>Entradas:</strong> durante la organización del evento y, después, los plazos que exija la ley (por ejemplo, hasta seis años por obligaciones contables y fiscales).</li>
+    <li><strong>Consultas por email:</strong> el tiempo necesario para atenderlas y, como máximo, hasta el final de la edición, salvo que haya una relación posterior (por ejemplo, como ponente o patrocinador).</li>
+    <li><strong>Ponentes y patrocinadores:</strong> mientras dure la relación con la asociación y, al terminar, los plazos legales aplicables.</li>
+    <li><strong>Alergias e intolerancias:</strong> hasta que termine el evento.</li>
+  </ul>
 
   <h2>Tus derechos</h2>
   <p>
     Puedes pedir acceder a tus datos, rectificarlos, suprimirlos, oponerte a su tratamiento, limitarlo o llevártelos a otro
-    responsable (portabilidad) escribiendo a <a href={`mailto:${titular.email}`}>{titular.email}</a>. Si has dado tu consentimiento,
-    puedes retirarlo cuando quieras.
+    responsable (portabilidad) escribiendo a <a href={`mailto:${titular.email}`}>{titular.email}</a> o a nuestra dirección postal.
+    Si has dado tu consentimiento, puedes retirarlo cuando quieras.
   </p>
   <p>
-    Si crees que no hemos tratado bien tus datos, puedes reclamar ante la Agencia Española de Protección de Datos
-    (<a href="https://www.aepd.es" rel="noopener noreferrer">aepd.es</a>).
+    Si crees que no hemos tratado bien tus datos, puedes decírnoslo en esas mismas direcciones o reclamar ante la Agencia Española de
+    Protección de Datos (<a href="https://www.aepd.es" rel="noopener noreferrer">aepd.es</a>).
   </p>
 
   <h2>Menores</h2>
   <p>Si tienes menos de 14 años, necesitas el consentimiento de tu madre, padre o tutor para facilitarnos tus datos.</p>
+
+  <h2>Cambios</h2>
+  <p>
+    Esta política puede cambiar. Publicaremos cualquier cambio en esta página y, si es importante, también lo avisaremos por otros
+    medios (por ejemplo, por email).
+  </p>
+
+  <p>Más información: <a href="/aviso-legal/">aviso legal</a>, <a href="/cookies/">política de cookies</a> y <a href="/codigo-de-conducta/">código de conducta</a>.</p>
 </PaginaTexto>
