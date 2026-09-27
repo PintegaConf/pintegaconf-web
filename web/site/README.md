@@ -72,8 +72,8 @@ se destapa a alguien del equipo) están marcados con `:global(...)`.
 - **Añadir un patrocinador:** guardar el logo en `src/assets/patrocinadores/`, importarlo en `src/data/patrocinio.ts` y añadirlo a `logos` del nivel: `{ src: logo, alt: "Empresa", url: "https://…" }`. El hueco "Tu logo aquí" desaparece solo.
 - **Añadir ponentes:** `src/data/ponentes.ts`. Mientras la lista esté vacía se ven 6 tarjetas "Próximamente".
 - **Ilustraciones de alguien del equipo:**
-  1. Dejar sus 3 dibujos (capucha, manos, rostro; lienzo 1236×1272) en `web/web_assets/designs/<persona>/`.
-  2. Añadirlo a `PERSONAS` en `web/tools/procesar-equipo.py` y ejecutarlo (`python3 web/tools/procesar-equipo.py <slug>`).
+  1. Dejar sus dibujos (lienzo 1236×1272) en `web/web_assets/designs/<slug>/` con estos nombres: `<slug>-capucha.png`, `<slug>-manos.png`, `<slug>-rostro.png` (y `<slug>-capucha-sola.png`, que no se usa en la web).
+  2. Añadir su slug a `PERSONAS` en `web/tools/procesar-equipo.py` y ejecutarlo (`python3 web/tools/procesar-equipo.py <slug>`).
   3. Importar las 3 imágenes en `src/data/equipo.ts` y ponerlas en su `ilustracion`.
 - **Datos legales:** rellenar `src/data/legal.ts`. Cuando estén todos, desaparece el aviso de borrador de las páginas legales y el aviso del build. Los textos deberían revisarlos una persona experta antes de publicarlos.
 - **Enlaces a páginas:** con barra final (`/faq/`, `/privacidad/`), que es la URL que genera Astro y la que aparece en el sitemap.

@@ -17,11 +17,11 @@ Uso:
     python3 web/tools/procesar-equipo.py            # procesa todas las personas de PERSONAS
     python3 web/tools/procesar-equipo.py matias     # solo una
 
-Para añadir a alguien: crea web/web_assets/designs/<carpeta>/ con sus tres dibujos, añade su entrada
-a PERSONAS y después su `slug` en src/data/equipo.ts.
+Para añadir a alguien: crea web/web_assets/designs/<slug>/ con sus dibujos renombrados como
+<slug>-capucha.png, <slug>-manos.png y <slug>-rostro.png, añade su slug a PERSONAS y después
+sus capas en src/data/equipo.ts.
 """
 import sys
-import unicodedata
 from pathlib import Path
 
 import numpy as np
@@ -35,29 +35,10 @@ LIENZO = (1236, 1272)   # tamaño de los dibujos originales
 SALIDA = (480, 494)     # tamaño en la web (misma proporción)
 CALIDAD_WEBP = 88
 
-# slug -> (carpeta, {capa: nombre de archivo}). Los nombres son los que entregó cada ilustrador.
-PERSONAS = {
-    "yisus": ("yisus", {
-        "capucha": "Yisus capucha.png",
-        "manos": "Yisus capucha manos.png",
-        "rostro": "Yisus sin capucha.png",
-    }),
-    "matias": ("matias", {
-        "capucha": "Matías con capucha.png",
-        "manos": "Matias capucha manos.png",
-        "rostro": "Matias.png",
-    }),
-    "daniel": ("daniel", {
-        "capucha": "Daniel capucha_1.png",
-        "manos": "Daniel capucha manos.png",
-        "rostro": "Daniel.png",
-    }),
-    "carlos": ("carlos", {
-        "capucha": "Cebtryck capucha.png",   # sic: errata en la entrega (Centryck)
-        "manos": "Centryck capucha manos.png",
-        "rostro": "Centryck.png",
-    }),
-}
+# Cada persona tiene su carpeta web/web_assets/designs/<slug>/ con una capa por archivo:
+# <slug>-<capa>.png (p. ej. matias/matias-rostro.png). También hay <slug>-capucha-sola.png, que no se usa.
+PERSONAS = ("yisus", "matias", "daniel", "carlos")
+CAPAS = ("capucha", "manos", "rostro")
 
 
 def mascara_hombros(ancho: int, alto: int) -> np.ndarray:
@@ -75,21 +56,10 @@ def mascara_hombros(ancho: int, alto: int) -> np.ndarray:
     return vertical * (1 - (1 - lados) * peso_lados)
 
 
-def buscar(carpeta: Path, nombre: str) -> Path:
-    """Encuentra el archivo aunque macOS haya guardado la tilde descompuesta (NFD)."""
-    objetivo = unicodedata.normalize("NFC", nombre)
-    for f in carpeta.iterdir():
-        if unicodedata.normalize("NFC", f.name) == objetivo:
-            return f
-    raise FileNotFoundError(f"No encuentro «{nombre}» en {carpeta}")
-
-
 def procesar(slug: str) -> None:
-    carpeta, capas = PERSONAS[slug]
     mascara = mascara_hombros(*SALIDA)
-    for capa, nombre in capas.items():
-        origen = buscar(ORIGEN / carpeta, nombre)
-        img = Image.open(origen).convert("RGBA")
+    for capa in CAPAS:
+        img = Image.open(ORIGEN / slug / f"{slug}-{capa}.png").convert("RGBA")
         img = img.crop((0, 0, *LIENZO))   # algún original viene con 1 px de más (1237 de ancho)
         img = img.resize(SALIDA, Image.LANCZOS)
         rgba = np.array(img).astype(float)

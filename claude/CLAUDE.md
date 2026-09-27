@@ -42,9 +42,9 @@ web/
   web_assets/
     TIERS/{SVG,PNG,WEBP,JPG}/  ← medallones de patrocinio: dragón, basilisco, tritón, ajolote
     orbes/                     ← propuestas de orbe + orbe-elegido-transparente.png (el de la portada)
-    designs/<persona>/         ← ilustraciones del equipo (lienzo 1236×1272): capucha, manos quitándose la capucha, rostro, capucha sola.
-                                 yisus/: "Yisus capucha.png", "Yisus capucha manos.png", "Yisus sin capucha.png". matias/: "Matías con capucha.png", "Matias capucha manos.png", "Matias.png".
-                                 daniel/: "Daniel capucha_1.png", "Daniel capucha manos.png", "Daniel.png". carlos/ (Centryck): "Cebtryck capucha.png" (sic), "Centryck capucha manos.png", "Centryck.png".
+    designs/<persona>/         ← ilustraciones del equipo (lienzo 1236×1272), una carpeta por persona con nombres fijos:
+                                 <persona>-capucha.png, -manos.png (quitándose la capucha), -rostro.png y -capucha-sola.png (no se usa).
+                                 Hechas: yisus, matias, daniel, carlos (Carlos = "Centryck"). Al recibir dibujos nuevos, renombrarlos así.
     equipo/                    ← versiones web antiguas (las actuales las genera tools/procesar-equipo.py)
 ```
 
@@ -72,7 +72,7 @@ Seguridad del proyecto: `.npmrc` con `ignore-scripts` y versiones exactas (no qu
 - **No** volver a la máscara CSS para difuminar hombros (líneas en Safari): el difuminado va incrustado en los PNG.
 - Si se cambian los `transform` del "paso al frente" en `Equipo.astro`, actualizar también `REPOSO`/`ACTIVA` en `src/scripts/equipo/revelado.ts`.
 - Revelado del equipo: capucha → manos → rostro con fundidos suaves. Capucha (pausa 0.3s + 0.45s) → manos aguantan 0.2s → se disuelven 0.35s al rostro; el rostro aparece a los 0.9s (antes asomaba el pelo por encima de la capucha); la ficha a los 0.9s. Orden de capas: capucha > manos > rostro. Al salir, el rostro se funde a la vez que vuelve la capucha (0.3s, 0.05s de retraso); si espera, el pelo que sobresale de la capucha se ve encima. Nada de cortes secos `steps()`.
-- Nuevas ilustraciones: añadir la persona a `PERSONAS` en `web/tools/procesar-equipo.py` (aplica el difuminado: vertical 72%→86% al 66%→98,5% a 0; lados 13% desde el 55–65% de altura; 480×494 WebP) y después importarlas en `src/data/equipo.ts`.
+- Nuevas ilustraciones: renombrar los dibujos a `<persona>-capucha.png`, `-manos.png`, `-rostro.png` (y `-capucha-sola.png`) en `web/web_assets/designs/<persona>/`, añadir la persona a `PERSONAS` en `web/tools/procesar-equipo.py` (aplica el difuminado: vertical 72%→86% al 66%→98,5% a 0; lados 13% desde el 55–65% de altura; 480×494 WebP) y después importarlas en `src/data/equipo.ts`.
 - Huecos de ponentes ("?" dorado animado) y patrocinadores ("Tu logo aquí"): se quedan así hasta que haya contenido real (decisión del usuario).
 - **Tema claro/oscuro:** oscuro = diseño original. Colores de secciones en tokens (`--text`, `--text-2`, `--text-3`, `--accent-text`, `--form-bg`, `--slot-*`, `--line`, `--logo-filter`) con valores claros en `prefers-color-scheme: light` y `html[data-theme=light]`. Cabecera y portada blancas en ambos (logo negro). En claro el dorado no vale como color de texto: `--accent-text` = ocre `#8a5b00`. Colores nuevos: siempre vía token, nunca literales en secciones.
 - **Táctil (tablet/iPad >680px):** toque en silueta destapa, otro toque en la misma o fuera tapa; arrastre no cuenta. El ratón sigue con hover. Lógica en `src/scripts/equipo/revelado.ts` (`pointerType`).
