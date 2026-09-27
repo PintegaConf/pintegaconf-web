@@ -39,8 +39,8 @@ CALIDAD_WEBP = 88
 PERSONAS = {
     "yisus": ("yisus", {
         "capucha": "Yisus capucha.png",
-        "manos": "Mesa de trabajo 16.png",
-        "rostro": "Yisus sin capucha (1).png",
+        "manos": "Yisus capucha manos.png",
+        "rostro": "Yisus sin capucha.png",
     }),
     "matias": ("matias", {
         "capucha": "Matías con capucha.png",
