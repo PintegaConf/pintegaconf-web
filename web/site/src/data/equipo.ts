@@ -12,6 +12,14 @@ import matiasCapucha from "../assets/equipo/matias-capucha.webp";
 import matiasManos from "../assets/equipo/matias-manos.webp";
 import matiasRostro from "../assets/equipo/matias-rostro.webp";
 import matiasCuerpo from "../assets/equipo/matias-cuerpo.webp";
+import nachoCapucha from "../assets/equipo/nacho-capucha.webp";
+import nachoManos from "../assets/equipo/nacho-manos.webp";
+import nachoRostro from "../assets/equipo/nacho-rostro.webp";
+import nachoCuerpo from "../assets/equipo/nacho-cuerpo.webp";
+import tizianaCapucha from "../assets/equipo/tiziana-capucha.webp";
+import tizianaManos from "../assets/equipo/tiziana-manos.webp";
+import tizianaRostro from "../assets/equipo/tiziana-rostro.webp";
+import tizianaCuerpo from "../assets/equipo/tiziana-cuerpo.webp";
 import danielCapucha from "../assets/equipo/daniel-capucha.webp";
 import danielManos from "../assets/equipo/daniel-manos.webp";
 import danielRostro from "../assets/equipo/daniel-rostro.webp";
@@ -45,6 +53,8 @@ const ilustraciones = {
   yisus: { capucha: yisusCapucha, manos: yisusManos, rostro: yisusRostro, cuerpo: yisusCuerpo },
   iria: { capucha: iriaCapucha, manos: iriaManos, rostro: iriaRostro, cuerpo: iriaCuerpo },
   matias: { capucha: matiasCapucha, manos: matiasManos, rostro: matiasRostro, cuerpo: matiasCuerpo },
+  nacho: { capucha: nachoCapucha, manos: nachoManos, rostro: nachoRostro, cuerpo: nachoCuerpo },
+  tiziana: { capucha: tizianaCapucha, manos: tizianaManos, rostro: tizianaRostro, cuerpo: tizianaCuerpo },
   daniel: { capucha: danielCapucha, manos: danielManos, rostro: danielRostro, cuerpo: danielCuerpo },
   carlos: { capucha: carlosCapucha, manos: carlosManos, rostro: carlosRostro, cuerpo: carlosCuerpo },
 } satisfies Record<string, Ilustracion>;
@@ -56,8 +66,8 @@ export const equipo: Miembro[] = [
   { nombre: "Jesús", rol: "Organización", fila: "atras", ilustracion: ilustraciones.yisus },
   { nombre: "Iria", rol: "Organización", fila: "delante", ilustracion: ilustraciones.iria },
   { nombre: "Matías", rol: "Organización", fila: "atras", ilustracion: ilustraciones.matias },
-  { nombre: "Nacho", rol: "Organización", fila: "delante" },
-  { nombre: "Tiziana", rol: "Organización", fila: "delante" },
+  { nombre: "Nacho", rol: "Organización", fila: "delante", ilustracion: ilustraciones.nacho },
+  { nombre: "Tiziana", rol: "Organización", fila: "delante", ilustracion: ilustraciones.tiziana },
   { nombre: "Daniel", rol: "Organización", fila: "atras", ilustracion: ilustraciones.daniel },
   { nombre: "Carlos", rol: "Organización", fila: "delante", ilustracion: ilustraciones.carlos },
 ];
