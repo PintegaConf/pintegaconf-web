@@ -41,7 +41,7 @@ CALIDAD_WEBP = 88
 
 # Cada persona tiene su carpeta web/web_assets/designs/<slug>/ con una capa por archivo:
 # <slug>-<capa>.png (p. ej. matias/matias-rostro.png). También hay <slug>-capucha-sola.png, que no se usa.
-PERSONAS = ("yisus", "iria", "matias", "daniel", "carlos")
+PERSONAS = ("yisus", "iria", "matias", "nacho", "tiziana", "daniel", "carlos")
 CAPAS = ("capucha", "manos", "rostro")
 
 
