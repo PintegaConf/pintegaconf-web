@@ -3,6 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Seguridad (CSP): scripts, fuentes e imágenes solo de nuestro dominio. Los estilos en línea se permiten porque
+     la página no muestra nada que venga de fuera. El anti-iframe (frame-ancestors) va en la cabecera: web/nginx.conf -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <title>Píntega Conf '27 · 9 y 10 de abril de 2027 · A Coruña</title>
 <meta name="description" content="Píntega Conf '27, la conferencia tecnológica de las comunidades tech: charlas el sábado 10 de abril de 2027 en el Rectorado de la UDC, A Coruña, y pre-evento el viernes 9. La sucesora de Lareira Conf.">
 <meta name="theme-color" content="#FDC330">
@@ -288,13 +291,6 @@
   </div>
 </footer>
 
-<script>
-  // Pausar / reanudar las animaciones (franjas y orbe). Con "reducir movimiento" ya no se animan y el botón no se muestra.
-  const boton = document.querySelector(".pausa");
-  boton.addEventListener("click", () => {
-    const pausada = document.documentElement.classList.toggle("sin-animacion");
-    boton.textContent = pausada ? "Reanudar animación" : "Pausar animación";
-  });
-</script>
+<script src="assets/pausa.js"></script>
 </body>
 </html>
