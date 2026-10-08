@@ -44,11 +44,15 @@
 }
 </script>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Arima:wght@400;700&family=Roboto+Mono:wght@400;700&family=Source+Sans+3:wght@400;600&display=swap">
+<!-- Fuentes servidas desde nuestro dominio, nunca desde Google (RGPD: la IP del visitante es un dato personal).
+     Son las mismas que descarga la web de Astro: variables (un archivo cubre todos los pesos), subconjunto latino. -->
+<link rel="preload" href="assets/fonts/arima.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin>
 
 <style>
+  @font-face { font-family: "Arima"; src: url("assets/fonts/arima.woff2") format("woff2"); font-weight: 400 700; font-display: swap; }
+  @font-face { font-family: "Roboto Mono"; src: url("assets/fonts/roboto-mono.woff2") format("woff2"); font-weight: 400 700; font-display: swap; }
+  @font-face { font-family: "Source Sans 3"; src: url("assets/fonts/source-sans-3.woff2") format("woff2"); font-weight: 400 600; font-display: swap; }
   :root {
     --gold: #FDC330;
     --ink: #1C1C1B;
