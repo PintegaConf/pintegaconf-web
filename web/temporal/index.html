@@ -167,14 +167,13 @@
   .btn-ghost:hover { background: var(--gold); color: var(--ink); }
   .btn:focus-visible { outline: 2px solid var(--white); outline-offset: 3px; }
 
-  /* Entradas: mostaza con texto negro; detrás, el contorno del papel desplazado */
-  .cta-principal { background: var(--gold); color: var(--ink); box-shadow: 6px 6px 0 var(--bg), 6px 6px 0 2px var(--gold); }
+  /* Entradas: mostaza con texto negro; detrás, el contorno del papel desplazado. Sin botón: el padding de abajo deja
+     hueco a las huellas, que si no pisan el texto en móvil */
+  .cta-principal { background: var(--gold); color: var(--ink); padding-bottom: 4.5rem; box-shadow: 6px 6px 0 var(--bg), 6px 6px 0 2px var(--gold); }
   .cta-principal:hover, .cta-principal:focus-within { box-shadow: 3px 3px 0 var(--bg), 3px 3px 0 2px var(--gold); }
   .cta-principal .tag { background: var(--ink); color: var(--gold); }
   .cta-principal p { color: var(--ink); }
   .cta-principal::after { background: var(--ink); opacity: .3; }
-  .cta-principal .btn { background: var(--ink); border-color: var(--ink); color: var(--gold); }
-  .cta-principal .btn:focus-visible { outline-color: var(--ink); }
   /* Alto contraste: las sombras desaparecen, así que cada tarjeta lleva borde */
   @media (forced-colors: active) { .cta { border: 1px solid CanvasText; } }
 
@@ -291,8 +290,7 @@
       <article class="cta cta-principal">
         <span class="tag">Entradas</span>
         <h3>Muy pronto a la venta</h3>
-        <p>Estamos preparando la venta de entradas. Escríbenos y te avisamos en cuanto abra.</p>
-        <a class="btn" href="mailto:info@pintegaconf.es?subject=Av%C3%ADsame%20cuando%20salgan%20las%20entradas">Avísame</a>
+        <p>Estamos preparando la venta de entradas.</p>
       </article>
       <article class="cta">
         <span class="tag">Ponentes</span>
