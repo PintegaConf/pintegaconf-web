@@ -14,7 +14,8 @@ web/
   site/          ← LA WEB (v2, Astro). Código fuente: se edita aquí. Guía práctica en site/README.md
   web_assets/    ← material original de diseño (ilustraciones, medallones, orbes). No se sirve tal cual.
   tools/         ← herramientas: procesar-equipo.py (prepara las ilustraciones del equipo)
-  temporal/      ← web provisional "en obras" (un solo HTML + assets/), para publicar mientras tanto
+  temporal/      ← web provisional "en obras" (un solo HTML + assets/): es la que se publica ahora
+  nginx.conf     ← configuración de nginx de la imagen Docker (Dockerfile en la raíz del repositorio)
   backup/        ← copia de la v1 (archivo único) y de la web temporal, tal como estaban. Referencia; no se toca.
 ```
 
@@ -68,7 +69,7 @@ Cómo se mitigan los contras de Astro:
   - la base legal y el responsable del tratamiento;
   - quitar los campos que no sean necesarios ("Trabajo en..." ¿hace falta?).
 - **Stripe:** usar **Stripe Checkout** o **Payment Links**, de modo que la tarjeta nunca pase por nuestra web. Para crear la sesión de pago y recibir los webhooks hará falta una función serverless pequeña (Cloudflare/Netlify), con la clave secreta solo en el servidor y la firma de los webhooks verificada.
-- **Hosting:** las cabeceras de `public/_headers` funcionan en Netlify y Cloudflare Pages. En nginx hay que traducirlas (ver `site/README.md`). HSTS solo cuando el HTTPS esté funcionando.
+- **Hosting:** se despliega con el `Dockerfile` de la raíz (nginx con las cabeceras de `public/_headers` traducidas en `web/nginx.conf`); de momento solo la web temporal. Si se cambia una cabecera, cambiarla en los dos sitios. HSTS solo cuando el HTTPS esté funcionando.
 - **Email en claro** (`mailto:info@…`): los bots lo recogen para spam. Es aceptable para una conferencia; la alternativa sería un formulario de contacto.
 - **Analítica:** ahora no hay ninguna, así que no hace falta banner de cookies. Si se añade, que sea sin cookies (Plausible, Umami autoalojado…) o habrá que poner banner con opción de rechazar.
 
@@ -82,7 +83,7 @@ Cómo se mitigan los contras de Astro:
    - comprobar el contraste del modo claro con una herramienta;
    - probar con VoiceOver en iPhone y Mac.
 4. ~~Integración continua~~ **Hecho:** workflow `.github/workflows/web.yml` (tipos, build y `npm audit` en cada cambio de `web/site`) y **Dependabot** (`.github/dependabot.yml`), más alertas y correcciones automáticas de seguridad activadas en el repositorio.
-5. **Web temporal** como segunda página del proyecto Astro (hoy está suelta en `web-temporal/`), para compartir cabecera, fuentes y CSP.
+5. **Web temporal** como segunda página del proyecto Astro (hoy está suelta en `web/temporal/`), para compartir cabecera, fuentes y CSP. (Ya tiene sus fuentes autoalojadas y su propia CSP, oct 2026.)
 6. **Traducciones al inglés y al gallego** (el español sigue siendo el idioma por defecto). Plan:
    - **Rutas:** usar el enrutado de idiomas que Astro trae de serie (`i18n` en `astro.config.mjs`, `locales: ["es", "en", "gl"]`, `defaultLocale: "es"`). Así el español sigue en `/` y los otros idiomas van en `/en/` y `/gl/`. No hace falta ninguna integración.
    - **Textos:** sacar los que hoy están escritos dentro de los componentes a diccionarios por idioma (p. ej. `src/i18n/{es,en,gl}.ts`), junto con los textos de `src/data/`, y un selector de idioma en la cabecera y el menú.

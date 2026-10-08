@@ -27,6 +27,7 @@ Repositorio **github.com/PintegaConf/pintegaconf-web — PRIVADO (debe seguir si
 
 ```
 CLAUDE.md                      ← una línea: importa claude/CLAUDE.md
+Dockerfile, .dockerignore      ← imagen nginx para desplegar (hoy sirve web/temporal; config en web/nginx.conf)
 README.md                      ← qué hay en el repositorio
 claude/
   CLAUDE.md                    ← este archivo
@@ -84,7 +85,7 @@ Seguridad del proyecto: `.npmrc` con `ignore-scripts` y versiones exactas (no qu
 ## Pendiente (resumen — detalle en claude/docs/contexto-web.md)
 
 - **Stripe como pasarela** de compra de entradas.
-- Web temporal "en obras" hecha en `web/temporal/`: falta confirmar dominio/email y publicarla (redes ya añadidas).
+- Web temporal "en obras" hecha en `web/temporal/`, con fuentes autoalojadas y CSP propia (oct 2026). Es la que se va a publicar (ver Publicación).
 - Line-up de ponentes, logos de patrocinadores (`logos` de cada nivel en `web/site/src/data/patrocinio.ts`), colaboradores y comunidades.
 - Precio de entrada + integración con Stripe.
 - Agenda: detalles del pre-evento (viernes 9) y horario de charlas (sábado 10).
@@ -93,4 +94,4 @@ Seguridad del proyecto: `.npmrc` con `ignore-scripts` y versiones exactas (no qu
 - **Traducciones: inglés y gallego** además del español (idioma por defecto). Plan técnico en `web/README.md` → Mejoras propuestas.
 - Páginas FAQ, código de conducta, aviso legal, privacidad y cookies: **hechas** (sep 2026). Privacidad y código de conducta están basados en los de lareiraconf.es (misma organización; cambiar "Lareira Conf" por "Píntega Conf"). **Titular: Asociación Sysarmy Galicia** (NIF G21961842, Travesía de Arteixo 5, 3.º dcha., Arteixo); email legal y de denuncias `administracion@sysarmygalicia.com` (las consultas generales siguen en info@pintegaconf.es). Contactos de Telegram del código de conducta en `web/site/src/data/conducta.ts`. Los textos de Lareira están revisados y estuvieron en producción: mantener su contenido tal cual (p. ej. las comunicaciones de próximas ediciones a quien compra entrada por interés legítimo, con opción de oponerse), sin "mejorarlos" por nuestra cuenta. Las legales siguen en BORRADOR: falta el hosting en `web/site/src/data/legal.ts` y una revisión legal. No inventar datos.
 - Web v2 en Astro hecha y probada por Matías en Safari de Mac, iPhone e iPad (sep 2026). Falta publicarla (el código ya está en el repo privado).
-- **Publicación (web temporal y completa), hosting y dominio: EN ESPERA.** No depende de Matías; no proponerla ni prepararla hasta que él lo diga. Mejoras propuestas en `web/README.md` (accesibilidad, CI, RGPD del formulario, Stripe con Checkout, web temporal dentro de Astro).
+- **Publicación (8-10-2026):** Matías decidió publicar **solo la web temporal**; la completa sigue sin publicar hasta que él lo diga. Se despliega con el `Dockerfile` de la raíz (lo pidió Nacho para desplegar). Si cambian las cabeceras, cambiarlas en `web/nginx.conf` y en `web/site/public/_headers`. HSTS comentado hasta que el dominio tenga HTTPS. Mejoras propuestas en `web/README.md` (accesibilidad, CI, RGPD del formulario, Stripe con Checkout, web temporal dentro de Astro).

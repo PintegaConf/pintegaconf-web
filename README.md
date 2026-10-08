@@ -21,6 +21,19 @@ cd web/site && npm run dev       # → http://localhost:4321
 
 Requisitos y detalles: [`claude/README.md`](claude/README.md).
 
+## Desplegar
+
+El [`Dockerfile`](Dockerfile) crea una imagen de nginx (sin root, puerto 8080) con la web y sus
+cabeceras de seguridad ([`web/nginx.conf`](web/nginx.conf)). **De momento sirve la web temporal
+("en obras")**; la completa se añadirá cuando se publique. El HTTPS lo pone el proxy de delante.
+
+```sh
+docker build -t pintegaconf-web .
+docker run --rm -p 8080:8080 pintegaconf-web   # → http://localhost:8080
+```
+
+La CI construye la imagen y comprueba sus cabeceras en cada cambio.
+
 ## Reglas
 
 - 🔒 **El repositorio es privado** y debe seguir siéndolo.
