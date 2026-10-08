@@ -101,7 +101,7 @@ jobs:
         run: node tests/accesibilidad.mjs
         env:
           A11Y_DIST: ../temporal
-          A11Y_PAGINAS: /
+          A11Y_PAGINAS: /,/aviso-legal/
 
   # La imagen Docker de despliegue (Dockerfile en la raíz) se construye y responde con las cabeceras
   # de seguridad. Los runners traen Docker; en local no hace falta tenerlo.
@@ -128,6 +128,7 @@ jobs:
           grep -q "Píntega Conf" <<< "$(curl -fsS http://localhost:8080/)"
           curl -fsS -o /dev/null http://localhost:8080/assets/fonts/arima.woff2
           curl -fsS -o /dev/null http://localhost:8080/assets/pausa.js
+          grep -q "Asociación Sysarmy Galicia" <<< "$(curl -fsS http://localhost:8080/aviso-legal/)"
           CABECERAS=$(curl -fsSI http://localhost:8080/)
           echo "$CABECERAS"
           for c in "Strict-Transport-Security" "frame-ancestors 'none'" "X-Frame-Options: DENY" "X-Content-Type-Options: nosniff" "Referrer-Policy" "Permissions-Policy"; do
