@@ -198,7 +198,19 @@
     .huellas { width: 380px; }
   }
   @media (max-width: 480px) {
-    .facts li { font-size: 14px; }
+    /* Portada compacta: en un iPhone SE (375×548 visibles con las barras de Safari) las redes se ven sin bajar */
+    .works-top { padding: 4px 0; gap: 4px 6px; }
+    .works p { font-size: 11px; letter-spacing: .05em; padding: .25rem .7rem; }
+    .pausa { font-size: 11px; padding: .2rem .7rem; }
+    .hero-grid { padding-top: 1.25rem; }
+    .logo { width: min(250px, 100%); }
+    .kicker { margin-top: 1rem; }
+    h1 { font-size: 30px; max-width: none; }
+    .facts { margin-top: 1.25rem; gap: .5rem; }
+    .facts li { font-size: 14px; padding: .45rem .9rem .45rem .7rem; }
+    .siguenos { margin-top: 1.25rem; }
+    .siguenos .redes { gap: .5rem; }   /* los tres botones en una fila desde 375px */
+    .siguenos a { min-height: 44px; gap: .45rem; font-size: 16px; padding: .45rem .8rem .45rem .65rem; }
     .about { padding-top: 3.5rem; }
     .format { padding-left: 1.2rem; }
   }
