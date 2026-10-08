@@ -127,6 +127,7 @@ Decisión, seguridad y mejoras: `web/README.md`. Guía de uso: `web/site/README.
   - [ ] Confirmar dominio y email.
   - [ ] Probar en Safari/iPhone y publicar.
   - [x] Lista para publicar (oct 2026): fuentes servidas desde `assets/fonts/` (antes de Google, problema de RGPD), CSP en un `<meta>` (el script del botón de pausa pasó a `assets/pausa.js`) e imagen Docker (`Dockerfile` en la raíz + `web/nginx.conf`, nginx sin root en el puerto 8080). La CI construye la imagen y comprueba las cabeceras.
+  - [x] Oct 2026: HSTS activado; aviso legal en `aviso-legal/index.html` (copia del de Astro; enlazado en el pie); portada compacta en ≤ 480 px para que «Síguenos» se vea sin bajar en un iPhone SE (375×548 visibles; en 320 px no cabe).
 
 ### Entradas
 - [x] Entrada estilo Wallet (sep 2026): `.pass` dentro de `.pass-stage`; reutiliza por JS el logo de la cabecera, el orbe y las huellas (no duplica data URI). Campos: Charlas Sáb 10 abr, Asistente (del formulario), Entrada General, Lugar Rectorado UDC, Pre-evento Vie 9 abr. QR decorativo generado en JS (no es real). Muescas con círculos `var(--bg)` (no máscaras, por Safari). El ticket clásico sigue en el HTML: `data-ticket="clasico"` para volver a él.

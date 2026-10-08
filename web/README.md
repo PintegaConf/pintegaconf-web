@@ -69,7 +69,7 @@ Cómo se mitigan los contras de Astro:
   - la base legal y el responsable del tratamiento;
   - quitar los campos que no sean necesarios ("Trabajo en..." ¿hace falta?).
 - **Stripe:** usar **Stripe Checkout** o **Payment Links**, de modo que la tarjeta nunca pase por nuestra web. Para crear la sesión de pago y recibir los webhooks hará falta una función serverless pequeña (Cloudflare/Netlify), con la clave secreta solo en el servidor y la firma de los webhooks verificada.
-- **Hosting:** se despliega con el `Dockerfile` de la raíz (nginx con las cabeceras de `public/_headers` traducidas en `web/nginx.conf`); de momento solo la web temporal. Si se cambia una cabecera, cambiarla en los dos sitios. HSTS solo cuando el HTTPS esté funcionando.
+- **Hosting:** se despliega con el `Dockerfile` de la raíz (nginx con las cabeceras de `public/_headers` traducidas en `web/nginx.conf`); de momento solo la web temporal. Si se cambia una cabecera, cambiarla en los dos sitios. HSTS activado (el dominio tendrá HTTPS).
 - **Email en claro** (`mailto:info@…`): los bots lo recogen para spam. Es aceptable para una conferencia; la alternativa sería un formulario de contacto.
 - **Analítica:** ahora no hay ninguna, así que no hace falta banner de cookies. Si se añade, que sea sin cookies (Plausible, Umami autoalojado…) o habrá que poner banner con opción de rechazar.
 
