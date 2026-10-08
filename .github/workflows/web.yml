@@ -130,7 +130,7 @@ jobs:
           curl -fsS -o /dev/null http://localhost:8080/assets/pausa.js
           CABECERAS=$(curl -fsSI http://localhost:8080/)
           echo "$CABECERAS"
-          for c in "frame-ancestors 'none'" "X-Frame-Options: DENY" "X-Content-Type-Options: nosniff" "Referrer-Policy" "Permissions-Policy"; do
+          for c in "Strict-Transport-Security" "frame-ancestors 'none'" "X-Frame-Options: DENY" "X-Content-Type-Options: nosniff" "Referrer-Policy" "Permissions-Policy"; do
             grep -qiF "$c" <<< "$CABECERAS" || { echo "Falta la cabecera: $c"; exit 1; }
           done
           # nginx no debe decir su versión ("! grep" no haría fallar el paso con bash -e)
