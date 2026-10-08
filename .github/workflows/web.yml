@@ -9,14 +9,14 @@
 # las PR en borrador (draft) y las de Dependabot no se fusionan solas, para revisarlas antes.
 #
 # Coste: el plan Free de la organización incluye 2.000 minutos/mes en repos privados. La comprobación
-# completa tarda unos 3 minutos y solo se hace si cambia algo de web/site, web/temporal o este archivo;
+# completa tarda unos 3 minutos y solo se hace si cambia algo de web/site, web/temporal, Docker o este archivo;
 # en las demás PR solo corren los dos jobs cortos (mirar los archivos y fusionar).
 name: Web
 
 on:
   push:
     branches: [main]
-    paths: ["web/site/**", "web/temporal/**", ".github/workflows/web.yml"]
+    paths: ["web/site/**", "web/temporal/**", "web/nginx.conf", "Dockerfile", ".dockerignore", ".github/workflows/web.yml"]
   # Todas las PR, sin filtro de rutas: la fusión automática tiene que ejecutarse aunque no toquen la web
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
@@ -55,7 +55,7 @@ jobs:
           fi
           # Nombre actual y anterior (si se ha movido) de cada archivo de la PR
           ARCHIVOS=$(gh api "repos/$REPO/pulls/$PR/files" --paginate --jq '.[] | .filename, (.previous_filename // empty)')
-          if grep -qE '^(web/site/|web/temporal/|\.github/workflows/web\.yml$)' <<< "$ARCHIVOS"; then
+          if grep -qE '^(web/site/|web/temporal/|web/nginx\.conf$|Dockerfile$|\.dockerignore$|\.github/workflows/web\.yml$)' <<< "$ARCHIVOS"; then
             echo "web=true" >> "$GITHUB_OUTPUT"
           else
             echo "web=false" >> "$GITHUB_OUTPUT"
@@ -103,6 +103,44 @@ jobs:
           A11Y_DIST: ../temporal
           A11Y_PAGINAS: /
 
+  # La imagen Docker de despliegue (Dockerfile en la raíz) se construye y responde con las cabeceras
+  # de seguridad. Los runners traen Docker; en local no hace falta tenerlo.
+  docker:
+    name: Imagen Docker
+    needs: cambios
+    if: needs.cambios.outputs.web == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Construir y arrancar
+        run: |
+          docker build -t pintegaconf-web .
+          docker run -d --name web -p 8080:8080 pintegaconf-web
+          curl -fsS --retry 10 --retry-connrefused --retry-delay 1 -o /dev/null http://localhost:8080/
+
+      - name: Comprobar la página, los archivos y las cabeceras
+        run: |
+          grep -q "Píntega Conf" <<< "$(curl -fsS http://localhost:8080/)"
+          curl -fsS -o /dev/null http://localhost:8080/assets/fonts/arima.woff2
+          curl -fsS -o /dev/null http://localhost:8080/assets/pausa.js
+          CABECERAS=$(curl -fsSI http://localhost:8080/)
+          echo "$CABECERAS"
+          for c in "frame-ancestors 'none'" "X-Frame-Options: DENY" "X-Content-Type-Options: nosniff" "Referrer-Policy" "Permissions-Policy"; do
+            grep -qiF "$c" <<< "$CABECERAS" || { echo "Falta la cabecera: $c"; exit 1; }
+          done
+          # nginx no debe decir su versión ("! grep" no haría fallar el paso con bash -e)
+          if grep -qiE '^server: nginx/' <<< "$CABECERAS"; then echo "nginx enseña su versión"; exit 1; fi
+          # Una ruta inexistente da 404 (y también lleva las cabeceras)
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8080/no-existe)" = 404
+
+      - name: Registro de nginx
+        if: always()
+        run: docker logs web
+
   # Fusiona la PR en main cuando todo ha ido bien. Solo PR de ramas de este repositorio (las abre
   # alguien con permiso de escritura), que no sean borrador ni de Dependabot. --match-head-commit:
   # solo se fusiona el commit que se ha comprobado; si llega otro push entretanto, se espera a su CI.
@@ -111,7 +149,7 @@ jobs:
   # no actúa cuando la fusión la hace el propio workflow).
   fusionar:
     name: Fusionar en main
-    needs: [cambios, build]
+    needs: [cambios, build, docker]
     if: >-
       !cancelled() &&
       github.event_name == 'pull_request' &&
@@ -119,7 +157,8 @@ jobs:
       !github.event.pull_request.draft &&
       github.event.pull_request.user.login != 'dependabot[bot]' &&
       needs.cambios.result == 'success' &&
-      (needs.build.result == 'success' || needs.build.result == 'skipped')
+      (needs.build.result == 'success' || needs.build.result == 'skipped') &&
+      (needs.docker.result == 'success' || needs.docker.result == 'skipped')
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
