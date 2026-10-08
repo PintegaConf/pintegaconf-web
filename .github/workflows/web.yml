@@ -120,7 +120,8 @@ jobs:
         run: |
           docker build -t pintegaconf-web .
           docker run -d --name web -p 8080:8080 pintegaconf-web
-          curl -fsS --retry 10 --retry-connrefused --retry-delay 1 -o /dev/null http://localhost:8080/
+          # Esperar a nginx: mientras arranca, Docker acepta la conexión y la corta (error 56), no la rechaza
+          curl -fsS --retry 10 --retry-all-errors --retry-delay 1 -o /dev/null http://localhost:8080/
 
       - name: Comprobar la página, los archivos y las cabeceras
         run: |
