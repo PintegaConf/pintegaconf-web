@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Misma CSP que la portada (ver el comentario de ../index.html) -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Aviso legal · Píntega Conf '27</title>
+<meta name="description" content="Datos del titular y condiciones de uso de la web de Píntega Conf '27.">
+<meta name="theme-color" content="#FDC330">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="preload" href="../assets/fonts/arima.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin>
+
+<style>
+  @font-face { font-family: "Arima"; src: url("../assets/fonts/arima.woff2") format("woff2"); font-weight: 400 700; font-display: swap; }
+  @font-face { font-family: "Source Sans 3"; src: url("../assets/fonts/source-sans-3.woff2") format("woff2"); font-weight: 400 600; font-display: swap; }
+  :root { --gold: #FDC330; --ink: #1C1C1B; --bg: #232323; --white: #ffffff; --muted: #c9c9c9; }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--muted); font: 400 16px/1.7 "Source Sans 3", "Source Sans Pro", system-ui, sans-serif; }
+  .wrap { width: min(760px, 100% - 3rem); margin: 0 auto; }
+  a { color: var(--gold); text-underline-offset: 3px; }
+  a:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+
+  .cabecera { background: var(--gold); padding: 1rem 0; }
+  .cabecera a { display: inline-block; }
+  .cabecera a:focus-visible { outline-color: var(--ink); }
+  .cabecera img { width: min(220px, 100%); height: auto; display: block; }
+  @media (forced-colors: active) { .cabecera img { background: #fff; padding: 4px 8px; border-radius: 4px; forced-color-adjust: none; } }
+
+  main { padding: 3.5rem 0 4.5rem; }
+  h1 { margin: 0 0 2rem; font: 700 clamp(36px, 5vw, 48px)/1.1 "Arima", Georgia, serif; color: var(--gold); }
+  h2 { margin: 2.4rem 0 .8rem; font: 700 26px/1.25 "Arima", Georgia, serif; color: var(--white); }
+  p, ul { margin: 0 0 1rem; }
+  li { margin-bottom: .35rem; }
+  strong { color: var(--white); font-weight: 600; }
+  .actualizado { margin-top: 3rem; font-size: 14px; }
+  .volver { margin-top: 2rem; }
+  .volver a { display: inline-block; padding: .25rem 0; }   /* ≥ 24 px de alto (WCAG 2.5.8) */
+
+  .pie { background: var(--gold); color: var(--ink); padding: 1.6rem 0; font-size: 15px; }
+  .pie .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .6rem 1.5rem; }
+  .pie a { color: var(--ink); font-weight: 600; display: inline-block; padding: .25rem 0; }
+  .pie a:focus-visible { outline-color: var(--ink); }
+  @media (max-width: 680px) { main { padding: 2.5rem 0 4rem; } }
+</style>
+</head>
+<body>
+
+<header class="cabecera">
+  <div class="wrap"><a href="../" aria-label="Píntega Conf '27 — portada"><img src="../assets/logo-pintega-horizontal.svg" alt="Píntega Conf '27" width="460" height="108"></a></div>
+</header>
+
+<!-- Copia de web/site/src/pages/aviso-legal.astro (datos de web/site/src/data/legal.ts). Si cambia uno, cambiar el otro.
+     Sin el enlace a privacidad y cookies: esas páginas aún no están en la web temporal (que no recoge datos ni usa cookies). -->
+<main class="wrap">
+  <h1>Aviso legal</h1>
+
+  <h2>Titular de la web</h2>
+  <p>En cumplimiento de la Ley 34/2002, de servicios de la sociedad de la información y de comercio electrónico (LSSI-CE):</p>
+  <ul>
+    <li><strong>Titular:</strong> Asociación Sysarmy Galicia</li>
+    <li><strong>NIF:</strong> G21961842</li>
+    <li><strong>Domicilio:</strong> Travesía de Arteixo 5, 3.º derecha, Arteixo (A Coruña)</li>
+    <li><strong>Contacto:</strong> <a href="mailto:administracion@sysarmygalicia.com">administracion@sysarmygalicia.com</a></li>
+  </ul>
+
+  <h2>Objeto</h2>
+  <p>
+    Esta web informa sobre Píntega Conf '27, una conferencia tecnológica que se celebra en A Coruña, y permitirá comprar
+    entradas cuando se abra la venta. Usarla implica aceptar este aviso legal.
+  </p>
+
+  <h2>Propiedad intelectual</h2>
+  <p>
+    El nombre y el logotipo de Píntega Conf, las ilustraciones, los textos y el diseño de esta web pertenecen a la organización o a
+    sus autores, y no pueden reproducirse sin permiso. Los logotipos de patrocinadores, colaboradores y comunidades pertenecen a sus
+    respectivos titulares.
+  </p>
+
+  <h2>Enlaces a otras webs</h2>
+  <p>
+    La web puede enlazar a páginas de terceros (patrocinadores, comunidades, la pasarela de pago). No somos responsables de su
+    contenido ni de sus políticas.
+  </p>
+
+  <h2>Responsabilidad</h2>
+  <p>
+    Procuramos que la información sea correcta y esté al día, pero datos como el programa, los ponentes o los horarios pueden
+    cambiar. La información definitiva es la que se publique más cerca del evento.
+  </p>
+
+  <h2>Ley aplicable</h2>
+  <p>Este aviso legal se rige por la legislación española.</p>
+
+  <p class="actualizado">Última actualización: 27 de septiembre de 2026.</p>
+  <p class="volver"><a href="../">Volver a la portada</a></p>
+</main>
+
+<footer class="pie">
+  <div class="wrap">
+    <span>Píntega Conf '27 · 9 y 10 de abril de 2027 · A Coruña</span>
+    <a href="mailto:info@pintegaconf.es">info@pintegaconf.es</a>
+  </div>
+</footer>
+
+</body>
+</html>
