@@ -7,6 +7,9 @@
 !/README.md
 !/CLAUDE.md
 !/.gitignore
+# Imagen Docker para desplegar la web (la configuración de nginx está en web/)
+!/Dockerfile
+!/.dockerignore
 # Configuración de GitHub (workflows, Dependabot): GitHub solo la busca en la raíz
 !/.github/
 
