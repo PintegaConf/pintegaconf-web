@@ -60,9 +60,7 @@
     --gold: #FDC330;
     --ink: #1C1C1B;
     --bg: #232323;
-    --panel-top: #1b1b1b;
-    --panel-bottom: #2d2d2d;
-    --white: #ffffff;
+      --white: #ffffff;
     --muted: #c9c9c9;
     --ease: cubic-bezier(.22,.9,.24,1);
     --f-head: "Arima", Georgia, serif;
@@ -138,14 +136,24 @@
 
   /* ---------- Llamadas ---------- */
   .ctas { padding: 4rem 0 5rem; }
-  .cta-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  /* Recorte de papel plano a dos tonos, como el manual de marca: cartulina negra sobre otra mostaza desplazada, la
+     etiqueta como pestaña y dos pasos de la píntega en la esquina. Entradas va al revés (mostaza): es la acción principal. */
+  .cta-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.25rem 2rem; }
   .cta {
     position: relative; display: flex; flex-direction: column; gap: .6rem;
-    border: 1px solid var(--gold); background: linear-gradient(180deg, var(--panel-top), var(--panel-bottom));
-    padding: 2rem 1.6rem 1.8rem;
+    background: var(--ink); margin-top: .9rem; padding: 2.4rem 1.6rem 1.8rem;
+    box-shadow: 6px 6px 0 var(--gold); transition: transform .15s var(--ease), box-shadow .15s var(--ease);
   }
-  .cta::after { content: ""; position: absolute; left: -1px; bottom: -1px; width: 22px; height: 22px; background: var(--gold); }
-  .cta .tag { font: 700 12px/1.4 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--gold); }
+  /* Al pasar el ratón o con el foco dentro, el papel "se pulsa" hacia su sombra */
+  .cta:hover, .cta:focus-within { transform: translate(3px, 3px); box-shadow: 3px 3px 0 var(--gold); }
+  .cta::after {
+    content: ""; position: absolute; right: 1.2rem; bottom: 1.2rem; width: 46px; height: 34px; background: var(--gold); opacity: .35;
+    -webkit-mask: url(assets/huella.svg) center / contain no-repeat; mask: url(assets/huella.svg) center / contain no-repeat;
+  }
+  .cta .tag {
+    position: absolute; top: 0; left: 1.6rem; transform: translateY(-50%); padding: .3rem .7rem;
+    background: var(--gold); color: var(--ink); font: 700 12px/1.4 var(--f-mono); letter-spacing: .12em; text-transform: uppercase;
+  }
   .cta h3 { margin: 0; font: 700 26px/1.15 var(--f-head); }
   .cta p { margin: 0 0 .8rem; color: var(--muted); font-size: 15.5px; }
   .btn {
@@ -159,34 +167,16 @@
   .btn-ghost:hover { background: var(--gold); color: var(--ink); }
   .btn:focus-visible { outline: 2px solid var(--white); outline-offset: 3px; }
 
-  /* ---------- Llamadas, variante "papel" (data-cajas="papel" en .ctas; sin el atributo, las cajas del mock) ----------
-     Recorte de papel plano a dos tonos, como el manual de marca: cartulina negra sobre otra mostaza desplazada, la
-     etiqueta como pestaña y dos pasos de la píntega en la esquina. Entradas va al revés (mostaza): es la acción principal. */
-  [data-cajas="papel"] .cta-grid { gap: 2.25rem 2rem; }
-  [data-cajas="papel"] .cta {
-    border: 0; background: var(--ink); margin-top: .9rem; padding: 2.4rem 1.6rem 1.8rem;
-    box-shadow: 6px 6px 0 var(--gold); transition: transform .15s var(--ease), box-shadow .15s var(--ease);
-  }
-  /* Al pasar el ratón o con el foco dentro, el papel "se pulsa" hacia su sombra */
-  [data-cajas="papel"] .cta:hover, [data-cajas="papel"] .cta:focus-within { transform: translate(3px, 3px); box-shadow: 3px 3px 0 var(--gold); }
-  [data-cajas="papel"] .cta .tag {
-    position: absolute; top: 0; left: 1.6rem; transform: translateY(-50%);
-    background: var(--gold); color: var(--ink); padding: .3rem .7rem;
-  }
-  [data-cajas="papel"] .cta::after {
-    left: auto; right: 1.2rem; bottom: 1.2rem; width: 46px; height: 34px; background: var(--gold); opacity: .35;
-    -webkit-mask: url(assets/huella.svg) center / contain no-repeat; mask: url(assets/huella.svg) center / contain no-repeat;
-  }
   /* Entradas: mostaza con texto negro; detrás, el contorno del papel desplazado */
-  [data-cajas="papel"] .cta-principal { background: var(--gold); color: var(--ink); box-shadow: 6px 6px 0 var(--bg), 6px 6px 0 2px var(--gold); }
-  [data-cajas="papel"] .cta-principal:hover, [data-cajas="papel"] .cta-principal:focus-within { box-shadow: 3px 3px 0 var(--bg), 3px 3px 0 2px var(--gold); }
-  [data-cajas="papel"] .cta-principal .tag { background: var(--ink); color: var(--gold); }
-  [data-cajas="papel"] .cta-principal p { color: var(--ink); }
-  [data-cajas="papel"] .cta-principal::after { background: var(--ink); opacity: .3; }
-  [data-cajas="papel"] .cta-principal .btn { background: var(--ink); border-color: var(--ink); color: var(--gold); }
-  [data-cajas="papel"] .cta-principal .btn:focus-visible { outline-color: var(--ink); }
+  .cta-principal { background: var(--gold); color: var(--ink); box-shadow: 6px 6px 0 var(--bg), 6px 6px 0 2px var(--gold); }
+  .cta-principal:hover, .cta-principal:focus-within { box-shadow: 3px 3px 0 var(--bg), 3px 3px 0 2px var(--gold); }
+  .cta-principal .tag { background: var(--ink); color: var(--gold); }
+  .cta-principal p { color: var(--ink); }
+  .cta-principal::after { background: var(--ink); opacity: .3; }
+  .cta-principal .btn { background: var(--ink); border-color: var(--ink); color: var(--gold); }
+  .cta-principal .btn:focus-visible { outline-color: var(--ink); }
   /* Alto contraste: las sombras desaparecen, así que cada tarjeta lleva borde */
-  @media (forced-colors: active) { [data-cajas="papel"] .cta { border: 1px solid CanvasText; } }
+  @media (forced-colors: active) { .cta { border: 1px solid CanvasText; } }
 
   /* ---------- Pie ---------- */
   .foot { background: var(--gold); color: var(--ink); padding: 1.6rem 0; font-size: 15px; }
@@ -296,7 +286,7 @@
     </div>
   </section>
 
-  <section class="ctas" aria-label="Participa" data-cajas="papel">
+  <section class="ctas" aria-label="Participa">
     <div class="wrap cta-grid">
       <article class="cta cta-principal">
         <span class="tag">Entradas</span>
