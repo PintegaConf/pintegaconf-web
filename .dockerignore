@@ -1,0 +1,6 @@
+# Lista blanca: a la imagen solo llega lo que se sirve. Así, quien construya desde su carpeta del
+# proyecto nunca mete contracts/, dossiers/, marca_and_rrss/... (que solo están en local).
+*
+!web/nginx.conf
+!web/temporal/
+**/.DS_Store
