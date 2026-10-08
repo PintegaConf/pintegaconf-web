@@ -3,7 +3,7 @@
 // logos por fila y el tamaño del medallón (valores por nivel en los estilos, [data-nivel]).
 import { Image } from "astro:assets";
 import { niveles } from "../../data/patrocinio";
-import { mailto } from "../../data/evento";
+import { evento } from "../../data/evento";
 import LogoHueco from "../LogoHueco.astro";
 ---
 <section id="patrocinadores">
@@ -31,7 +31,7 @@ import LogoHueco from "../LogoHueco.astro";
     </div>
     <div class="sponsor-cta">
       <p>¿Quieres que tu empresa impulse la comunidad tech?</p>
-      <a class="btn btn-gold" href={mailto("Patrocinio Píntega Conf '27")}>Patrocina Píntega Conf</a>
+      <a class="btn btn-gold" href={evento.dossierPatrocinio}>Patrocina Píntega Conf</a>
     </div>
   </div>
 </section>

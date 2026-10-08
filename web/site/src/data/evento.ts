@@ -5,7 +5,11 @@ export const evento = {
   lema: "Código, comunidad y futuro",
   ciudad: "A Coruña",
   email: "info@pintegaconf.es",
-  // Formulario (Google Forms) para proponer charlas. Lo enlazan los botones de "quiero ser ponente".
+  // Dossier para ponentes (Canva). Lo enlazan los botones de "quiero ser ponente" (también el de la web temporal).
+  dossierPonentes: "https://pintegaconf-dossier.my.canva.site/pintegaconf27-dossier-ponentes-pdf",
+  // Dossier de patrocinio (Canva). Lo enlazan los botones de "patrocina" (también el de la web temporal).
+  dossierPatrocinio: "https://pintegaconf-dossier.my.canva.site",
+  // Formulario (Google Forms) para proponer charlas. Lo enlaza la FAQ.
   formularioPonentes: "https://forms.gle/RYwGGrW43a5542Rz8",
 
   // Perfiles oficiales. Salen en el pie y en schema.org (sameAs); `usuario` de X va en twitter:site.
