@@ -17,11 +17,11 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "3.7.4",
-    "astro": "7.3.5"
+    "astro": "7.3.8"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",
-    "axe-core": "4.13.0",
+    "axe-core": "4.14.0",
     "typescript": "6.0.3"
   }
 }
