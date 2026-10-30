@@ -1,6 +1,6 @@
 ---
-// Entrada estilo Apple Wallet: vista previa de la entrada con el nombre del formulario en vivo,
-// inclinación 3D con el ratón (scripts/entradas/pase.ts) y QR decorativo "Muy pronto".
+// Entrada estilo Apple Wallet: vista previa de la entrada, inclinación 3D con el ratón
+// (scripts/entradas/pase.ts) y QR decorativo (el de verdad llega por email al comprar en Weezevent).
 import { Image } from "astro:assets";
 import logo from "../../assets/marca/logo-horizontal.svg";
 import orbe from "../../assets/marca/orbe.png";
@@ -22,15 +22,15 @@ import QrDecorativo from "./QrDecorativo.astro";
       <p class="pass-tag">{evento.lema}</p>
     </div>
     <div class="pass-fields">
-      <div><span class="pass-label">Asistente</span><span class="pass-value" data-pase-nombre>Tu nombre aquí</span></div>
+      <div><span class="pass-label">Asistente</span><span class="pass-value">Tu nombre aquí</span></div>
       <div class="right"><span class="pass-label">Entrada</span><span class="pass-value">General</span></div>
       <div><span class="pass-label">Lugar</span><span class="pass-value">{evento.charlas.lugar}</span></div>
       <div class="right"><span class="pass-label">Pre-evento</span><span class="pass-value">Vie 9 abr</span></div>
     </div>
     <div class="pass-tear" aria-hidden="true"><span></span></div>
     <div class="pass-code">
-      <div class="qr" aria-hidden="true"><QrDecorativo /><b>Muy pronto</b></div>
-      <small>Tu código QR llegará al comprar la entrada</small>
+      <div class="qr" aria-hidden="true"><QrDecorativo /><b>Tu QR aquí</b></div>
+      <small>Tu código QR te llegará por email al comprar la entrada</small>
     </div>
   </article>
 </div>

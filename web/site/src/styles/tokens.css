@@ -33,7 +33,6 @@
   --slot-text: rgba(253, 195, 48, .7);
   --line: rgba(255, 255, 255, .08);
   --logo-filter: brightness(0) invert(1);   /* logos de patrocinadores en blanco */
-  --error: #ff8f85;             /* mensajes de error: 7,7:1 sobre el fondo del formulario */
 
   /* Sección EQUIPO: escenario con el orbe (oscuro en el tema oscuro, crema cálido en el claro) */
   --equipo-fondo: var(--ink);
@@ -63,7 +62,6 @@
     --slot-text: #8a5b00;
     --line: rgba(0, 0, 0, .08);
     --logo-filter: brightness(0);
-    --error: #b3261e;
     --equipo-fondo: #f3e9cf;
     --equipo-suelo: #e9dcb8;
     --equipo-halo: rgba(253, 195, 48, .35);
@@ -83,7 +81,6 @@
   --slot-text: #8a5b00;
   --line: rgba(0, 0, 0, .08);
   --logo-filter: brightness(0);
-  --error: #b3261e;             /* 6,6:1 sobre blanco */
   --equipo-fondo: #f3e9cf;
   --equipo-suelo: #e9dcb8;
   --equipo-halo: rgba(253, 195, 48, .35);

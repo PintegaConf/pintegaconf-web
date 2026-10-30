@@ -1,8 +1,8 @@
 ---
-// Entradas: diseño de la entrada + formulario de compra.
+// Entradas: diseño de la entrada + cómo comprarla (en Weezevent).
 import PaseWallet from "../entradas/PaseWallet.astro";
 import TicketClasico from "../entradas/TicketClasico.astro";
-import FormularioCompra from "../entradas/FormularioCompra.astro";
+import ComoComprar from "../entradas/ComoComprar.astro";
 
 // Diseño de la entrada: "wallet" (pase estilo Apple Wallet) o "clasico" (ticket mostaza original).
 const DISENO_ENTRADA: "wallet" | "clasico" = "wallet";
@@ -12,14 +12,13 @@ const DISENO_ENTRADA: "wallet" | "clasico" = "wallet";
     <h2 class="sec-title">ENTRADAS</h2>
     <div class="tickets">
       {DISENO_ENTRADA === "wallet" ? <PaseWallet /> : <TicketClasico />}
-      <FormularioCompra />
+      <ComoComprar />
     </div>
   </div>
 </section>
 
 <script>
   import "../../scripts/entradas/pase";
-  import "../../scripts/entradas/formulario";
 </script>
 
 <style>

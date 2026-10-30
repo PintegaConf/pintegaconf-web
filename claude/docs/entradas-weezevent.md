@@ -12,8 +12,8 @@ ya trae el panel, los QR, las facturas y los reembolsos, y no hay tiempo para de
 - **Carga:** nuestra web es estática (nginx). El pico de la apertura lo recibe la tienda de Weezevent, no nuestro servidor.
 - La confirmación de la compra la dan la página final y el email de Weezevent. En la web explicamos los pasos: elegir → pagar
   (factura si hace falta) → llega un email con la entrada y su QR (así se sabe que la compra ha terminado).
-- URL de la tienda: **pendiente**. En la web temporal está como `PENDIENTE-URL-WEEZEVENT` (dos veces en `web/temporal/index.html`,
-  PR #26 en borrador hasta tenerla).
+- URL de la tienda: **pendiente**. Está como `PENDIENTE-URL-WEEZEVENT` en `evento.tiendaEntradas` (`web/site/src/data/evento.ts`)
+  y dos veces en `web/temporal/index.html`. PR #26 en borrador hasta tenerla.
 
 ## Qué cubre Weezevent de lo que pedimos
 
@@ -43,5 +43,5 @@ Fuentes: [comptabilité](https://weezevent.com/fr/comptabilite/), [CGUS](https:/
    Basarlos en los textos de Lareira y no inventar datos.
 6. Compra real de prueba de principio a fin y reembolso después: comprobar la página final, el email, el QR, la factura, el reembolso y el escaneo con la app.
 7. Poner la URL de la tienda en la web (PR #26), quitarle el borrador y probar en Safari y en el iPhone.
-8. Web completa (Astro), cuando se publique: el formulario de compra y las menciones a Stripe (privacidad, cookies, seguridad,
-   FAQ y el distintivo «Pagos con Stripe · PCI DSS») hay que cambiarlos a Weezevent. Si Weezevent no acredita PCI DSS, quitar el distintivo.
+8. ~~Web completa (Astro): formulario y menciones a Stripe~~ **Hecho en la PR #26:** pasos y enlace a Weezevent, y FAQ, seguridad,
+   privacidad, cookies y distintivo del pie hablan de Weezevent. Falta la revisión legal de privacidad y cookies.
