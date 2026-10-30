@@ -1,6 +1,6 @@
 ---
 // Política de privacidad (RGPD, art. 13, y LOPDGDD). Basada en la de Lareira Conf (lareiraconf.es), que
-// organiza la misma asociación, adaptada a esta web (sin cookies, fuentes propias, pago con Stripe).
+// organiza la misma asociación, adaptada a esta web (sin cookies, fuentes propias, venta de entradas en Weezevent).
 // BORRADOR: falta el alojamiento (src/data/legal.ts) y la revisión legal.
 import PaginaTexto from "../layouts/PaginaTexto.astro";
 import Dato from "../components/Dato.astro";
@@ -37,7 +37,7 @@ import { evento } from "../data/evento";
     <li><strong>Salud (opcional):</strong> alergias e intolerancias alimentarias, solo si nos las indicas para la comida.</li>
     <li><strong>Imágenes y vídeos:</strong> fotos o vídeos tomados durante el evento en los que puedas aparecer.</li>
   </ul>
-  <p>Mientras la venta no esté abierta, el formulario de entradas de esta web no envía tus datos a ningún sitio.</p>
+  <p>Los datos de la compra los das en la tienda de Weezevent, que los recoge por nuestra cuenta (ver «A quién podemos comunicar tus datos»).</p>
 
   <h3>Si eres ponente</h3>
   <ul>
@@ -113,9 +113,10 @@ import { evento } from "../data/evento";
       <strong>Proveedores</strong> que necesitan tus datos para prestarnos los servicios que les hemos contratado, entre ellos:
       <ul>
         <li>
-          <strong>Stripe</strong> (Stripe Payments Europe, Ltd., Irlanda), que procesará el pago de las entradas en su propia página:
-          los datos de tu tarjeta los recibe Stripe, nunca esta web. Más información en su{" "}
-          <a href="https://stripe.com/es/privacy" rel="noopener noreferrer">política de privacidad</a>.
+          <strong>Weezevent</strong> (Weezevent SAS, Francia), la plataforma donde se venden las entradas: recoge los datos de la
+          compra por nuestra cuenta y, como parte de la venta, guarda los datos de la transacción como prueba legal durante cinco años
+          desde el evento. Los datos de tu tarjeta los procesan sus proveedores de pago, nunca esta web. Más información en su{" "}
+          <a href="https://weezevent.com/es/privacidad-proteccion-de-datos/" rel="noopener noreferrer">política de privacidad</a>.
         </li>
         <li>
           <strong>Alojamiento de la web:</strong> <Dato valor={alojamiento} pendiente="proveedor de hosting" />, que guarda los
@@ -128,9 +129,7 @@ import { evento } from "../data/evento";
 
   <h2>Transferencias internacionales</h2>
   <p>
-    No trabajamos con proveedores situados en países sin una protección de datos equivalente a la europea, con una excepción: Stripe
-    puede transferir datos de pago fuera del Espacio Económico Europeo con las garantías que exige el RGPD (como las cláusulas
-    contractuales tipo de la Comisión Europea).
+    No trabajamos con proveedores situados en países sin una protección de datos equivalente a la europea.
   </p>
 
   <h2>Cuánto tiempo guardamos tus datos</h2>

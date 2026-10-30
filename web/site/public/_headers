@@ -11,7 +11,7 @@
   Strict-Transport-Security: max-age=31536000; includeSubDomains
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
-  # La web no usa cámara, micro, ubicación ni pagos en la propia página (Stripe Checkout va en su dominio)
+  # La web no usa cámara, micro, ubicación ni pagos en la propia página (las entradas se compran en la web de Weezevent)
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()
   Cross-Origin-Opener-Policy: same-origin
 
