@@ -63,10 +63,14 @@ const temas = [
         <h2>Entradas</h2>
         <PreguntaFaq numero={4} pregunta="¿Cuánto cuesta la entrada y cómo la compro?">
           <p>
-            El precio se anunciará cuando abramos la venta. Se comprará en esta web y el pago se hará con Stripe, en su propia página de
-            pago: los datos de tu tarjeta nunca pasan por nuestra web.
+            En <a href={evento.tiendaEntradas}>nuestra tienda de Weezevent</a>, la plataforma donde vendemos las entradas: allí verás el
+            precio y los tipos de entrada. El pago se hace en su página y los datos de tu tarjeta nunca pasan por esta web. Si necesitas
+            factura (por ejemplo, para tu empresa), pídela al pagar.
           </p>
-          <p><a href={mailto("Avísame cuando salgan las entradas")}>Escríbenos</a> si quieres que te avisemos.</p>
+          <p>
+            Al terminar te llega un email con tu entrada y su código QR, que es lo que enseñarás en la puerta, en el móvil o impreso. Si no
+            te llega, mira en spam o <a href={mailto("No me ha llegado la entrada")}>escríbenos</a>.
+          </p>
         </PreguntaFaq>
       </section>
 

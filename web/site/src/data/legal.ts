@@ -23,7 +23,7 @@ export const titular = {
 export const alojamiento = null as string | null;
 
 /** Fecha de la última revisión de los textos legales. */
-export const ACTUALIZADO = "2026-09-27";
+export const ACTUALIZADO = "2026-10-30";
 
 /** ¿Están todos los datos obligatorios? (el registro es opcional) */
 export const datosLegalesCompletos = Boolean(titular.nombre && titular.nif && titular.domicilio && alojamiento);
