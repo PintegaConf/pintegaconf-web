@@ -1,0 +1,39 @@
+---
+// Cómo se compra la entrada. La venta es en Weezevent: el botón lleva a su tienda, así que la tarjeta nunca
+// pasa por esta web. Los pasos dicen qué va a pasar y cómo saber que la compra ha terminado (llega el email
+// con la entrada y su QR); la confirmación en sí la dan la página y el email de Weezevent.
+import { evento } from "../../data/evento";
+---
+<div class="compra">
+  <h3 class="compra-titulo">Ya a la venta</h3>
+  <!-- role="list": Safari quita la semántica de lista cuando no hay viñetas -->
+  <ol class="pasos" role="list">
+    <li><span><strong>Elige tu entrada</strong> en Weezevent, nuestra plataforma de venta.</span></li>
+    <li><span><strong>Paga en su página segura.</strong> ¿Necesitas factura? Pídela al pagar.</span></li>
+    <li><span><strong>Te llega un email con tu entrada</strong> y su código QR: así sabes que la compra está hecha. Enséñalo en la puerta, en el móvil o impreso.</span></li>
+  </ol>
+  <a class="btn btn-gold" href={evento.tiendaEntradas}>Compra tu entrada</a>
+  <p class="nota">
+    ¿No te ha llegado? Mira en spam o escríbenos a <a href={`mailto:${evento.email}`}>{evento.email}</a>.
+    Qué datos se piden y para qué: <a href="/privacidad/">política de privacidad</a>.
+  </p>
+</div>
+
+<style>
+  .compra { border: 1px solid var(--gold); background: var(--form-bg); padding: 1.8rem 2.2rem; display: flex; flex-direction: column; gap: 1.2rem; font-family: var(--f-sans); }
+  .compra-titulo { margin: 0; font: 400 26px/1.1 var(--f-head); color: var(--text); }
+  .pasos { list-style: none; counter-reset: paso; margin: 0; padding: 0; display: grid; gap: .9rem; font-size: 15px; line-height: 1.45; color: var(--text-2); }
+  .pasos li { counter-increment: paso; display: grid; grid-template-columns: 1.75rem 1fr; gap: .65rem; align-items: start; }
+  .pasos li::before {
+    content: counter(paso); display: grid; place-items: center; width: 1.75rem; height: 1.75rem; border-radius: 50%;
+    background: var(--gold); color: var(--ink); font: 700 14px/1 var(--f-mono);
+  }
+  .pasos strong { color: var(--text); }
+  .compra .btn { align-self: flex-start; }
+  .nota { margin: 0; font-size: 13px; line-height: 1.5; color: var(--text-3); }
+  .nota a { color: var(--accent-text); }
+  @media (max-width: 680px) {
+    .compra { padding: 1.5rem 1.4rem; }
+    .compra .btn { align-self: stretch; }
+  }
+</style>
