@@ -38,11 +38,11 @@ src/
   components/
     layout/                  Cabecera, Menu (desplegable), Pie
     secciones/               Portada, QueEs, Agenda, Ponentes, Patrocinadores, Logos, Equipo, Entradas
-    entradas/                PaseWallet, TicketClasico, FormularioCompra, QrDecorativo
+    entradas/                PaseWallet, TicketClasico, ComoComprar (pasos + enlace a Weezevent), QrDecorativo
     LogoHueco.astro          un hueco de logo (logo real o "Tu logo aquí")
     Dato.astro               un dato legal o el hueco "pendiente: ..." si falta
   data/                      ← EL CONTENIDO. Casi todo lo que cambia se edita aquí
-    evento.ts                fechas, lugares, email, descripciones
+    evento.ts                fechas, lugares, email, descripciones, enlaces (tienda de entradas, dossiers)
     navegacion.ts            secciones del menú y enlaces del pie
     equipo.ts                personas, fila y sus ilustraciones
     patrocinio.ts            niveles, logos de patrocinadores, colaboradores, comunidades
@@ -52,8 +52,7 @@ src/
     tema.ts, cabecera.ts, menu.ts
     equipo/revelado.ts       hover por silueta (ratón) y toques (tablet)
     equipo/carrusel.ts       carrusel del móvil: revelado automático y flechas
-    entradas/pase.ts         nombre en vivo e inclinación 3D del pase
-    entradas/formulario.ts   validación del formulario (sin pasarela)
+    entradas/pase.ts         inclinación 3D del pase
     lib/medios.ts            media queries compartidas y utilidades
   styles/
     tokens.css               colores, tema claro/oscuro, puntos de corte (LEER antes de tocar colores)
@@ -94,7 +93,7 @@ se destapa a alguien del equipo) están marcados con `:global(...)`.
 - **axe-core** (WCAG 2.0, 2.1 y 2.2 A y AA + buenas prácticas) en todas las páginas, en escritorio y móvil, en los temas oscuro y claro, y con el menú abierto.
 - **Recorrido real con Tab:** nombre accesible, foco visible, foco no tapado por la cabecera y objetivos de 24×24 px.
 - **Espaciado de texto** (1.4.12), **reducir movimiento** y **palabras pegadas** a enlaces o negritas.
-- **Comportamientos:** Escape en el equipo, flechas del carrusel, cierre del menú y errores del formulario.
+- **Comportamientos:** Escape en el equipo, flechas del carrusel y cierre del menú.
 
 Opciones:
 - `A11Y_DETALLE=1`: orden de tabulación completo.
