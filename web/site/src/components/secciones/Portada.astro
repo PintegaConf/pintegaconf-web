@@ -1,5 +1,7 @@
 ---
 // Portada: qué, cuándo, dónde y qué hago (entrada / agenda). Blanca en los dos temas.
+// El orbe flota como en la web temporal; se pausa con el botón del final (scripts/equipo/pausa-orbe.ts,
+// el mismo que el del equipo). Con «reducir movimiento» no se mueve y el botón no aparece.
 import { Image } from "astro:assets";
 import orbe from "../../assets/marca/orbe.png";
 import { evento } from "../../data/evento";
@@ -37,7 +39,16 @@ import { evento } from "../../data/evento";
       <Image class="orbe" src={orbe} alt="" width={840} widths={[300, 420, 840]} sizes="(max-width: 680px) 150px, (max-width: 980px) 300px, 420px" loading="eager" fetchpriority="high" />
     </div>
   </div>
+  <button type="button" class="pausa-orbe" aria-controls="inicio">
+    <svg class="icono-pausa" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M4 2h3v12H4zM9 2h3v12H9z" fill="currentColor"></path></svg>
+    <svg class="icono-seguir" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M4 2l10 6-10 6z" fill="currentColor"></path></svg>
+    <span class="pausa-texto">Pausar animación</span>
+  </button>
 </section>
+
+<script>
+  import "../../scripts/equipo/pausa-orbe";
+</script>
 
 <style>
   .hero { position: relative; background: var(--white); color: var(--ink); overflow: hidden; }
@@ -55,7 +66,23 @@ import { evento } from "../../data/evento";
   .facts svg { flex: none; width: 40px; height: 40px; padding: 9px; border-radius: 50%; background: var(--ink); color: var(--gold); }
   .cta { display: flex; flex-wrap: wrap; gap: .9rem; }
   .hero-art { justify-self: center; width: min(420px, 100%); }
-  .orbe { width: 100%; height: auto; }
+  .orbe { width: 100%; height: auto; animation: flotar 6s ease-in-out infinite; }
+  @keyframes flotar { 50% { transform: translateY(-10px) rotate(-1.5deg); } }
+  .hero.orbe-pausado .orbe { animation-play-state: paused; }
+  .pausa-orbe {
+    position: absolute; right: max(1.5rem, (100% - var(--wrap)) / 2); bottom: 1.25rem; z-index: 1;   /* alineado con el contenido */
+    display: inline-flex; align-items: center; gap: .45rem; min-height: 36px; padding: .35rem .8rem;
+    font: 600 .72rem var(--f-mono); letter-spacing: .04em; text-transform: uppercase;
+    color: var(--ink); background: var(--white); border: 1px solid var(--ink); border-radius: 999px; cursor: pointer;
+  }
+  .pausa-orbe:hover { background: var(--gold); }
+  .icono-seguir { display: none; }
+  .hero.orbe-pausado .icono-pausa { display: none; }
+  .hero.orbe-pausado .icono-seguir { display: inline; }
+  @media (prefers-reduced-motion: reduce) {
+    .orbe { animation: none; }
+    .pausa-orbe { display: none; }   /* no hay nada que pausar */
+  }
   /* Huellas decorativas: fondo CSS (no <img>): no son contenido y así no compiten en la carga */
   .hero::after {
     content: ""; position: absolute; left: -30px; bottom: 16px; width: 520px; aspect-ratio: 558 / 96;
