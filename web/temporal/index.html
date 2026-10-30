@@ -124,6 +124,26 @@
     -webkit-mask-image: linear-gradient(to right, #000 25%, transparent 95%); mask-image: linear-gradient(to right, #000 25%, transparent 95%);
   }
 
+  /* Botón de compra con forma de entrada de papel: cuerpo y talón separados por la línea de corte, con muescas
+     (círculos del color de la portada, no máscaras: Safari). Al pasar el ratón se endereza y el talón se arranca un poco */
+  .entrada {
+    position: relative; display: inline-flex; margin-top: 1.75rem; background: var(--ink); color: var(--gold);
+    text-decoration: none; transform: rotate(-1.5deg); transition: transform .2s var(--ease);
+  }
+  .entrada-texto { display: flex; align-items: center; gap: .6rem; padding: .85rem 1.3rem .85rem 1.5rem; font: 700 25px/1.1 var(--f-head); }
+  .entrada-talon { position: relative; width: 66px; background: var(--ink); border-left: 2px dashed var(--gold); transition: transform .2s var(--ease); }
+  .entrada-talon::before, .entrada-talon::after { content: ""; position: absolute; left: -10px; width: 18px; height: 18px; border-radius: 50%; background: var(--gold); }
+  .entrada-talon::before { top: -9px; }
+  .entrada-talon::after { bottom: -9px; }
+  .entrada-talon span {
+    position: absolute; inset: 0; margin: auto; width: 40px; height: 29px; background: var(--gold);
+    -webkit-mask: url(assets/huella.svg) center / contain no-repeat; mask: url(assets/huella.svg) center / contain no-repeat;
+  }
+  .entrada:hover { transform: rotate(0); }
+  .entrada:hover .entrada-talon { transform: translate(5px, 2px) rotate(5deg); }
+  .entrada:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
+  @media (forced-colors: active) { .entrada { border: 2px solid LinkText; } }
+
   /* ---------- Qué es ---------- */
   .about { padding: 5rem 0 1rem; }
   .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
@@ -203,7 +223,7 @@
   .siguenos a:hover { background: transparent; color: var(--ink); }
   .siguenos a:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
 
-  @media (prefers-reduced-motion: reduce) { .hero-art img, .works { animation: none; } .btn, .cta, .foot .redes a, .siguenos a { transition: none; } .pausa { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .hero-art img, .works { animation: none; } .btn, .cta, .foot .redes a, .siguenos a, .entrada, .entrada-talon { transition: none; } .pausa { display: none; } }
 
   @media (max-width: 900px) {
     .hero-grid { grid-template-columns: 1fr; min-height: 0; padding: 2.5rem 0 3.5rem; gap: 1rem; }
@@ -220,13 +240,18 @@
     .works-top { padding: 4px 0; gap: 4px 6px; }
     .works p { font-size: 11px; letter-spacing: .05em; padding: .25rem .7rem; }
     .pausa { font-size: 11px; padding: .2rem .7rem; }
-    .hero-grid { padding-top: 1.25rem; }
+    .hero-grid { padding-top: 1rem; }
     .logo { width: min(250px, 100%); }
-    .kicker { margin-top: 1rem; }
+    .kicker { margin-top: .8rem; }
     h1 { font-size: 30px; max-width: none; }
-    .facts { margin-top: 1.25rem; gap: .5rem; }
+    .facts { margin-top: 1rem; gap: .5rem; }
     .facts li { font-size: 14px; padding: .45rem .9rem .45rem .7rem; }
-    .siguenos { margin-top: 1.25rem; }
+    /* La entrada ocupa todo el ancho: es lo primero que hay que ver */
+    .entrada { display: flex; margin-top: 1rem; }
+    .entrada-texto { flex: 1; padding: .6rem 1rem; font-size: 22px; }
+    .entrada-talon { width: 58px; }
+    .siguenos { margin-top: .9rem; }
+    .siguenos h2 { margin-bottom: .5rem; }
     .siguenos .redes { gap: .5rem; }   /* los tres botones en una fila desde 375px */
     .siguenos a { min-height: 44px; gap: .45rem; font-size: 16px; padding: .45rem .8rem .45rem .65rem; }
     .about { padding-top: 3.5rem; }
@@ -237,7 +262,7 @@
 <body>
 
 <aside class="works works-top" aria-label="Aviso">
-  <p>Web en obras · muy pronto, la web completa con ponentes, agenda y entradas</p>
+  <p>Web en obras · muy pronto, ponentes y agenda</p>
   <!-- Las franjas y el orbe se mueven sin parar: WCAG 2.2.2 exige poder pausarlos -->
   <button class="pausa" type="button">Pausar animación</button>
 </aside>
@@ -253,6 +278,11 @@
         <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span><strong>Rectorado UDC</strong>, A Coruña</span></li>
         <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.1 6.9L21 12l-6.9 2.1L12 21l-2.1-6.9L3 12l6.9-2.1z"/></svg><span><strong>Viernes 9 · pre-evento</strong>, lugar por anunciar</span></li>
       </ul>
+      <!-- La venta es en Weezevent: la tarjeta nunca pasa por esta web y el pico de carga de la apertura lo aguantan ellos -->
+      <a class="entrada" href="PENDIENTE-URL-WEEZEVENT">
+        <span class="entrada-texto">Compra tu entrada <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        <span class="entrada-talon" aria-hidden="true"><span></span></span>
+      </a>
       <section class="siguenos" aria-labelledby="siguenos-titulo">
         <h2 id="siguenos-titulo">Síguenos: las novedades salen primero en redes</h2>
         <ul class="redes">
