@@ -80,12 +80,12 @@ Seguridad del proyecto: `.npmrc` con `ignore-scripts` y versiones exactas (no qu
 - Huecos de ponentes ("?" dorado animado) y patrocinadores ("Tu logo aquí"): se quedan así hasta que haya contenido real (decisión del usuario).
 - **Tema claro/oscuro:** oscuro = diseño original. Colores de secciones en tokens (`--text`, `--text-2`, `--text-3`, `--accent-text`, `--form-bg`, `--slot-*`, `--line`, `--logo-filter`) con valores claros en `prefers-color-scheme: light` y `html[data-theme=light]`. Cabecera y portada blancas en ambos (logo negro). En claro el dorado no vale como color de texto: `--accent-text` = ocre `#8a5b00`. Colores nuevos: siempre vía token, nunca literales en secciones.
 - **Táctil (tablet/iPad >680px):** toque en silueta destapa, otro toque en la misma o fuera tapa; arrastre no cuenta. El ratón sigue con hover. Lógica en `src/scripts/equipo/revelado.ts` (`pointerType`).
-- Formulario de compra (`FormularioCompra.astro` + `scripts/entradas/formulario.ts`): sin pasarela todavía; solo valida y muestra "la venta abrirá muy pronto".
-- Entrada: dos diseños, se elige con `DISENO_ENTRADA` en `src/components/secciones/Entradas.astro`: `"wallet"` (actual: pase estilo Apple Wallet con inclinación 3D, nombre del formulario en vivo y QR decorativo difuminado "Muy pronto") o `"clasico"` (el ticket mostaza original, al usuario también le gusta: no borrarlo).
+- Compra de entradas (Weezevent, sin formulario propio): `components/entradas/ComoComprar.astro` (pasos + botón) en la sección Entradas y botón con forma de entrada de papel en la portada, que va directo a la tienda. La URL está en `evento.tiendaEntradas` (`src/data/evento.ts`) y, en la web temporal, dos veces en `web/temporal/index.html`: cambiar las dos.
+- Entrada: dos diseños, se elige con `DISENO_ENTRADA` en `src/components/secciones/Entradas.astro`: `"wallet"` (actual: pase estilo Apple Wallet con inclinación 3D, «Tu nombre aquí» y QR decorativo difuminado «Tu QR aquí»: el de verdad llega en el email de Weezevent) o `"clasico"` (el ticket mostaza original, al usuario también le gusta: no borrarlo).
 
 ## Pendiente (resumen — detalle en claude/docs/contexto-web.md)
 
-- **Venta de entradas con Weezevent:** crear el evento y poner la URL de la tienda en la web temporal (PR #26, en borrador hasta tenerla). Lista completa en `claude/docs/entradas-weezevent.md`.
+- **Venta de entradas con Weezevent:** crear el evento y poner la URL de la tienda en las dos webs (PR #26, en borrador hasta tenerla). Lista completa en `claude/docs/entradas-weezevent.md`.
 - Web temporal "en obras" hecha en `web/temporal/`, con fuentes autoalojadas, CSP propia y aviso legal en `/aviso-legal/` (copia del de Astro sin el enlace a privacidad/cookies: si cambia uno, cambiar el otro). Portada compacta en ≤ 480 px para que las redes se vean sin bajar en un iPhone SE (375×548). Es la que se va a publicar (ver Publicación).
 - Line-up de ponentes, logos de patrocinadores (`logos` de cada nivel en `web/site/src/data/patrocinio.ts`), colaboradores y comunidades.
 - Precio de la entrada.
