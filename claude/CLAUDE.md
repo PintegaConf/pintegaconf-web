@@ -16,7 +16,7 @@ Idioma de trabajo: **español**. El usuario es Matías (organización, sistemas/
 - Sucesora de **Lareira Conf**. La cuenta de Instagram de Lareira (~1000 seguidores, con su propio CM) se usa para promocionar Pintega, pero su CM solo publica contenido con la estética pixel-art/hoguera de Lareira.
 - **Mascota:** la píntega (salamandra de fuego negra con manchas amarillas, la del logo). "Píntega" = salamandra en gallego. **No reutilizar a Lumi** (mascota de Lareira, diseñada por otra persona).
 - **Equipo** (orden de la sección EQUIPO): Jesús, Iria, Matías, Nacho, Tiziana, Daniel, Carlos — rol "Organización".
-- **Entradas:** nada de Eventbrite/Weezevent (comisiones altas). Se usará **Stripe** (ya hay cuenta y TPV físico de Stripe). Precio aún por anunciar.
+- **Entradas:** se venden con **Weezevent** (decisión del 30-10-2026; sustituye a Stripe: una plataforma de empresa ya trae panel, QR, facturas y reembolsos). La web solo enlaza a su tienda (sin iframe ni scripts suyos). Cobro, facturas, QR, SLA y lista de comprobación antes de abrir la venta: `claude/docs/entradas-weezevent.md`. Precio aún por anunciar.
 - **Oferta a ponentes:** viaje y hotel cubiertos, entrada full-pass, cena en el post-evento (no hay cena solo de ponentes), grabación de la charla + difusión en web/redes, regalo de ponente.
 - **Charlas:** 30–45 min de media, duraciones variadas (no slot fijo). La agenda la organizará Matías más adelante.
 - **Niveles de patrocinio:** Dragón > Basilisco > Tritón > Ajolote. **Dragón es exclusivo: una sola empresa** (un único hueco en la web).
@@ -33,6 +33,7 @@ claude/
   CLAUDE.md                    ← este archivo
   README.md                    ← cómo montar el proyecto en otro equipo (Node, npm ci, Claude Code)
   docs/contexto-web.md         ← historial de decisiones de diseño/código de la web y to-dos (LEER antes de tocar la web)
+  docs/entradas-weezevent.md   ← venta de entradas con Weezevent: qué cubre, qué falta y lista antes de abrir la venta
   docs/propuestas-mejora.md    ← auditoría antigua de la web con mejoras priorizadas
 web/
   README.md                    ← decisión tecnológica (Astro), seguridad, mejoras y REGLAS DEL REPOSITORIO
@@ -84,14 +85,14 @@ Seguridad del proyecto: `.npmrc` con `ignore-scripts` y versiones exactas (no qu
 
 ## Pendiente (resumen — detalle en claude/docs/contexto-web.md)
 
-- **Stripe como pasarela** de compra de entradas.
+- **Venta de entradas con Weezevent:** crear el evento y poner la URL de la tienda en la web temporal (PR #26, en borrador hasta tenerla). Lista completa en `claude/docs/entradas-weezevent.md`.
 - Web temporal "en obras" hecha en `web/temporal/`, con fuentes autoalojadas, CSP propia y aviso legal en `/aviso-legal/` (copia del de Astro sin el enlace a privacidad/cookies: si cambia uno, cambiar el otro). Portada compacta en ≤ 480 px para que las redes se vean sin bajar en un iPhone SE (375×548). Es la que se va a publicar (ver Publicación).
 - Line-up de ponentes, logos de patrocinadores (`logos` de cada nivel en `web/site/src/data/patrocinio.ts`), colaboradores y comunidades.
-- Precio de entrada + integración con Stripe.
+- Precio de la entrada.
 - Agenda: detalles del pre-evento (viernes 9) y horario de charlas (sábado 10).
 - **Accesibilidad: probar con lectores de pantalla reales** (VoiceOver macOS/iOS, NVDA, TalkBack) y actualizar la declaración. Lo automático y el teclado ya están (sep 2026).
 - **Renovar `security.txt`** antes del 26-09-2027.
 - **Traducciones: inglés y gallego** además del español (idioma por defecto). Plan técnico en `web/README.md` → Mejoras propuestas.
 - Páginas FAQ, código de conducta, aviso legal, privacidad y cookies: **hechas** (sep 2026). Privacidad y código de conducta están basados en los de lareiraconf.es (misma organización; cambiar "Lareira Conf" por "Píntega Conf"). **Titular: Asociación Sysarmy Galicia** (NIF G21961842, Travesía de Arteixo 5, 3.º dcha., Arteixo); email legal y de denuncias `administracion@sysarmygalicia.com` (las consultas generales siguen en info@pintegaconf.es). Contactos de Telegram del código de conducta en `web/site/src/data/conducta.ts`. Los textos de Lareira están revisados y estuvieron en producción: mantener su contenido tal cual (p. ej. las comunicaciones de próximas ediciones a quien compra entrada por interés legítimo, con opción de oponerse), sin "mejorarlos" por nuestra cuenta. Las legales siguen en BORRADOR: falta el hosting en `web/site/src/data/legal.ts` y una revisión legal. No inventar datos.
 - Web v2 en Astro hecha y probada por Matías en Safari de Mac, iPhone e iPad (sep 2026). Falta publicarla (el código ya está en el repo privado).
-- **Publicación (8-10-2026):** Matías decidió publicar **solo la web temporal**; la completa sigue sin publicar hasta que él lo diga. Se despliega con el `Dockerfile` de la raíz (lo pidió Nacho para desplegar). Si cambian las cabeceras, cambiarlas en `web/nginx.conf` y en `web/site/public/_headers`. HSTS activado: el dominio tendrá HTTPS (confirmado por Matías). Mejoras propuestas en `web/README.md` (accesibilidad, CI, RGPD del formulario, Stripe con Checkout, web temporal dentro de Astro).
+- **Publicación (8-10-2026):** Matías decidió publicar **solo la web temporal**; la completa sigue sin publicar hasta que él lo diga. Se despliega con el `Dockerfile` de la raíz (lo pidió Nacho para desplegar). Si cambian las cabeceras, cambiarlas en `web/nginx.conf` y en `web/site/public/_headers`. HSTS activado: el dominio tendrá HTTPS (confirmado por Matías). Mejoras propuestas en `web/README.md` (accesibilidad, CI, RGPD del formulario, web temporal dentro de Astro).

@@ -64,11 +64,11 @@ Cómo se mitigan los contras de Astro:
 
 ### Pendiente (no se puede cerrar solo con código)
 
-- **Formulario de compra y RGPD:** hoy no envía datos a ningún sitio. Antes de activarlo (con Stripe) hacen falta:
+- **Formulario de compra y RGPD:** hoy no envía datos a ningún sitio. Las entradas se venden en **Weezevent** (ver `claude/docs/entradas-weezevent.md`), así que en la web completa lo previsto es cambiar el formulario por un enlace a su tienda. Si se mantiene algún formulario, hacen falta:
   - la política de privacidad publicada y enlazada junto al formulario;
   - la base legal y el responsable del tratamiento;
   - quitar los campos que no sean necesarios ("Trabajo en..." ¿hace falta?).
-- **Stripe:** usar **Stripe Checkout** o **Payment Links**, de modo que la tarjeta nunca pase por nuestra web. Para crear la sesión de pago y recibir los webhooks hará falta una función serverless pequeña (Cloudflare/Netlify), con la clave secreta solo en el servidor y la firma de los webhooks verificada.
+- **Pago:** en la tienda de Weezevent, enlazada desde la web (sin iframe ni scripts suyos, así la CSP no cambia y la tarjeta nunca pasa por nuestra web). Antes estaba previsto Stripe Checkout; se descartó el 30-10-2026.
 - **Hosting:** se despliega con el `Dockerfile` de la raíz (nginx con las cabeceras de `public/_headers` traducidas en `web/nginx.conf`); de momento solo la web temporal. Si se cambia una cabecera, cambiarla en los dos sitios. HSTS activado (el dominio tendrá HTTPS).
 - **Email en claro** (`mailto:info@…`): los bots lo recogen para spam. Es aceptable para una conferencia; la alternativa sería un formulario de contacto.
 - **Analítica:** ahora no hay ninguna, así que no hace falta banner de cookies. Si se añade, que sea sin cookies (Plausible, Umami autoalojado…) o habrá que poner banner con opción de rechazar.
@@ -76,7 +76,7 @@ Cómo se mitigan los contras de Astro:
 ## Mejoras propuestas (siguientes pasos)
 
 1. ~~Páginas de FAQ, aviso legal, privacidad y cookies~~ **Hechas** (las legales, como BORRADOR hasta tener los datos del titular en `site/src/data/legal.ts` y una revisión legal). Además: sitemap (`@astrojs/sitemap`) y aviso de privacidad junto al formulario de compra.
-2. **Integración de Stripe** (ver arriba).
+2. **Venta de entradas con Weezevent:** ver `claude/docs/entradas-weezevent.md`.
 3. ~~Accesibilidad~~ **Hecho (sep 2026):** WCAG 2.2 AA en autoevaluación, con auditoría automática en la CI (`npm run a11y`), declaración de accesibilidad y página de seguridad. **Pendiente:** probar con lectores de pantalla reales (VoiceOver, NVDA, TalkBack). Plan inicial:
    - enlace "saltar al contenido";
    - revisar el orden de foco del menú;
