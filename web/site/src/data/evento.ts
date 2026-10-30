@@ -11,6 +11,9 @@ export const evento = {
   dossierPatrocinio: "https://pintegaconf-dossier.my.canva.site",
   // Formulario (Google Forms) para proponer charlas. Lo enlaza la FAQ.
   formularioPonentes: "https://forms.gle/RYwGGrW43a5542Rz8",
+  // Tienda de Weezevent donde se venden las entradas. La enlazan la portada y la sección Entradas (también la
+  // web temporal: web/temporal/index.html). Pendiente hasta crear el evento en Weezevent.
+  tiendaEntradas: "PENDIENTE-URL-WEEZEVENT",
 
   // Perfiles oficiales. Salen en el pie y en schema.org (sameAs); `usuario` de X va en twitter:site.
   redes: [
