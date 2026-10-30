@@ -187,13 +187,22 @@
   .btn-ghost:hover { background: var(--gold); color: var(--ink); }
   .btn:focus-visible { outline: 2px solid var(--white); outline-offset: 3px; }
 
-  /* Entradas: mostaza con texto negro; detrás, el contorno del papel desplazado. Sin botón: el padding de abajo deja
-     hueco a las huellas, que si no pisan el texto en móvil */
-  .cta-principal { background: var(--gold); color: var(--ink); padding-bottom: 4.5rem; box-shadow: 6px 6px 0 var(--bg), 6px 6px 0 2px var(--gold); }
+  /* Entradas: mostaza con texto negro; detrás, el contorno del papel desplazado */
+  .cta-principal { background: var(--gold); color: var(--ink); box-shadow: 6px 6px 0 var(--bg), 6px 6px 0 2px var(--gold); }
   .cta-principal:hover, .cta-principal:focus-within { box-shadow: 3px 3px 0 var(--bg), 3px 3px 0 2px var(--gold); }
   .cta-principal .tag { background: var(--ink); color: var(--gold); }
   .cta-principal p { color: var(--ink); }
   .cta-principal::after { background: var(--ink); opacity: .3; }
+  .cta-principal .btn { background: var(--ink); color: var(--gold); border-color: var(--ink); }
+  .cta-principal .btn:focus-visible { outline-color: var(--ink); }
+  /* Pasos de la compra, numerados con círculos negros. role="list" en el HTML: Safari quita la lista si no hay viñetas */
+  .pasos { list-style: none; counter-reset: paso; margin: .2rem 0 .4rem; padding: 0; display: grid; gap: .75rem; font-size: 15.5px; }
+  .pasos li { counter-increment: paso; display: grid; grid-template-columns: 1.75rem 1fr; gap: .65rem; align-items: start; }
+  .pasos li::before {
+    content: counter(paso); display: grid; place-items: center; width: 1.75rem; height: 1.75rem; border-radius: 50%;
+    background: var(--ink); color: var(--gold); font: 700 14px/1 var(--f-mono);
+  }
+  .cta-principal .nota { font-size: 14px; }
   /* Alto contraste: las sombras desaparecen, así que cada tarjeta lleva borde */
   @media (forced-colors: active) { .cta { border: 1px solid CanvasText; } }
 
@@ -319,8 +328,14 @@
     <div class="wrap cta-grid">
       <article class="cta cta-principal">
         <span class="tag">Entradas</span>
-        <h3>Muy pronto a la venta</h3>
-        <p>Estamos preparando la venta de entradas.</p>
+        <h3>Ya a la venta</h3>
+        <ol class="pasos" role="list">
+          <li><span><strong>Elige tu entrada</strong> en Weezevent, nuestra plataforma de venta.</span></li>
+          <li><span><strong>Paga en su página segura.</strong> ¿Necesitas factura? Pídela al pagar.</span></li>
+          <li><span><strong>Te llega un email con tu entrada</strong> y su código QR: así sabes que la compra está hecha. Enséñalo en la puerta, en el móvil o impreso.</span></li>
+        </ol>
+        <p class="nota">¿No te ha llegado? Mira en spam o escríbenos a <a href="mailto:info@pintegaconf.es">info@pintegaconf.es</a>.</p>
+        <a class="btn" href="PENDIENTE-URL-WEEZEVENT">Compra tu entrada</a>
       </article>
       <article class="cta">
         <span class="tag">Ponentes</span>
