@@ -30,7 +30,11 @@ import { evento } from "../../data/evento";
         </li>
       </ul>
       <div class="cta">
-        <a class="btn btn-gold" href="#entradas">Consigue tu entrada</a>
+        <!-- Directo a la tienda de Weezevent (los pasos de la compra están en la sección Entradas) -->
+        <a class="entrada" href={evento.tiendaEntradas}>
+          <span class="entrada-texto">Compra tu entrada <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          <span class="entrada-talon" aria-hidden="true"><span></span></span>
+        </a>
         <a class="btn btn-ghost" href="#agenda">Ver agenda</a>
       </div>
     </div>
@@ -64,7 +68,27 @@ import { evento } from "../../data/evento";
      lea "abril2027" todo junto */
   .facts strong { display: block; font: 700 19px var(--f-head); color: var(--ink); }
   .facts svg { flex: none; width: 40px; height: 40px; padding: 9px; border-radius: 50%; background: var(--ink); color: var(--gold); }
-  .cta { display: flex; flex-wrap: wrap; gap: .9rem; }
+  /* Botón de compra con forma de entrada de papel, como en la web temporal: cuerpo y talón separados por la línea de
+     corte, con muescas (círculos del color de la portada, no máscaras: Safari). Al pasar el ratón se endereza y el
+     talón se arranca un poco */
+  .entrada {
+    position: relative; display: inline-flex; background: var(--ink); color: var(--gold); text-decoration: none;
+    transform: rotate(-1.5deg); transition: transform .2s var(--ease);
+  }
+  .entrada-texto { display: flex; align-items: center; justify-content: center; gap: .55rem; padding: .75rem 1.2rem .75rem 1.4rem; font: 700 21px/1.1 var(--f-head); }
+  .entrada-talon { position: relative; width: 58px; background: var(--ink); border-left: 2px dashed var(--gold); transition: transform .2s var(--ease); }
+  .entrada-talon::before, .entrada-talon::after { content: ""; position: absolute; left: -10px; width: 18px; height: 18px; border-radius: 50%; background: var(--white); }
+  .entrada-talon::before { top: -9px; }
+  .entrada-talon::after { bottom: -9px; }
+  .entrada-talon span {
+    position: absolute; inset: 0; margin: auto; width: 36px; height: 26px; background: var(--gold);
+    -webkit-mask: url("../../assets/marca/huella.svg") center / contain no-repeat; mask: url("../../assets/marca/huella.svg") center / contain no-repeat;
+  }
+  .entrada:hover { transform: rotate(0); }
+  .entrada:hover .entrada-talon { transform: translate(5px, 2px) rotate(5deg); }
+  @media (forced-colors: active) { .entrada { border: 2px solid LinkText; } }
+  @media (prefers-reduced-motion: reduce) { .entrada, .entrada-talon { transition: none; } }
+  .cta { display: flex; flex-wrap: wrap; align-items: center; gap: 1.1rem; }
   .hero-art { justify-self: center; width: min(420px, 100%); }
   .orbe { width: 100%; height: auto; animation: flotar 6s ease-in-out infinite; }
   @keyframes flotar { 50% { transform: translateY(-10px) rotate(-1.5deg); } }
@@ -103,6 +127,7 @@ import { evento } from "../../data/evento";
     .cta { order: 4; margin-bottom: 1.8rem; }
     .facts { order: 5; margin-bottom: 0; flex-direction: column; gap: .8rem; }
     .lede { font-size: 16px; }
-    .cta .btn { flex: 1 1 100%; }
+    .cta .btn, .cta .entrada { flex: 1 1 100%; }
+    .entrada-texto { flex: 1; }
   }
 </style>
