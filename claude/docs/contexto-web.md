@@ -131,7 +131,7 @@ Decisión, seguridad y mejoras: `web/README.md`. Guía de uso: `web/site/README.
 
 ### Entradas
 - [x] Entrada estilo Wallet (sep 2026): `.pass` dentro de `.pass-stage`; reutiliza por JS el logo de la cabecera, el orbe y las huellas (no duplica data URI). Campos: Charlas Sáb 10 abr, Asistente (del formulario), Entrada General, Lugar Rectorado UDC, Pre-evento Vie 9 abr. QR decorativo generado en JS (no es real). Muescas con círculos `var(--bg)` (no máscaras, por Safari). El ticket clásico sigue en el HTML: `data-ticket="clasico"` para volver a él.
-- [ ] Con Weezevent el QR real va en su email: en la web completa, quitar el QR decorativo del pase o dejar claro que es decorativo, poner el precio y cambiar el formulario de compra por el enlace a la tienda.
+- [x] Web completa con Weezevent (30-10-2026, PR #26): el formulario de compra se sustituye por los pasos y el enlace a la tienda (`ComoComprar.astro`), la portada tiene el botón con forma de entrada y el QR del pase dice «Tu QR aquí» (el real llega por email). El precio lo muestra la tienda de Weezevent.
 
 ### Marca
 - [x] Nombre con tilde "Píntega Conf" en ambas webs (textos, títulos, metadatos, asuntos de email) y logo nuevo con la llama-tilde. `og.jpg` de la web temporal regenerado con el logo nuevo . Banners de Twitter y LinkedIn (`marca_and_rrss/`) con la tilde añadida: llama negra rellena encima de la I (variante del manual "fondo blanco / blanco y negro"), sacada del logo vectorial. El resto del banner se queda como está (decisión del usuario).
