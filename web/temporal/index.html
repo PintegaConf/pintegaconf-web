@@ -157,21 +157,30 @@
   /* ---------- Entradas ---------- */
   /* Las tres entradas como entradas de papel: 1, 2 y 3 llamitas del logo (cuanto más fuego, más incluye). El talón negro
      es el enlace a Weezevent con esa tarifa ya elegida. Muescas: círculos del color del fondo, no máscaras (Safari).
+     Con una columna (≤ 900 px) cada entrada es un desplegable (<details>) cerrado: se ven las tres de un vistazo (nombre,
+     precio y lo que la distingue) y al abrirla salen lo que incluye y el talón. assets/entradas.js las cierra en una
+     columna y las deja fijas en escritorio; sin JS, todas abiertas.
      Es el selector de la web de Astro (components/entradas/SelectorEntradas.astro): si cambia uno, cambiar el otro */
   .entradas { padding: 4rem 0 1rem; }
   .defs { position: absolute; width: 0; height: 0; overflow: hidden; }
   .tarifas { list-style: none; margin: 1.6rem 0 3rem; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem; }
-  .tarifa { display: flex; flex-direction: column; background: var(--gold); color: var(--ink); transform: rotate(-1.2deg); transition: transform .2s var(--ease); }
-  .tarifa:nth-child(2) { transform: rotate(.8deg); }
-  .tarifa:nth-child(3) { transform: rotate(-.5deg); }
-  .tarifa:hover, .tarifa:focus-within { transform: translateY(-6px); }
-  .tarifa-cuerpo { flex: 1; padding: 1.6rem 1.6rem 1.5rem; }
-  .llamas { display: flex; gap: .35rem; margin-bottom: .9rem; }
+  .tarifas > li { transform: rotate(-1.2deg); transition: transform .2s var(--ease); }
+  .tarifas > li:nth-child(2) { transform: rotate(.8deg); }
+  .tarifas > li:nth-child(3) { transform: rotate(-.5deg); }
+  .tarifas > li:hover, .tarifas > li:focus-within { transform: translateY(-6px); }
+  .tarifa { background: var(--gold); color: var(--ink); }
+  /* Cabecera (<summary>): en escritorio, llamitas, nombre y precio en columna; no despliega nada */
+  .tarifa-cabecera { display: grid; grid-template-areas: "llamas" "nombre" "precio"; padding: 1.6rem 1.6rem 1.2rem; list-style: none; cursor: default; }
+  .tarifa-cabecera::-webkit-details-marker { display: none; }
+  .tarifa-cabecera:focus-visible { outline: 3px solid var(--ink); outline-offset: -6px; }
+  .llamas { grid-area: llamas; display: flex; gap: .35rem; margin-bottom: .9rem; }
   .llamas svg { width: 17px; height: 36px; }
-  .tarifa h3 { margin: 0; font: 700 30px/1.1 var(--f-head); }
-  .precio { margin: .25rem 0 1.2rem; font: 700 56px/1 var(--f-head); }
+  .tarifa-nombre { grid-area: nombre; margin: 0; font: 700 30px/1.1 var(--f-head); }
+  .precio { grid-area: precio; margin-top: .25rem; font: 700 56px/1 var(--f-head); }
   .precio small { display: block; margin-top: .4rem; font: 700 11px/1.3 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; }
-  .incluye { list-style: none; margin: 0; padding: 0; display: grid; gap: .55rem; font: 600 16px/1.3 var(--f-sans); }
+  .resumen, .flecha-abrir { display: none; }
+  /* Hueco para cuatro líneas (las de Hoguera): así los talones de las tres quedan a la misma altura */
+  .incluye { list-style: none; margin: 0; padding: 0 1.6rem 1.5rem; min-height: calc(4 * 22px + 3 * .55rem + 1.5rem); display: grid; align-content: start; gap: .55rem; font: 600 16px/1.3 var(--f-sans); }
   .incluye li { display: flex; align-items: center; gap: .6rem; }
   .incluye svg { flex: none; width: 22px; height: 22px; padding: 3px; border-radius: 50%; background: var(--ink); color: var(--gold); }
   .incluye .no svg { background: none; color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--ink); }
@@ -262,7 +271,7 @@
   .siguenos a:hover { background: transparent; color: var(--ink); }
   .siguenos a:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
 
-  @media (prefers-reduced-motion: reduce) { .hero-art img, .works { animation: none; } .btn, .cta, .foot .redes a, .siguenos a, .entrada, .entrada-talon, .tarifa, .tarifa-talon svg { transition: none; } .pausa { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .hero-art img, .works { animation: none; } .btn, .cta, .foot .redes a, .siguenos a, .entrada, .entrada-talon, .tarifas > li, .tarifa-talon svg, .flecha-abrir { transition: none; } .pausa { display: none; } }
 
   @media (max-width: 900px) {
     .hero-grid { grid-template-columns: 1fr; min-height: 0; padding: 2.5rem 0 3.5rem; gap: 1rem; }
@@ -272,7 +281,26 @@
     .kicker { margin-top: 1.5rem; }
     .about-grid { grid-template-columns: 1fr; gap: 2rem; }
     .cta-grid { grid-template-columns: 1fr; }
-    .tarifas { grid-template-columns: 1fr; gap: 2rem; max-width: 440px; }
+    /* Una columna: desplegables. Cerrado, una fila compacta con lo que distingue a cada entrada; abierto, la entrada entera */
+    .tarifas { grid-template-columns: 1fr; gap: 1.25rem; max-width: 440px; }
+    .tarifas > li:hover, .tarifas > li:focus-within { transform: none; }
+    .tarifa-cabecera {
+      grid-template-columns: 1fr auto auto; grid-template-areas: "llamas precio flecha" "nombre precio flecha" "resumen precio flecha";
+      column-gap: .9rem; align-items: center; padding: 1rem 1.2rem; cursor: pointer;
+    }
+    .llamas { margin-bottom: .35rem; gap: .25rem; }
+    .llamas svg { width: 12px; height: 25px; }
+    .tarifa-nombre { font-size: 26px; }
+    .precio { margin: 0; font-size: 36px; text-align: right; }
+    .precio small { font-size: 10px; letter-spacing: .08em; }
+    .resumen { display: block; grid-area: resumen; margin-top: .15rem; font: 600 15px/1.3 var(--f-sans); }
+    .flecha-abrir {
+      display: block; grid-area: flecha; width: 30px; height: 30px; padding: 4px; border-radius: 50%;
+      background: var(--ink); color: var(--gold); transition: transform .2s var(--ease);
+    }
+    .tarifa[open] .flecha-abrir { transform: rotate(180deg); }
+    .incluye { min-height: 0; padding: .2rem 1.2rem 1.2rem; }
+    .tarifa-talon { padding: 1rem 1.2rem; }
     .pasos { grid-template-columns: 1fr; }
     .huellas { width: 380px; }
   }
@@ -290,9 +318,6 @@
     /* La entrada ocupa todo el ancho: es lo primero que hay que ver */
     .entrada { display: flex; margin-top: 1rem; }
     .entrada-texto { flex: 1; padding: .6rem 1rem; font-size: 22px; }
-    .tarifa-cuerpo { padding: 1.3rem 1.3rem 1.2rem; }
-    .precio { font-size: 48px; }
-    .tarifa-talon { padding: 1rem 1.3rem; }
     .entrada-talon { width: 58px; }
     .siguenos { margin-top: .9rem; }
     .siguenos h2 { margin-bottom: .5rem; }
@@ -371,45 +396,57 @@
         <symbol id="no" viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></symbol>
       </svg>
       <ul class="tarifas" role="list">
-        <li class="tarifa">
-          <div class="tarifa-cuerpo">
-            <span class="llamas" aria-hidden="true"><svg viewBox="0 0 16.9 35.3"><use href="#llama"/></svg></span>
-            <h3>Chispa</h3>
-            <p class="precio">30&nbsp;€ <small>IVA incluido</small></p>
+        <li>
+          <details class="tarifa" open>
+            <summary class="tarifa-cabecera">
+              <span class="llamas" aria-hidden="true"><svg viewBox="0 0 16.9 35.3"><use href="#llama"/></svg></span>
+              <h3 class="tarifa-nombre">Chispa</h3>
+              <span class="precio">30&nbsp;€ <small>IVA incluido</small></span>
+              <span class="resumen">Sin post-evento</span>
+              <svg class="flecha-abrir" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </summary>
             <ul class="incluye" role="list">
               <li><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#si"/></svg><span>Viernes 9 · pre-evento</span></li>
               <li><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#si"/></svg><span>Sábado 10 · charlas</span></li>
               <li class="no"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#no"/></svg><span>Sin post-evento</span></li>
             </ul>
-          </div>
-          <a class="tarifa-talon" href="PENDIENTE-URL-WEEZEVENT-CHISPA">Comprar Chispa <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <a class="tarifa-talon" href="PENDIENTE-URL-WEEZEVENT-CHISPA">Comprar Chispa <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </details>
         </li>
-        <li class="tarifa">
-          <div class="tarifa-cuerpo">
-            <span class="llamas" aria-hidden="true"><svg viewBox="0 0 16.9 35.3"><use href="#llama"/></svg><svg viewBox="0 0 16.9 35.3"><use href="#llama"/></svg></span>
-            <h3>Llama</h3>
-            <p class="precio">40&nbsp;€ <small>IVA incluido</small></p>
+        <li>
+          <details class="tarifa" open>
+            <summary class="tarifa-cabecera">
+              <span class="llamas" aria-hidden="true"><svg viewBox="0 0 16.9 35.3"><use href="#llama"/></svg><svg viewBox="0 0 16.9 35.3"><use href="#llama"/></svg></span>
+              <h3 class="tarifa-nombre">Llama</h3>
+              <span class="precio">40&nbsp;€ <small>IVA incluido</small></span>
+              <span class="resumen">Con post-evento</span>
+              <svg class="flecha-abrir" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </summary>
             <ul class="incluye" role="list">
               <li><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#si"/></svg><span>Viernes 9 · pre-evento</span></li>
               <li><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#si"/></svg><span>Sábado 10 · charlas</span></li>
               <li><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#si"/></svg><span>Post-evento del sábado</span></li>
             </ul>
-          </div>
-          <a class="tarifa-talon" href="PENDIENTE-URL-WEEZEVENT-LLAMA">Comprar Llama <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <a class="tarifa-talon" href="PENDIENTE-URL-WEEZEVENT-LLAMA">Comprar Llama <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </details>
         </li>
-        <li class="tarifa">
-          <div class="tarifa-cuerpo">
-            <span class="llamas" aria-hidden="true"><svg viewBox="0 0 16.9 35.3"><use href="#llama"/></svg><svg viewBox="0 0 16.9 35.3"><use href="#llama"/></svg><svg viewBox="0 0 16.9 35.3"><use href="#llama"/></svg></span>
-            <h3>Hoguera</h3>
-            <p class="precio">60&nbsp;€ <small>IVA incluido</small></p>
+        <li>
+          <details class="tarifa" open>
+            <summary class="tarifa-cabecera">
+              <span class="llamas" aria-hidden="true"><svg viewBox="0 0 16.9 35.3"><use href="#llama"/></svg><svg viewBox="0 0 16.9 35.3"><use href="#llama"/></svg><svg viewBox="0 0 16.9 35.3"><use href="#llama"/></svg></span>
+              <h3 class="tarifa-nombre">Hoguera</h3>
+              <span class="precio">60&nbsp;€ <small>IVA incluido</small></span>
+              <span class="resumen">Con post-evento y regalo</span>
+              <svg class="flecha-abrir" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </summary>
             <ul class="incluye" role="list">
               <li><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#si"/></svg><span>Viernes 9 · pre-evento</span></li>
               <li><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#si"/></svg><span>Sábado 10 · charlas</span></li>
               <li><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#si"/></svg><span>Post-evento del sábado</span></li>
               <li><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#si"/></svg><span>Regalo de Píntega Conf</span></li>
             </ul>
-          </div>
-          <a class="tarifa-talon" href="PENDIENTE-URL-WEEZEVENT-HOGUERA">Comprar Hoguera <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <a class="tarifa-talon" href="PENDIENTE-URL-WEEZEVENT-HOGUERA">Comprar Hoguera <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </details>
         </li>
       </ul>
       <ol class="pasos" role="list">
@@ -453,5 +490,6 @@
 </footer>
 
 <script src="assets/pausa.js"></script>
+<script src="assets/entradas.js"></script>
 </body>
 </html>
