@@ -59,7 +59,7 @@ Un componente web para la página de **Pintega Conf**: una fila de personas ocul
 - **Assets**: logo horizontal, logo PC27, salamandra y huellas sacados en vectorial del PDF `marca_and_rrss/imagen corporativa pintega conf.pdf` (manual de marca, págs. 16, 14, 14 y 1). Las descargas directas de Penpot estaban bloqueadas por la red.
 - **Portada** (propuesta aceptada): cabecera fija (sticky) en todos los tamaños con logo + menú horizontal (≥1100px) + botón Entradas; por debajo de 1100px hamburguesa, y la barra sigue visible al hacer scroll. Hero blanco: "Conferencia tecnológica · A Coruña", H1 "El punto de encuentro de las comunidades tech", datos (fecha, lugar, un solo track), botones "Consigue tu entrada" / "Ver agenda", salamandra sobre orbe dorado. En móvil los botones van antes de los datos.
 - **Huecos de ponentes y patrocinadores: se quedan así** hasta que haya (decisión del usuario).
-- **Precio**: aún no hay; hueco "Entrada general · Precio por anunciar".
+- **Precio** (31-10-2026): Chispa 30 €, Llama 40 € y Hoguera 60 € (ver `claude/CLAUDE.md`); se muestran en el selector de la sección Entradas.
 - Bug corregido: en móvil el carrusel del equipo salía desplazado 24px → `max-width:none` en el media query.
 - **Hombros difuminados** incrustados en los PNG. Antes era una máscara CSS y en **Safari** dejaba líneas claras al animar — **no volver a la máscara CSS**.
 - **Centrado del equipo en Safari**: ancho explícito `calc(4*200px - 3*55px)` en vez de `fit-content`.
@@ -114,7 +114,7 @@ Decisión, seguridad y mejoras: `web/README.md`. Guía de uso: `web/site/README.
 - [ ] Logos de patrocinadores: array `niveles[i].logos = [{ src, alt }]`.
 - [ ] Email real de patrocinio en el botón "Patrocina Pintega Conf" (ahora `mailto:` sin destinatario).
 - [ ] Logos de colaboradores y comunidades.
-- [ ] Precio de la entrada (tipos, qué incluye, plazas).
+- [x] Precio de la entrada (31-10-2026): tres tipos, en `src/data/entradas.ts`. Plazas: se configuran en Weezevent.
 - [ ] ~~Pasarela de pago con Stripe~~ **Sustituida por Weezevent (30-10-2026)**: ver `claude/docs/entradas-weezevent.md`. Nota antigua: pasarela de pago con Stripe para comprar entradas (ya hay cuenta y TPV físico). Opción más simple sin backend: Stripe Payment Links o Checkout alojado; el botón COMPRAR lleva al checkout con los datos del formulario (email prellenado, cupón como código de promoción de Stripe). Hace falta: precio definido, producto en Stripe, páginas de éxito/cancelación, y textos legales (privacidad, condiciones de venta/devoluciones) antes de abrir la venta. Pagos de prueba en modo test antes de pasar a producción.
 - [x] ~~Modo claro y modo oscuro~~ (hecho). Nota original:: pasar todos los colores a tokens en `:root`, respetar `prefers-color-scheme` y añadir un selector en la cabecera que guarde la preferencia. Revisar el contraste del dorado `#FDC330` sobre fondo claro (sobre blanco no cumple para texto), las ilustraciones del equipo, los medallones y el orbe en ambos modos.
 - [ ] Agenda: pre-evento del viernes 9 (sin charlas; lugar por decidir, no es el Rectorado) y horario de charlas del sábado 10.
@@ -132,6 +132,7 @@ Decisión, seguridad y mejoras: `web/README.md`. Guía de uso: `web/site/README.
 ### Entradas
 - [x] Entrada estilo Wallet (sep 2026): `.pass` dentro de `.pass-stage`; reutiliza por JS el logo de la cabecera, el orbe y las huellas (no duplica data URI). Campos: Charlas Sáb 10 abr, Asistente (del formulario), Entrada General, Lugar Rectorado UDC, Pre-evento Vie 9 abr. QR decorativo generado en JS (no es real). Muescas con círculos `var(--bg)` (no máscaras, por Safari). El ticket clásico sigue en el HTML: `data-ticket="clasico"` para volver a él.
 - [x] Web completa con Weezevent (30-10-2026, PR #26): el formulario de compra se sustituye por los pasos y el enlace a la tienda (`ComoComprar.astro`), la portada tiene el botón con forma de entrada y el QR del pase dice «Tu QR aquí» (el real llega por email). El precio lo muestra la tienda de Weezevent.
+- [x] Selector de entradas (31-10-2026, PR #26): Chispa, Llama y Hoguera como entradas de papel mostaza con 1, 2 y 3 llamitas del logo, en las dos webs. Se descartó el widget (iframe) de Weezevent: solo deja cambiar el color, habría que abrir la CSP y su accesibilidad y el 3D Secure en el móvil no dependen de nosotros. Cada talón enlaza al módulo filtrado de su tarifa. La portada lleva a `#entradas` y la tarjeta mostaza de Entradas de la web temporal se sustituye por la sección.
 
 ### Marca
 - [x] Nombre con tilde "Píntega Conf" en ambas webs (textos, títulos, metadatos, asuntos de email) y logo nuevo con la llama-tilde. `og.jpg` de la web temporal regenerado con el logo nuevo . Banners de Twitter y LinkedIn (`marca_and_rrss/`) con la tilde añadida: llama negra rellena encima de la I (variante del manual "fondo blanco / blanco y negro"), sacada del logo vectorial. El resto del banner se queda como está (decisión del usuario).

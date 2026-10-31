@@ -64,11 +64,8 @@ Cómo se mitigan los contras de Astro:
 
 ### Pendiente (no se puede cerrar solo con código)
 
-- **Formulario de compra y RGPD:** hoy no envía datos a ningún sitio. Las entradas se venden en **Weezevent** (ver `claude/docs/entradas-weezevent.md`), así que en la web completa lo previsto es cambiar el formulario por un enlace a su tienda. Si se mantiene algún formulario, hacen falta:
-  - la política de privacidad publicada y enlazada junto al formulario;
-  - la base legal y el responsable del tratamiento;
-  - quitar los campos que no sean necesarios ("Trabajo en..." ¿hace falta?).
-- **Pago:** en la tienda de Weezevent, enlazada desde la web (sin iframe ni scripts suyos, así la CSP no cambia y la tarjeta nunca pasa por nuestra web). Antes estaba previsto Stripe Checkout; se descartó el 30-10-2026.
+- **Formulario de compra:** ya no hay (PR #26). Los datos de quien compra los recoge Weezevent por nuestra cuenta (ver la política de privacidad).
+- **Pago:** en la tienda de Weezevent, enlazada desde el selector de entradas de la web (sin iframe ni scripts suyos, así la CSP no cambia y la tarjeta nunca pasa por nuestra web). Antes estaba previsto Stripe Checkout; se descartó el 30-10-2026.
 - **Hosting:** se despliega con el `Dockerfile` de la raíz (nginx con las cabeceras de `public/_headers` traducidas en `web/nginx.conf`); de momento solo la web temporal. Si se cambia una cabecera, cambiarla en los dos sitios. HSTS activado (el dominio tendrá HTTPS).
 - **Email en claro** (`mailto:info@…`): los bots lo recogen para spam. Es aceptable para una conferencia; la alternativa sería un formulario de contacto.
 - **Analítica:** ahora no hay ninguna, así que no hace falta banner de cookies. Si se añade, que sea sin cookies (Plausible, Umami autoalojado…) o habrá que poner banner con opción de rechazar.
