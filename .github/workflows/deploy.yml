@@ -30,7 +30,7 @@ jobs:
 
             echo "🚀 Deploying contest-app..."
 
-            cd /root/Pintegaconf/pintegaconf-web
+            cd /root/PintegaConf/pintegaconf-web
 
             echo "📥 Pulling latest code"
             git pull origin main
@@ -40,7 +40,7 @@ jobs:
               -t pintega-web:latest .
 
             echo "🛑 Stopping old container (if exists)"
-            docker pintega-web || true
+            docker stop pintega-web || true
             docker rm pintega-web || true
 
             echo "▶️ Running new container"
