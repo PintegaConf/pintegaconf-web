@@ -1,8 +1,8 @@
 ---
-import { evento } from "../../data/evento";
+import { evento, fecha, mayuscula } from "../../data/evento";
 const formato = [
-  { titulo: "Viernes 9 · Pre-evento", texto: `Para conocernos y abrir boca antes del gran día. Sin charlas. ${evento.preEvento.lugar ? `En ${evento.preEvento.lugar}.` : "Lugar por anunciar."}` },
-  { titulo: "Sábado 10 · El gran día", texto: `Charlas, ponentes, patrocinadores y networking en ${evento.charlas.lugarEnFrase}.` },
+  { titulo: `${mayuscula(fecha(evento.preEvento.fecha, "dia"))} · Pre-evento`, texto: `Para conocernos y abrir boca antes del gran día. Sin charlas. ${evento.preEvento.lugar ? `En ${evento.preEvento.lugar}.` : "Lugar por anunciar."}` },
+  { titulo: `${mayuscula(fecha(evento.charlas.fecha, "dia"))} · El gran día`, texto: `Charlas, ponentes, patrocinadores y networking en ${evento.charlas.lugarEnFrase}.` },
   { titulo: "Para todos los perfiles", texto: "Gente de distintas edades, trayectorias y cargos, tanto en el público como entre los ponentes." },
 ];
 ---

@@ -4,7 +4,7 @@
 // Móvil: todo en una columna.
 import PaginaTexto from "../layouts/PaginaTexto.astro";
 import PreguntaFaq from "../components/PreguntaFaq.astro";
-import { evento, mailto } from "../data/evento";
+import { evento, fecha, mailto } from "../data/evento";
 import { entradas, ventaAbierta } from "../data/entradas";
 
 // «Chispa (30 €), Llama (40 €) y Hoguera (60 €)»
@@ -45,8 +45,8 @@ const temas = [
         <h2>El evento</h2>
         <PreguntaFaq numero={1} pregunta="¿Cuándo y dónde es?" abierta>
           <p>
-            El <strong>sábado 10 de abril de 2027</strong> es el día de las charlas, en {evento.charlas.lugarEnFrase} ({evento.ciudad}).
-            El <strong>viernes 9</strong> hay un pre-evento para conocernos, sin charlas, en un lugar que anunciaremos pronto.
+            El <strong>{fecha(evento.charlas.fecha)}</strong> es el día de las charlas, en {evento.charlas.lugarEnFrase} ({evento.ciudad}).
+            El <strong>{fecha(evento.preEvento.fecha, "dia")}</strong> hay un pre-evento para conocernos, sin charlas, en un lugar que anunciaremos pronto.
           </p>
         </PreguntaFaq>
         <PreguntaFaq numero={2} pregunta="¿Qué es Píntega Conf?">
@@ -110,7 +110,7 @@ const temas = [
           <p>
             Hay cuatro niveles: <strong>Dragón</strong> (patrocinio principal, exclusivo para una sola empresa), <strong>Basilisco</strong>,{" "}
             <strong>Tritón</strong> y <strong>Ajolote</strong>. Pídenos el dossier en{" "}
-            <a href={mailto("Patrocinio Píntega Conf '27")}>{evento.email}</a> y lo hablamos.
+            <a href={mailto(`Patrocinio ${evento.nombre}`)}>{evento.email}</a> y lo hablamos.
           </p>
         </PreguntaFaq>
       </section>

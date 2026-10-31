@@ -5,27 +5,27 @@ import { Image } from "astro:assets";
 import logo from "../../assets/marca/logo-horizontal.svg";
 import orbe from "../../assets/marca/orbe.png";
 import huellas from "../../assets/marca/huellas.svg";
-import { evento } from "../../data/evento";
+import { evento, fecha, mayuscula } from "../../data/evento";
 import QrDecorativo from "./QrDecorativo.astro";
 ---
 <div class="pass-stage">
   <article class="pass" aria-label={`Vista previa de tu entrada de ${evento.nombre}`}>
     <header class="pass-head">
       <Image class="pass-logo" src={logo} alt={evento.nombre} />
-      <div><span class="pass-label">Charlas</span><span class="pass-value">Sáb 10 abr</span></div>
+      <div><span class="pass-label">Charlas</span><span class="pass-value">{mayuscula(fecha(evento.charlas.fecha, "corta"))}</span></div>
     </header>
     <div class="pass-strip">
       <Image class="steps" src={huellas} alt="" />
       <Image class="orb" src={orbe} alt="" width={300} widths={[150, 300]} sizes="150px" />
       <span class="pass-label">Evento</span>
-      <p class="pass-title">Píntega Conf&nbsp;’27</p>
+      <p class="pass-title">Píntega Conf&nbsp;’{evento.anioCorto}</p>
       <p class="pass-tag">{evento.lema}</p>
     </div>
     <div class="pass-fields">
       <div><span class="pass-label">Asistente</span><span class="pass-value">Tu nombre aquí</span></div>
       <div class="right"><span class="pass-label">Entrada</span><span class="pass-value">Llama</span></div>
       <div><span class="pass-label">Lugar</span><span class="pass-value">{evento.charlas.lugar}</span></div>
-      <div class="right"><span class="pass-label">Pre-evento</span><span class="pass-value">Vie 9 abr</span></div>
+      <div class="right"><span class="pass-label">Pre-evento</span><span class="pass-value">{mayuscula(fecha(evento.preEvento.fecha, "corta"))}</span></div>
     </div>
     <div class="pass-tear" aria-hidden="true"><span></span></div>
     <div class="pass-code">
