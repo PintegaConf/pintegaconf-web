@@ -14,10 +14,14 @@ ya trae el panel, los QR, las facturas y los reembolsos, y no hay tiempo para de
 - **Carga:** nuestra web es estática (nginx). El pico de la apertura lo recibe la tienda de Weezevent, no nuestro servidor.
 - La confirmación de la compra la dan la página final y el email de Weezevent. En la web explicamos los pasos: elegir → pagar
   (factura si hace falta) → llega un email con la entrada y su QR (así se sabe que la compra ha terminado).
-- Enlaces: **pendientes**. Están como `PENDIENTE-URL-WEEZEVENT-CHISPA`, `-LLAMA` y `-HOGUERA` en `web/site/src/data/entradas.ts`
-  y en `web/temporal/index.html`. Cada uno sale de **Canales de venta → Módulos de venta de entradas → Crear nuevo módulo →
-  Nuevo widget filtrado** (nombre, evento, la tarifa y el idioma **español**): del código que da, la URL entre `data-src="…"` y
-  `data-width`. PR #26 en borrador hasta tenerlos.
+- Enlaces: **puestos** (1-11-2026), uno por entrada, en `web/site/src/data/entradas.ts` y en `web/temporal/index.html`. Son los
+  módulos filtrados de Chispa, Llama y Hoguera del evento 2561671 (`widget.weezevent.com/ticket/<clave>?id_evenement=2561671&locale=es-ES&code=42734`).
+  Para hacer uno nuevo: **Canales de venta → Módulos de venta de entradas → Crear nuevo módulo → Nuevo widget filtrado** (nombre,
+  evento, la tarifa y el idioma **español**); del código que da, la URL entre `data-src="…"` y `data-width`. Su script (`weez.js`) no se usa.
+- **Early bird:** cada entrada tiene además su tarifa early bird (31-10-2026; precio y plazo sin pasar a la web todavía). Para que
+  el enlace no cambie, el módulo de cada entrada debe llevar sus dos tarifas, y la normal empezar «sustituyendo» a la early bird
+  (que necesita fecha de fin o cupo; las dos visibles en Internet). Si el módulo solo admite una tarifa, al acabar el early bird
+  hay que crear módulos nuevos y cambiar los tres enlaces.
 - Precios en Weezevent: **precio fijo** de 30, 40 y 60 € (es el precio final con IVA) **sin «+ comisiones»**: la comisión sale
   de lo que nos pagan (0,99 €, 1,00 € y 1,50 €). IVA del evento: el que diga la gestora (previsiblemente el 21 %, tipo general).
 
