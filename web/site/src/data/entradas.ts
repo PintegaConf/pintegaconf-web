@@ -14,7 +14,7 @@ export const entradas = [
     precio: 30,
     resumen: "Sin post-evento",   // lo que la distingue: se ve con el desplegable cerrado (móvil)
     incluye: [...BASE, { texto: "Sin post-evento", incluido: false }],
-    tienda: "PENDIENTE-URL-WEEZEVENT-CHISPA",
+    tienda: "https://widget.weezevent.com/ticket/3dc446fe-73e3-42d7-81bb-ea62f7945ecf?id_evenement=2561671&locale=es-ES&code=42734",
   },
   {
     nombre: "Llama",
