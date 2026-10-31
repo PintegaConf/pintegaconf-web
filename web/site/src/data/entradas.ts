@@ -1,0 +1,30 @@
+// Tipos de entrada = tarifas de Weezevent. Precios finales: IVA y comisión de Weezevent incluidos.
+// `tienda`: enlace al módulo filtrado de esa tarifa (Weezevent → Canales de venta → Módulos de venta de entradas →
+// Nuevo widget filtrado; la URL que va entre data-src="…" y data-width): la tienda se abre con esa tarifa ya elegida.
+// Si cambia algo, cambiarlo también en la web temporal (web/temporal/index.html, sección Entradas).
+
+const BASE = [
+  { texto: "Viernes 9 · pre-evento", incluido: true },
+  { texto: "Sábado 10 · charlas", incluido: true },
+];
+
+export const entradas = [
+  {
+    nombre: "Chispa",
+    precio: 30,
+    incluye: [...BASE, { texto: "Sin post-evento", incluido: false }],
+    tienda: "PENDIENTE-URL-WEEZEVENT-CHISPA",
+  },
+  {
+    nombre: "Llama",
+    precio: 40,
+    incluye: [...BASE, { texto: "Post-evento del sábado", incluido: true }],
+    tienda: "PENDIENTE-URL-WEEZEVENT-LLAMA",
+  },
+  {
+    nombre: "Hoguera",
+    precio: 60,
+    incluye: [...BASE, { texto: "Post-evento del sábado", incluido: true }, { texto: "Regalo de Píntega Conf", incluido: true }],
+    tienda: "PENDIENTE-URL-WEEZEVENT-HOGUERA",
+  },
+];

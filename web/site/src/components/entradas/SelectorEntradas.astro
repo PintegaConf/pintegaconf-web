@@ -1,0 +1,87 @@
+---
+// Las tres entradas (data/entradas.ts) como entradas de papel: 1, 2 y 3 llamitas del logo (cuanto más fuego, más
+// incluye). El talón negro es el enlace a Weezevent con esa tarifa ya elegida. Muescas: círculos del color del fondo,
+// no máscaras (Safari). Al pasar el ratón la entrada se endereza y sube.
+import { entradas } from "../../data/entradas";
+---
+<svg class="defs" aria-hidden="true" focusable="false">
+  <!-- La llamita del logo en un solo trazado: el hueco de dentro (evenodd) deja ver el papel, como el recorte del logo -->
+  <symbol id="llama-entrada" viewBox="456 247.5 16.9 35.3">
+    <path fill="currentColor" fill-rule="evenodd" d="M 464.292969 282.441406 C 462.039062 282.214844 460.023438 280.992188 458.566406 279.257812 C 456.703125 277.03125 455.167969 273.496094 457.902344 267.632812 C 458.878906 265.539062 460.214844 263.632812 461.78125 261.9375 C 467.097656 256.183594 469.460938 255.285156 467.496094 247.8125 C 467.496094 247.8125 470.539062 250.695312 472.011719 255.394531 C 473.167969 259.085938 472.761719 263.089844 471.0625 266.566406 C 470.082031 268.574219 469.734375 269.585938 470.667969 270.882812 C 474.433594 276.113281 470.789062 283.097656 464.292969 282.441406 Z M 464.757812 277.902344 C 463.253906 277.964844 461.894531 277.027344 461.242188 275.671875 C 460.28125 273.667969 459.605469 270.03125 463.527344 265.546875 C 469.585938 258.625 469.585938 256.609375 469.585938 256.609375 C 469.585938 256.609375 471.027344 261.796875 467.566406 266.410156 C 467.566406 266.410156 465.546875 269.871094 467.277344 271.890625 C 468.707031 273.554688 467.972656 277.773438 464.757812 277.902344 Z"/>
+  </symbol>
+</svg>
+<!-- role="list": Safari quita la semántica de lista cuando no hay viñetas -->
+<ul class="tarifas" role="list">
+  {entradas.map((e, i) => (
+    <li class="tarifa">
+      <div class="tarifa-cuerpo">
+        <span class="llamas" aria-hidden="true">
+          {Array.from({ length: i + 1 }, () => <svg viewBox="0 0 16.9 35.3"><use href="#llama-entrada" /></svg>)}
+        </span>
+        <h3>{e.nombre}</h3>
+        <p class="precio">{e.precio}&nbsp;€ <small>IVA incluido</small></p>
+        <ul class="incluye" role="list">
+          {e.incluye.map((x) => (
+            <li class={x.incluido ? undefined : "no"}>
+              {x.incluido
+                ? <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                : <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" /></svg>}
+              <span>{x.texto}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <a class="tarifa-talon" href={e.tienda}>
+        Comprar {e.nombre}
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" /></svg>
+      </a>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+  .tarifas { list-style: none; margin: 0 0 5rem; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 330px)); gap: 2.5rem; justify-content: center; }
+  .tarifa { display: flex; flex-direction: column; background: var(--gold); color: var(--ink); transform: rotate(-1.2deg); transition: transform .2s var(--ease); }
+  .tarifa:nth-child(2) { transform: rotate(.8deg); }
+  .tarifa:nth-child(3) { transform: rotate(-.5deg); }
+  .tarifa:hover, .tarifa:focus-within { transform: translateY(-6px); }
+  .tarifa-cuerpo { flex: 1; padding: 1.6rem 1.6rem 1.5rem; }
+  .llamas { display: flex; gap: .35rem; margin-bottom: .9rem; }
+  .llamas svg { width: 17px; height: 36px; }
+  .tarifa h3 { margin: 0; font: 700 30px/1.1 var(--f-head); }
+  .precio { margin: .25rem 0 1.2rem; font: 700 56px/1 var(--f-head); }
+  .precio small { display: block; margin-top: .4rem; font: 700 11px/1.3 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; }
+  .incluye { list-style: none; margin: 0; padding: 0; display: grid; gap: .55rem; font: 600 16px/1.3 var(--f-sans); }
+  .incluye li { display: flex; align-items: center; gap: .6rem; }
+  .incluye svg { flex: none; width: 22px; height: 22px; padding: 3px; border-radius: 50%; background: var(--ink); color: var(--gold); }
+  .incluye .no svg { background: none; color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--ink); }
+
+  /* Talón: el enlace. Borde dorado (en el tema oscuro, el negro no se distingue del fondo), línea de corte y muescas
+     del color de la sección */
+  .tarifa-talon {
+    position: relative; display: flex; align-items: center; justify-content: space-between; gap: .6rem;
+    padding: 1.1rem 1.6rem; background: var(--ink); color: var(--gold); border: 2px solid var(--gold); border-top-style: dashed;
+    font: 700 21px/1.1 var(--f-head); text-decoration: none;
+  }
+  .tarifa-talon::before, .tarifa-talon::after { content: ""; position: absolute; top: -12px; width: 20px; height: 20px; border-radius: 50%; background: var(--bg); }
+  .tarifa-talon::before { left: -12px; }
+  .tarifa-talon::after { right: -12px; }
+  .tarifa-talon svg { flex: none; width: 22px; height: 22px; transition: transform .2s var(--ease); }
+  .tarifa-talon:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .tarifa-talon:hover svg { transform: translateX(4px); }
+
+  @media (forced-colors: active) {
+    .tarifa { border: 2px solid CanvasText; }
+    .tarifa-talon { border-color: CanvasText; }
+  }
+  @media (prefers-reduced-motion: reduce) { .tarifa, .tarifa-talon svg { transition: none; } }
+  @media (max-width: 1240px) { .tarifas { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; } }
+  @media (max-width: 980px) { .tarifas { grid-template-columns: 1fr; gap: 2rem; max-width: 440px; margin-inline: auto; } }
+  @media (max-width: 680px) {
+    .tarifas { margin-bottom: 3.5rem; }
+    .tarifa-cuerpo { padding: 1.3rem 1.3rem 1.2rem; }
+    .precio { font-size: 48px; }
+    .tarifa-talon { padding: 1rem 1.3rem; }
+  }
+</style>
