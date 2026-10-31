@@ -4,7 +4,7 @@
 // el mismo que el del equipo). Con «reducir movimiento» no se mueve y el botón no aparece.
 import { Image } from "astro:assets";
 import orbe from "../../assets/marca/orbe.png";
-import { evento } from "../../data/evento";
+import { evento, fecha, mayuscula } from "../../data/evento";
 import { ventaAbierta } from "../../data/entradas";
 ---
 <section class="hero" id="inicio">
@@ -19,7 +19,7 @@ import { ventaAbierta } from "../../data/entradas";
       <ul class="facts">
         <li>
           <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2" fill="none" stroke="currentColor" stroke-width="2"></rect><path d="M3.5 10h17M8 3v4M16 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
-          <span><strong>Sábado 10 de abril</strong> 2027 · día de charlas</span>
+          <span><strong>{mayuscula(fecha(evento.charlas.fecha, "media"))}</strong> {evento.anio} · día de charlas</span>
         </li>
         <li>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path><circle cx="12" cy="9.5" r="2.5" fill="none" stroke="currentColor" stroke-width="2"></circle></svg>
@@ -27,7 +27,7 @@ import { ventaAbierta } from "../../data/entradas";
         </li>
         <li>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.1 6.9L21 12l-6.9 2.1L12 21l-2.1-6.9L3 12l6.9-2.1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path></svg>
-          <span><strong>Viernes 9 · pre-evento</strong> {evento.preEvento.lugar ?? "lugar por anunciar"}</span>
+          <span><strong>{mayuscula(fecha(evento.preEvento.fecha, "dia"))} · pre-evento</strong> {evento.preEvento.lugar ?? "lugar por anunciar"}</span>
         </li>
       </ul>
       <div class="cta">
