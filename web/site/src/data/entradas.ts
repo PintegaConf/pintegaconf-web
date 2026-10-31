@@ -21,7 +21,7 @@ export const entradas = [
     precio: 40,
     resumen: "Con post-evento",
     incluye: [...BASE, { texto: "Post-evento del sábado", incluido: true }],
-    tienda: "PENDIENTE-URL-WEEZEVENT-LLAMA",
+    tienda: "https://widget.weezevent.com/ticket/f2d3c92d-3014-4ac0-bbba-a48f554f7780?id_evenement=2561671&locale=es-ES&code=42734",
   },
   {
     nombre: "Hoguera",
