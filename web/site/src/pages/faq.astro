@@ -5,6 +5,10 @@
 import PaginaTexto from "../layouts/PaginaTexto.astro";
 import PreguntaFaq from "../components/PreguntaFaq.astro";
 import { evento, mailto } from "../data/evento";
+import { entradas } from "../data/entradas";
+
+// «Chispa (30 €), Llama (40 €) y Hoguera (60 €)»
+const precios = new Intl.ListFormat("es").format(entradas.map((e) => `${e.nombre} (${e.precio}\u00a0€)`));
 
 const temas = [
   { id: "evento", titulo: "El evento", preguntas: 3 },
@@ -63,9 +67,12 @@ const temas = [
         <h2>Entradas</h2>
         <PreguntaFaq numero={4} pregunta="¿Cuánto cuesta la entrada y cómo la compro?">
           <p>
-            En <a href={evento.tiendaEntradas}>nuestra tienda de Weezevent</a>, la plataforma donde vendemos las entradas: allí verás el
-            precio y los tipos de entrada. El pago se hace en su página y los datos de tu tarjeta nunca pasan por esta web. Si necesitas
-            factura (por ejemplo, para tu empresa), pídela al pagar.
+            Hay tres: {precios}, precio final con IVA incluido. Las tres incluyen el pre-evento del viernes y el día de charlas del
+            sábado; lo que cambia es el post-evento y el regalo, y lo tienes en la <a href="/#entradas">sección Entradas</a>.
+          </p>
+          <p>
+            Al pulsar «Comprar» vas a Weezevent, la plataforma donde vendemos las entradas. El pago se hace en su página y los datos de
+            tu tarjeta nunca pasan por esta web. Si necesitas factura (por ejemplo, para tu empresa), pídela al pagar.
           </p>
           <p>
             Al terminar te llega un email con tu entrada y su código QR, que es lo que enseñarás en la puerta, en el móvil o impreso. Si no
