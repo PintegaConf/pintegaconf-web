@@ -1,9 +1,9 @@
 ---
-import { evento } from "../../data/evento";
+import { evento, fecha, mayuscula } from "../../data/evento";
 // Cuando haya horario, cada día puede pasar a tener una lista de charlas.
 const dias = [
-  { titulo: "Día 1 · Viernes 9 de abril", texto: `Pre-evento: sin charlas, un primer encuentro para conocernos. ${evento.preEvento.lugar ? `En ${evento.preEvento.lugar}; muy pronto daremos los detalles.` : "Lugar por anunciar; muy pronto daremos los detalles."}` },
-  { titulo: "Día 2 · Sábado 10 de abril", texto: `El día de las charlas, en ${evento.charlas.lugarEnFrase}. Horario en preparación: muy pronto publicaremos ponentes y horarios.` },
+  { titulo: `Día 1 · ${mayuscula(fecha(evento.preEvento.fecha, "media"))}`, texto: `Pre-evento: sin charlas, un primer encuentro para conocernos. ${evento.preEvento.lugar ? `En ${evento.preEvento.lugar}; muy pronto daremos los detalles.` : "Lugar por anunciar; muy pronto daremos los detalles."}` },
+  { titulo: `Día 2 · ${mayuscula(fecha(evento.charlas.fecha, "media"))}`, texto: `El día de las charlas, en ${evento.charlas.lugarEnFrase}. Horario en preparación: muy pronto publicaremos ponentes y horarios.` },
 ];
 ---
 <section id="agenda">
