@@ -38,7 +38,7 @@ src/
   components/
     layout/                  Cabecera, Menu (desplegable), Pie
     secciones/               Portada, QueEs, Agenda, Ponentes, Patrocinadores, Logos, Equipo, Entradas
-    entradas/                PaseWallet, TicketClasico, ComoComprar (pasos + enlace a Weezevent), QrDecorativo
+    entradas/                SelectorEntradas (las tres entradas, enlazan a Weezevent), PaseWallet, TicketClasico, ComoComprar (pasos), QrDecorativo
     LogoHueco.astro          un hueco de logo (logo real o "Tu logo aquí")
     Dato.astro               un dato legal o el hueco "pendiente: ..." si falta
   data/                      ← EL CONTENIDO. Casi todo lo que cambia se edita aquí
