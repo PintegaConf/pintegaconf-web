@@ -285,14 +285,14 @@
     .tarifas { grid-template-columns: 1fr; gap: 1.25rem; max-width: 440px; }
     .tarifas > li:hover, .tarifas > li:focus-within { transform: none; }
     .tarifa-cabecera {
-      grid-template-columns: 1fr auto auto; grid-template-areas: "llamas precio flecha" "nombre precio flecha" "resumen precio flecha";
+      grid-template-columns: 1fr auto auto; grid-template-areas: "llamas precio flecha" "nombre precio flecha" "resumen resumen flecha";
       column-gap: .9rem; align-items: center; padding: 1rem 1.2rem; cursor: pointer;
     }
     .llamas { margin-bottom: .35rem; gap: .25rem; }
     .llamas svg { width: 12px; height: 25px; }
     .tarifa-nombre { font-size: 26px; }
     .precio { margin: 0; font-size: 36px; text-align: right; }
-    .precio small { font-size: 10px; letter-spacing: .08em; }
+    .precio small { letter-spacing: .08em; white-space: nowrap; }
     .resumen { display: block; grid-area: resumen; margin-top: .15rem; font: 600 15px/1.3 var(--f-sans); }
     .flecha-abrir {
       display: block; grid-area: flecha; width: 30px; height: 30px; padding: 4px; border-radius: 50%;
