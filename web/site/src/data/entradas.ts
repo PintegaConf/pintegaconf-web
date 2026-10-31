@@ -28,6 +28,6 @@ export const entradas = [
     precio: 60,
     resumen: "Con post-evento y regalo",
     incluye: [...BASE, { texto: "Post-evento del sábado", incluido: true }, { texto: "Regalo de Píntega Conf", incluido: true }],
-    tienda: "PENDIENTE-URL-WEEZEVENT-HOGUERA",
+    tienda: "https://widget.weezevent.com/ticket/79abd7ec-4040-4d6a-b9e9-31f136fc9728?id_evenement=2561671&locale=es-ES&code=42734",
   },
 ];
