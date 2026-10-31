@@ -5,7 +5,7 @@
 import PaginaTexto from "../layouts/PaginaTexto.astro";
 import PreguntaFaq from "../components/PreguntaFaq.astro";
 import { evento, mailto } from "../data/evento";
-import { entradas } from "../data/entradas";
+import { entradas, ventaAbierta } from "../data/entradas";
 
 // «Chispa (30 €), Llama (40 €) y Hoguera (60 €)»
 const precios = new Intl.ListFormat("es").format(entradas.map((e) => `${e.nombre} (${e.precio}\u00a0€)`));
@@ -71,6 +71,7 @@ const temas = [
             sábado; lo que cambia es el post-evento y el regalo, y lo tienes en la <a href="/#entradas">sección Entradas</a>.
           </p>
           <p>
+            {!ventaAbierta && "La venta abre muy pronto: lo anunciaremos en redes. "}
             Al pulsar «Comprar» vas a Weezevent, la plataforma donde vendemos las entradas. El pago se hace en su página y los datos de
             tu tarjeta nunca pasan por esta web. Si necesitas factura (por ejemplo, para tu empresa), pídela al pagar.
           </p>

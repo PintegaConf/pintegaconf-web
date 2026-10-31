@@ -5,7 +5,8 @@
 // Con una sola columna (≤ 980 px) cada entrada es un desplegable (<details>) cerrado: se ven las tres de un vistazo
 // (nombre, precio y lo que la distingue) y al abrirla salen lo que incluye y el talón. scripts/entradas/selector.ts
 // las cierra en una columna y las deja fijas en escritorio; sin JS, todas abiertas.
-import { entradas } from "../../data/entradas";
+// Con la venta aún cerrada (ventaAbierta = false), el talón dice «Muy pronto a la venta» y no es un enlace.
+import { entradas, ventaAbierta } from "../../data/entradas";
 ---
 <svg class="defs" aria-hidden="true" focusable="false">
   <!-- La llamita del logo en un solo trazado: el hueco de dentro (evenodd) deja ver el papel, como el recorte del logo -->
@@ -37,10 +38,17 @@ import { entradas } from "../../data/entradas";
             </li>
           ))}
         </ul>
-        <a class="tarifa-talon" href={e.tienda}>
-          Comprar {e.nombre}
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" /></svg>
-        </a>
+        {ventaAbierta ? (
+          <a class="tarifa-talon" href={e.tienda}>
+            Comprar {e.nombre}
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </a>
+        ) : (
+          <p class="tarifa-talon">
+            Muy pronto a la venta
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2.2" /><path d="M12 7.5V12l3 2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </p>
+        )}
       </details>
     </li>
   ))}
@@ -80,14 +88,14 @@ import { entradas } from "../../data/entradas";
   .tarifa-talon {
     position: relative; display: flex; align-items: center; justify-content: space-between; gap: .6rem;
     padding: 1.1rem 1.6rem; background: var(--ink); color: var(--gold); border: 2px solid var(--gold); border-top-style: dashed;
-    font: 700 21px/1.1 var(--f-head); text-decoration: none;
+    margin: 0; font: 700 21px/1.1 var(--f-head); text-decoration: none;
   }
   .tarifa-talon::before, .tarifa-talon::after { content: ""; position: absolute; top: -12px; width: 20px; height: 20px; border-radius: 50%; background: var(--bg); }
   .tarifa-talon::before { left: -12px; }
   .tarifa-talon::after { right: -12px; }
   .tarifa-talon svg { flex: none; width: 22px; height: 22px; transition: transform .2s var(--ease); }
-  .tarifa-talon:hover { text-decoration: underline; text-underline-offset: 4px; }
-  .tarifa-talon:hover svg { transform: translateX(4px); }
+  a.tarifa-talon:hover { text-decoration: underline; text-underline-offset: 4px; }
+  a.tarifa-talon:hover svg { transform: translateX(4px); }
 
   @media (forced-colors: active) {
     .tarifa { border: 2px solid CanvasText; }
