@@ -1,4 +1,4 @@
-# web/site — la web de Píntega Conf '27 (Astro)
+# web/site — la web de Píntega Conf (Astro)
 
 Web estática: `npm run build` genera `dist/` con HTML, CSS, JS, fuentes e imágenes, listos para
 subir a cualquier hosting. No hace falta Node en el servidor.
@@ -42,7 +42,7 @@ src/
     LogoHueco.astro          un hueco de logo (logo real o "Tu logo aquí")
     Dato.astro               un dato legal o el hueco "pendiente: ..." si falta
   data/                      ← EL CONTENIDO. Casi todo lo que cambia se edita aquí
-    evento.ts                fechas, lugares, email, descripciones, enlaces (tienda de entradas, dossiers)
+    evento.ts                fechas de la edición (de ellas salen el año y el nombre), lugares, email, descripciones, dossiers
     navegacion.ts            secciones del menú y enlaces del pie
     equipo.ts                personas, fila y sus ilustraciones
     patrocinio.ts            niveles, logos de patrocinadores, colaboradores, comunidades
@@ -68,6 +68,10 @@ se destapa a alguien del equipo) están marcados con `:global(...)`.
 ## Tareas habituales
 
 - **Cambiar un texto o una fecha:** `src/data/evento.ts` o el componente de la sección.
+- **Edición del año siguiente:** cambiar `PRE_EVENTO` y `CHARLAS` al principio de `src/data/evento.ts`. El año, el nombre
+  («Píntega Conf '28») y todos los textos con fecha (portada, agenda, FAQ, entradas, título, SEO, schema.org) salen de ahí con
+  `fecha()`: no escribir fechas ni el año a mano en los componentes. Lo que hay que cambiar aparte: el logo y la imagen para
+  redes (llevan el año dibujado: `src/assets/marca/logo-*.svg`, `public/og.jpg`) y los enlaces a los dossiers.
 - **Añadir un patrocinador:** guardar el logo en `src/assets/patrocinadores/`, importarlo en `src/data/patrocinio.ts` y añadirlo a `logos` del nivel: `{ src: logo, alt: "Empresa", url: "https://…" }`. El hueco "Tu logo aquí" desaparece solo.
 - **Añadir ponentes:** `src/data/ponentes.ts`. Mientras la lista esté vacía se ven 6 tarjetas "Próximamente".
 - **Ilustraciones de alguien del equipo:**
