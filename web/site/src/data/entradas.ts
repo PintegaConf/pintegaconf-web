@@ -12,18 +12,21 @@ export const entradas = [
   {
     nombre: "Chispa",
     precio: 30,
+    resumen: "Sin post-evento",   // lo que la distingue: se ve con el desplegable cerrado (móvil)
     incluye: [...BASE, { texto: "Sin post-evento", incluido: false }],
     tienda: "PENDIENTE-URL-WEEZEVENT-CHISPA",
   },
   {
     nombre: "Llama",
     precio: 40,
+    resumen: "Con post-evento",
     incluye: [...BASE, { texto: "Post-evento del sábado", incluido: true }],
     tienda: "PENDIENTE-URL-WEEZEVENT-LLAMA",
   },
   {
     nombre: "Hoguera",
     precio: 60,
+    resumen: "Con post-evento y regalo",
     incluye: [...BASE, { texto: "Post-evento del sábado", incluido: true }, { texto: "Regalo de Píntega Conf", incluido: true }],
     tienda: "PENDIENTE-URL-WEEZEVENT-HOGUERA",
   },
