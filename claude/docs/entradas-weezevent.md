@@ -59,6 +59,10 @@ Fuentes: [comptabilité](https://weezevent.com/fr/comptabilite/), [CGUS](https:/
 5. Condiciones de venta y de reembolso, y aviso de privacidad (Weezevent trata los datos de los compradores por nuestra cuenta).
    Basarlos en los textos de Lareira y no inventar datos.
 6. Compra real de prueba de principio a fin y reembolso después: comprobar la página final, el email, el QR, la factura, el reembolso y el escaneo con la app.
-7. Poner los enlaces de los tres módulos filtrados en las dos webs (PR #26), quitarle el borrador y probar en Safari y en el iPhone.
-8. ~~Web completa (Astro): formulario y menciones a Stripe~~ **Hecho en la PR #26:** pasos y enlace a Weezevent, y FAQ, seguridad,
+7. ~~Poner los enlaces de los tres módulos filtrados en las dos webs~~ (hecho, PR #26). Al abrir la venta: `ventaAbierta = true` en
+   `web/site/src/data/entradas.ts` y quitar la clase `venta-pronto` del `<html>` de la web temporal (hasta entonces los talones dicen
+   «Muy pronto a la venta» y no enlazan). Probar en Safari y en el iPhone.
+8. Mensaje propio de Weezevent para cuando no haya entradas (agotadas o venta cerrada): *Opciones de venta de entradas →
+   Visualización del módulo → Mensajes informativos* («si no hay entradas disponibles» y «si se alcanza el cupo»).
+9. ~~Web completa (Astro): formulario y menciones a Stripe~~ **Hecho en la PR #26:** pasos y enlace a Weezevent, y FAQ, seguridad,
    privacidad, cookies y distintivo del pie hablan de Weezevent. Falta la revisión legal de privacidad y cookies.
