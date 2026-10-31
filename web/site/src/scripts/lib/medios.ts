@@ -4,6 +4,9 @@
 /** Móvil: el equipo pasa a carrusel. */
 export const MOVIL = window.matchMedia("(max-width: 680px)");
 
+/** Una sola columna: las entradas pasan a desplegables. */
+export const UNA_COLUMNA = window.matchMedia("(max-width: 980px)");
+
 /** Ratón o trackpad (puntero fino con hover). En táctil, no. */
 export const PUNTERO_FINO = window.matchMedia("(hover: hover) and (pointer: fine)");
 
