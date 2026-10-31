@@ -154,11 +154,57 @@
   .format b { display: block; font: 700 22px/1.2 var(--f-head); color: var(--white); }
   .format span { color: var(--muted); font-size: 15px; }
 
+  /* ---------- Entradas ---------- */
+  /* Las tres entradas como entradas de papel: 1, 2 y 3 llamitas del logo (cuanto más fuego, más incluye). El talón negro
+     es el enlace a Weezevent con esa tarifa ya elegida. Muescas: círculos del color del fondo, no máscaras (Safari).
+     Es el selector de la web de Astro (components/entradas/SelectorEntradas.astro): si cambia uno, cambiar el otro */
+  .entradas { padding: 4rem 0 1rem; }
+  .defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+  .tarifas { list-style: none; margin: 1.6rem 0 3rem; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem; }
+  .tarifa { display: flex; flex-direction: column; background: var(--gold); color: var(--ink); transform: rotate(-1.2deg); transition: transform .2s var(--ease); }
+  .tarifa:nth-child(2) { transform: rotate(.8deg); }
+  .tarifa:nth-child(3) { transform: rotate(-.5deg); }
+  .tarifa:hover, .tarifa:focus-within { transform: translateY(-6px); }
+  .tarifa-cuerpo { flex: 1; padding: 1.6rem 1.6rem 1.5rem; }
+  .llamas { display: flex; gap: .35rem; margin-bottom: .9rem; }
+  .llamas svg { width: 17px; height: 36px; }
+  .tarifa h3 { margin: 0; font: 700 30px/1.1 var(--f-head); }
+  .precio { margin: .25rem 0 1.2rem; font: 700 56px/1 var(--f-head); }
+  .precio small { display: block; margin-top: .4rem; font: 700 11px/1.3 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; }
+  .incluye { list-style: none; margin: 0; padding: 0; display: grid; gap: .55rem; font: 600 16px/1.3 var(--f-sans); }
+  .incluye li { display: flex; align-items: center; gap: .6rem; }
+  .incluye svg { flex: none; width: 22px; height: 22px; padding: 3px; border-radius: 50%; background: var(--ink); color: var(--gold); }
+  .incluye .no svg { background: none; color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--ink); }
+  /* Talón: el enlace. Borde dorado (el negro no se distingue del fondo), línea de corte y muescas del color del fondo */
+  .tarifa-talon {
+    position: relative; display: flex; align-items: center; justify-content: space-between; gap: .6rem;
+    padding: 1.1rem 1.6rem; background: var(--ink); color: var(--gold); border: 2px solid var(--gold); border-top-style: dashed;
+    font: 700 21px/1.1 var(--f-head); text-decoration: none;
+  }
+  .tarifa-talon::before, .tarifa-talon::after { content: ""; position: absolute; top: -12px; width: 20px; height: 20px; border-radius: 50%; background: var(--bg); }
+  .tarifa-talon::before { left: -12px; }
+  .tarifa-talon::after { right: -12px; }
+  .tarifa-talon svg { flex: none; transition: transform .2s var(--ease); }
+  .tarifa-talon:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .tarifa-talon:hover svg { transform: translateX(4px); }
+  .tarifa-talon:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; box-shadow: 0 0 0 3px var(--ink); }
+  @media (forced-colors: active) { .tarifa { border: 2px solid CanvasText; } .tarifa-talon { border-color: CanvasText; } }
+  /* Pasos de la compra, numerados con círculos dorados. role="list" en el HTML: Safari quita la lista si no hay viñetas */
+  .pasos { list-style: none; counter-reset: paso; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem 2.5rem; color: var(--muted); font-size: 15.5px; }
+  .pasos li { counter-increment: paso; display: grid; grid-template-columns: 1.75rem 1fr; gap: .65rem; align-items: start; }
+  .pasos li::before {
+    content: counter(paso); display: grid; place-items: center; width: 1.75rem; height: 1.75rem; border-radius: 50%;
+    background: var(--gold); color: var(--ink); font: 700 14px/1 var(--f-mono);
+  }
+  .pasos strong { color: var(--white); font-weight: 600; }
+  .entradas .nota { margin: 1.4rem 0 0; color: var(--muted); font-size: 14px; }
+  .entradas .nota a { color: var(--gold); }
+
   /* ---------- Llamadas ---------- */
   .ctas { padding: 4rem 0 5rem; }
   /* Recorte de papel plano a dos tonos, como el manual de marca: cartulina negra sobre otra mostaza desplazada, la
-     etiqueta como pestaña y dos pasos de la píntega en la esquina. Entradas va al revés (mostaza): es la acción principal. */
-  .cta-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.25rem 2rem; }
+     etiqueta como pestaña y dos pasos de la píntega en la esquina. */
+  .cta-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.25rem 2rem; }
   .cta {
     position: relative; display: flex; flex-direction: column; gap: .6rem;
     background: var(--ink); margin-top: .9rem; padding: 2.4rem 1.6rem 1.8rem;
@@ -187,22 +233,6 @@
   .btn-ghost:hover { background: var(--gold); color: var(--ink); }
   .btn:focus-visible { outline: 2px solid var(--white); outline-offset: 3px; }
 
-  /* Entradas: mostaza con texto negro; detrás, el contorno del papel desplazado */
-  .cta-principal { background: var(--gold); color: var(--ink); box-shadow: 6px 6px 0 var(--bg), 6px 6px 0 2px var(--gold); }
-  .cta-principal:hover, .cta-principal:focus-within { box-shadow: 3px 3px 0 var(--bg), 3px 3px 0 2px var(--gold); }
-  .cta-principal .tag { background: var(--ink); color: var(--gold); }
-  .cta-principal p { color: var(--ink); }
-  .cta-principal::after { background: var(--ink); opacity: .3; }
-  .cta-principal .btn { background: var(--ink); color: var(--gold); border-color: var(--ink); }
-  .cta-principal .btn:focus-visible { outline-color: var(--ink); }
-  /* Pasos de la compra, numerados con círculos negros. role="list" en el HTML: Safari quita la lista si no hay viñetas */
-  .pasos { list-style: none; counter-reset: paso; margin: .2rem 0 .4rem; padding: 0; display: grid; gap: .75rem; font-size: 15.5px; }
-  .pasos li { counter-increment: paso; display: grid; grid-template-columns: 1.75rem 1fr; gap: .65rem; align-items: start; }
-  .pasos li::before {
-    content: counter(paso); display: grid; place-items: center; width: 1.75rem; height: 1.75rem; border-radius: 50%;
-    background: var(--ink); color: var(--gold); font: 700 14px/1 var(--f-mono);
-  }
-  .cta-principal .nota { font-size: 14px; }
   /* Alto contraste: las sombras desaparecen, así que cada tarjeta lleva borde */
   @media (forced-colors: active) { .cta { border: 1px solid CanvasText; } }
 
@@ -232,7 +262,7 @@
   .siguenos a:hover { background: transparent; color: var(--ink); }
   .siguenos a:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
 
-  @media (prefers-reduced-motion: reduce) { .hero-art img, .works { animation: none; } .btn, .cta, .foot .redes a, .siguenos a, .entrada, .entrada-talon { transition: none; } .pausa { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .hero-art img, .works { animation: none; } .btn, .cta, .foot .redes a, .siguenos a, .entrada, .entrada-talon, .tarifa, .tarifa-talon svg { transition: none; } .pausa { display: none; } }
 
   @media (max-width: 900px) {
     .hero-grid { grid-template-columns: 1fr; min-height: 0; padding: 2.5rem 0 3.5rem; gap: 1rem; }
@@ -242,6 +272,8 @@
     .kicker { margin-top: 1.5rem; }
     .about-grid { grid-template-columns: 1fr; gap: 2rem; }
     .cta-grid { grid-template-columns: 1fr; }
+    .tarifas { grid-template-columns: 1fr; gap: 2rem; max-width: 440px; }
+    .pasos { grid-template-columns: 1fr; }
     .huellas { width: 380px; }
   }
   @media (max-width: 480px) {
@@ -258,6 +290,9 @@
     /* La entrada ocupa todo el ancho: es lo primero que hay que ver */
     .entrada { display: flex; margin-top: 1rem; }
     .entrada-texto { flex: 1; padding: .6rem 1rem; font-size: 22px; }
+    .tarifa-cuerpo { padding: 1.3rem 1.3rem 1.2rem; }
+    .precio { font-size: 48px; }
+    .tarifa-talon { padding: 1rem 1.3rem; }
     .entrada-talon { width: 58px; }
     .siguenos { margin-top: .9rem; }
     .siguenos h2 { margin-bottom: .5rem; }
@@ -287,8 +322,8 @@
         <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span><strong>Rectorado UDC</strong>, A Coruña</span></li>
         <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.1 6.9L21 12l-6.9 2.1L12 21l-2.1-6.9L3 12l6.9-2.1z"/></svg><span><strong>Viernes 9 · pre-evento</strong>, lugar por anunciar</span></li>
       </ul>
-      <!-- La venta es en Weezevent: la tarjeta nunca pasa por esta web y el pico de carga de la apertura lo aguantan ellos -->
-      <a class="entrada" href="PENDIENTE-URL-WEEZEVENT">
+      <!-- A la sección Entradas: allí se elige entre las tres y cada una lleva a Weezevent -->
+      <a class="entrada" href="#entradas">
         <span class="entrada-texto">Compra tu entrada <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
         <span class="entrada-talon" aria-hidden="true"><span></span></span>
       </a>
@@ -324,19 +359,70 @@
     </div>
   </section>
 
+  <!-- Entradas: los precios, lo que incluye cada una y los mismos enlaces que en data/entradas.ts de la web de Astro
+       (módulo filtrado de Weezevent de cada tarifa). La tarjeta nunca pasa por esta web y el pico de la apertura lo aguantan ellos -->
+  <section class="entradas" id="entradas" aria-labelledby="entradas-titulo">
+    <div class="wrap">
+      <h2 id="entradas-titulo">Entradas, ya a la venta</h2>
+      <svg class="defs" aria-hidden="true" focusable="false">
+        <!-- La llamita del logo en un solo trazado: el hueco de dentro (evenodd) deja ver el papel, como el recorte del logo -->
+        <symbol id="llama" viewBox="456 247.5 16.9 35.3"><path fill="currentColor" fill-rule="evenodd" d="M 464.292969 282.441406 C 462.039062 282.214844 460.023438 280.992188 458.566406 279.257812 C 456.703125 277.03125 455.167969 273.496094 457.902344 267.632812 C 458.878906 265.539062 460.214844 263.632812 461.78125 261.9375 C 467.097656 256.183594 469.460938 255.285156 467.496094 247.8125 C 467.496094 247.8125 470.539062 250.695312 472.011719 255.394531 C 473.167969 259.085938 472.761719 263.089844 471.0625 266.566406 C 470.082031 268.574219 469.734375 269.585938 470.667969 270.882812 C 474.433594 276.113281 470.789062 283.097656 464.292969 282.441406 Z M 464.757812 277.902344 C 463.253906 277.964844 461.894531 277.027344 461.242188 275.671875 C 460.28125 273.667969 459.605469 270.03125 463.527344 265.546875 C 469.585938 258.625 469.585938 256.609375 469.585938 256.609375 C 469.585938 256.609375 471.027344 261.796875 467.566406 266.410156 C 467.566406 266.410156 465.546875 269.871094 467.277344 271.890625 C 468.707031 273.554688 467.972656 277.773438 464.757812 277.902344 Z"/></symbol>
+        <symbol id="si" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+        <symbol id="no" viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></symbol>
+      </svg>
+      <ul class="tarifas" role="list">
+        <li class="tarifa">
+          <div class="tarifa-cuerpo">
+            <span class="llamas" aria-hidden="true"><svg viewBox="0 0 16.9 35.3"><use href="#llama"/></svg></span>
+            <h3>Chispa</h3>
+            <p class="precio">30&nbsp;€ <small>IVA incluido</small></p>
+            <ul class="incluye" role="list">
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#si"/></svg><span>Viernes 9 · pre-evento</span></li>
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#si"/></svg><span>Sábado 10 · charlas</span></li>
+              <li class="no"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#no"/></svg><span>Sin post-evento</span></li>
+            </ul>
+          </div>
+          <a class="tarifa-talon" href="PENDIENTE-URL-WEEZEVENT-CHISPA">Comprar Chispa <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </li>
+        <li class="tarifa">
+          <div class="tarifa-cuerpo">
+            <span class="llamas" aria-hidden="true"><svg viewBox="0 0 16.9 35.3"><use href="#llama"/></svg><svg viewBox="0 0 16.9 35.3"><use href="#llama"/></svg></span>
+            <h3>Llama</h3>
+            <p class="precio">40&nbsp;€ <small>IVA incluido</small></p>
+            <ul class="incluye" role="list">
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#si"/></svg><span>Viernes 9 · pre-evento</span></li>
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#si"/></svg><span>Sábado 10 · charlas</span></li>
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#si"/></svg><span>Post-evento del sábado</span></li>
+            </ul>
+          </div>
+          <a class="tarifa-talon" href="PENDIENTE-URL-WEEZEVENT-LLAMA">Comprar Llama <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </li>
+        <li class="tarifa">
+          <div class="tarifa-cuerpo">
+            <span class="llamas" aria-hidden="true"><svg viewBox="0 0 16.9 35.3"><use href="#llama"/></svg><svg viewBox="0 0 16.9 35.3"><use href="#llama"/></svg><svg viewBox="0 0 16.9 35.3"><use href="#llama"/></svg></span>
+            <h3>Hoguera</h3>
+            <p class="precio">60&nbsp;€ <small>IVA incluido</small></p>
+            <ul class="incluye" role="list">
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#si"/></svg><span>Viernes 9 · pre-evento</span></li>
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#si"/></svg><span>Sábado 10 · charlas</span></li>
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#si"/></svg><span>Post-evento del sábado</span></li>
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#si"/></svg><span>Regalo de Píntega Conf</span></li>
+            </ul>
+          </div>
+          <a class="tarifa-talon" href="PENDIENTE-URL-WEEZEVENT-HOGUERA">Comprar Hoguera <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </li>
+      </ul>
+      <ol class="pasos" role="list">
+        <li><span><strong>Elige tu entrada</strong> y pulsa «Comprar»: se abre Weezevent, nuestra plataforma de venta.</span></li>
+        <li><span><strong>Paga en su página segura.</strong> ¿Necesitas factura? Pídela al pagar.</span></li>
+        <li><span><strong>Te llega un email con tu entrada</strong> y su código QR: así sabes que la compra está hecha. Enséñalo en la puerta, en el móvil o impreso.</span></li>
+      </ol>
+      <p class="nota">¿No te ha llegado? Mira en spam o escríbenos a <a href="mailto:info@pintegaconf.es">info@pintegaconf.es</a>.</p>
+    </div>
+  </section>
+
   <section class="ctas" aria-label="Participa">
     <div class="wrap cta-grid">
-      <article class="cta cta-principal">
-        <span class="tag">Entradas</span>
-        <h3>Ya a la venta</h3>
-        <ol class="pasos" role="list">
-          <li><span><strong>Elige tu entrada</strong> en Weezevent, nuestra plataforma de venta.</span></li>
-          <li><span><strong>Paga en su página segura.</strong> ¿Necesitas factura? Pídela al pagar.</span></li>
-          <li><span><strong>Te llega un email con tu entrada</strong> y su código QR: así sabes que la compra está hecha. Enséñalo en la puerta, en el móvil o impreso.</span></li>
-        </ol>
-        <p class="nota">¿No te ha llegado? Mira en spam o escríbenos a <a href="mailto:info@pintegaconf.es">info@pintegaconf.es</a>.</p>
-        <a class="btn" href="PENDIENTE-URL-WEEZEVENT">Compra tu entrada</a>
-      </article>
       <article class="cta">
         <span class="tag">Ponentes</span>
         <h3>¿Quieres dar una charla?</h3>
