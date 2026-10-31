@@ -3,6 +3,11 @@
 // Nuevo widget filtrado; la URL que va entre data-src="…" y data-width): la tienda se abre con esa tarifa ya elegida.
 // Si cambia algo, cambiarlo también en la web temporal (web/temporal/index.html, sección Entradas).
 
+// Venta abierta en Weezevent. Mientras sea false, las entradas se ven con su precio pero los talones dicen «Muy pronto a
+// la venta» y no enlazan (con la venta cerrada, Weezevent enseña una página en blanco). Al abrir la venta, ponerlo a
+// true y, en la web temporal, quitar la clase venta-pronto de <html>.
+export const ventaAbierta: boolean = false;
+
 const BASE = [
   { texto: "Viernes 9 · pre-evento", incluido: true },
   { texto: "Sábado 10 · charlas", incluido: true },
