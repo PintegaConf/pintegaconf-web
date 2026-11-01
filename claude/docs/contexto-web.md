@@ -112,6 +112,7 @@ Decisión, seguridad y mejoras: `web/README.md`. Guía de uso: `web/site/README.
 - [ ] Line-up de ponentes (hoy 6 encapuchados "Próximamente"; cada ponente: nombre, cargo, charla, resumen, bio, foto y redes en `src/data/ponentes.ts`).
 - [x] Medallones de nivel.
 - [x] Rediseño de Patrocinadores.
+- [x] **Paneles sin el cuadradito dorado** (1-11-2026, elegido por Matías entre papel recortado, contraluz, sin caja y bloque liso): el borde dorado de 1 px, el degradado y el cuadrado de la esquina eran la plantilla de Penpot y quedaban feos. Ahora `.panel` (base.css) es un bloque liso (`--panel-top`) con un borde dorado muy suave (`--panel-borde`) y 6 px de radio. Lo usan ¿Qué es?, Agenda, los cuatro niveles de Patrocinadores y el «¿Otra pregunta?» de la FAQ (antes cada uno repetía el estilo).
 - [ ] Logos de patrocinadores: array `niveles[i].logos = [{ src, alt, url }]`. Hechos (1-11-2026): Raiola Networks, Next Digital y Allenta (Basilisco) y Teimas (Tritón). Denodo (Basilisco), desactivado hasta que firme. Cada logo enlaza a su web en otra pestaña y el enlace lo avisa en su `aria-label`.
 - [ ] Email real de patrocinio en el botón "Patrocina Pintega Conf" (ahora `mailto:` sin destinatario).
 - [ ] Logos de colaboradores y comunidades.

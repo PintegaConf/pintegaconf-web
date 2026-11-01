@@ -24,6 +24,7 @@
   --bg: #232323;
   --panel-top: #1b1b1b;
   --panel-bottom: #2d2d2d;
+  --panel-borde: rgba(253, 195, 48, .24);   /* borde de los paneles (.panel): dorado muy suave */
   --text: #ffffff;              /* texto sobre las secciones */
   --text-2: #d6d6d6;            /* párrafos */
   --text-3: #b3b3b3;            /* notas, etiquetas secundarias */
@@ -58,6 +59,7 @@
     --bg: #f6f2e7;
     --panel-top: #ffffff;
     --panel-bottom: #fbf5e3;
+    --panel-borde: rgba(138, 91, 0, .25);
     --text: #1C1C1B;
     --text-2: #3b3b39;
     --text-3: #66645e;
@@ -80,6 +82,7 @@
   --bg: #f6f2e7;
   --panel-top: #ffffff;
   --panel-bottom: #fbf5e3;
+  --panel-borde: rgba(138, 91, 0, .25);
   --text: #1C1C1B;
   --text-2: #3b3b39;
   --text-3: #66645e;
