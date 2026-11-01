@@ -8,7 +8,7 @@ import ajolote from "../assets/niveles/ajolote.png";
 // Logos de los patrocinadores: los SVG de la web de Lareira Conf (github.com/Gallegarmy/LareiraConf-MainPage,
 // src/img/sponsors/) y el de Allenta, que pasó Matías; revisados (sin scripts ni enlaces externos).
 import raiola from "../assets/patrocinadores/raiola.svg";
-import denodo from "../assets/patrocinadores/denodo.svg";
+// import denodo from "../assets/patrocinadores/denodo.svg";   // pendiente de firmar: ver Basilisco
 import nextDigital from "../assets/patrocinadores/nextdigital.svg";
 import teimas from "../assets/patrocinadores/teimas.svg";
 import allenta from "../assets/patrocinadores/allenta.svg";
@@ -38,7 +38,8 @@ export const niveles: Nivel[] = [
   { id: "dragon", nombre: "Dragón", rango: "Patrocinio principal · exclusivo", medallon: dragon, huecos: 1, logos: [] },
   { id: "basilisco", nombre: "Basilisco", rango: "Patrocinio oro", medallon: basilisco, huecos: 4, logos: [
     { src: raiola, alt: "Raiola Networks", url: "https://raiolanetworks.com/" },
-    { src: denodo, alt: "Denodo", url: "https://www.denodo.com/" },
+    // Denodo: aún no ha firmado (1-11-2026). Cuando firme, descomentar esta línea y su import de arriba.
+    // { src: denodo, alt: "Denodo", url: "https://www.denodo.com/" },
     { src: nextDigital, alt: "Next Digital", url: "https://www.nextdigital.es/" },
     { src: allenta, alt: "Allenta", url: "https://allenta.com/" },
   ] },
