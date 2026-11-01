@@ -42,7 +42,7 @@ const { numero, pregunta, abierta = false } = Astro.props;
 
   .icono {
     width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center;
-    border: 1.5px solid color-mix(in srgb, var(--accent-text) 60%, transparent); color: var(--accent-text);   /* dorado en oscuro, ocre en claro */
+    border: 1.5px solid color-mix(in srgb, var(--accent-text) 60%, transparent); color: var(--accent-text);   /* dorado en oscuro, naranja en claro */
     transition: transform .35s var(--ease), background .25s, color .25s;
   }
   .pregunta[open] .icono { transform: rotate(180deg); background: var(--gold); color: var(--ink); border-color: var(--gold); }

@@ -56,7 +56,7 @@ import { ventaAbierta } from "../../data/entradas";
 </script>
 
 <style>
-  .hero { position: relative; background: var(--white); color: var(--ink); overflow: hidden; }
+  .hero { position: relative; background: var(--cabecera-bg); color: var(--ink); overflow: hidden; }
   .hero-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); align-items: center; gap: 2rem; padding: 3.5rem 0 5.5rem; }
   .eyebrow { display: inline-flex; align-items: center; gap: .6rem; font: 700 13px var(--f-mono); letter-spacing: .14em; text-transform: uppercase; margin: 0 0 1.1rem; }
   .eyebrow::before { content: ""; width: 12px; height: 12px; background: var(--gold); }
@@ -78,7 +78,7 @@ import { ventaAbierta } from "../../data/entradas";
   }
   .entrada-texto { display: flex; align-items: center; justify-content: center; gap: .55rem; padding: .75rem 1.2rem .75rem 1.4rem; font: 700 21px/1.1 var(--f-head); }
   .entrada-talon { position: relative; width: 58px; background: var(--ink); border-left: 2px dashed var(--gold); transition: transform .2s var(--ease); }
-  .entrada-talon::before, .entrada-talon::after { content: ""; position: absolute; left: -10px; width: 18px; height: 18px; border-radius: 50%; background: var(--white); }
+  .entrada-talon::before, .entrada-talon::after { content: ""; position: absolute; left: -10px; width: 18px; height: 18px; border-radius: 50%; background: var(--cabecera-bg); }
   .entrada-talon::before { top: -9px; }
   .entrada-talon::after { bottom: -9px; }
   .entrada-talon span {
