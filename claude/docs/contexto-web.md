@@ -111,7 +111,7 @@ Decisión, seguridad y mejoras: `web/README.md`. Guía de uso: `web/site/README.
 - [ ] Line-up de ponentes (hoy 6 tarjetas "Próximamente").
 - [x] Medallones de nivel.
 - [x] Rediseño de Patrocinadores.
-- [ ] Logos de patrocinadores: array `niveles[i].logos = [{ src, alt, url }]`. Hechos (1-11-2026): Raiola Networks, Denodo, Next Digital y Allenta (Basilisco) y Teimas (Tritón). Cada logo enlaza a su web en otra pestaña y el enlace lo avisa en su `aria-label`.
+- [ ] Logos de patrocinadores: array `niveles[i].logos = [{ src, alt, url }]`. Hechos (1-11-2026): Raiola Networks, Next Digital y Allenta (Basilisco) y Teimas (Tritón). Denodo (Basilisco), desactivado hasta que firme. Cada logo enlaza a su web en otra pestaña y el enlace lo avisa en su `aria-label`.
 - [ ] Email real de patrocinio en el botón "Patrocina Pintega Conf" (ahora `mailto:` sin destinatario).
 - [ ] Logos de colaboradores y comunidades.
 - [x] Precio de la entrada (31-10-2026): tres tipos, en `src/data/entradas.ts`. Plazas: se configuran en Weezevent.
