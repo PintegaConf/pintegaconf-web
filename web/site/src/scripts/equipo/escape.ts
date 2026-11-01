@@ -9,7 +9,8 @@ import { requerido } from "../lib/medios";
 const pista = requerido<HTMLElement>("#equipo .formation-inner");
 
 document.addEventListener("keydown", (e) => {
-  if (e.key !== "Escape") return;
+  // Con una ventana abierta, Escape solo la cierra (lo hace el navegador): la persona sigue destapada
+  if (e.key !== "Escape" || document.querySelector("dialog[open]")) return;
   pista.querySelectorAll<HTMLElement>(".operative").forEach((op) => {
     if (op.classList.contains("is-active") || op.matches(":focus-within")) op.classList.add("cerrada");
   });

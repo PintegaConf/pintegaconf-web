@@ -108,6 +108,7 @@ Decisión, seguridad y mejoras: `web/README.md`. Guía de uso: `web/site/README.
 - [x] ~~Revelado al tocar en tablets~~ (hecho, ver abajo). Nota original:: en pantallas táctiles de más de 680px no hay hover, así que no se puede quitar la capucha. Activar el revelado con un toque (`pointerdown`/`click` con `pointerType === "touch"`, o bajo `@media (hover: none)`): el toque en una silueta la marca `.is-active` y un toque fuera o en otra persona cambia la activa. Reutilizar el `pick()` por alfa de la silueta que ya existe para escritorio. Probar en iPad real (Safari).
 
 ### Contenido de la web
+- [ ] Descripciones y redes reales del equipo (hoy lorem ipsum en `RELLENO`, `src/data/equipo.ts`).
 - [ ] Line-up de ponentes (hoy 6 encapuchados "Próximamente"; cada ponente: nombre, cargo, charla, resumen, bio, foto y redes en `src/data/ponentes.ts`).
 - [x] Medallones de nivel.
 - [x] Rediseño de Patrocinadores.

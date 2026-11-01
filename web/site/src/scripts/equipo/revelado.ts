@@ -2,8 +2,12 @@
 //
 // Las figuras se solapan, así que no vale el rectángulo de cada una: se mira el canal alfa de la
 // ilustración bajo el puntero (la silueta real), deshaciendo el "paso al frente" de cada persona.
-// Con ratón funciona por hover; en táctil, un toque destapa y otro toque (en la misma o fuera) tapa.
-// Con teclado lo hace el CSS (:focus-within).
+// Con ratón funciona por hover; en táctil, un toque destapa, otro toque en la misma abre su ventana y uno
+// fuera tapa. Con teclado lo hace el CSS (:focus-within).
+//
+// Ventana de cada persona (bio y redes, VentanaPersona.astro): con ratón, un clic abre la de la persona
+// destapada (no la del elemento bajo el puntero: las figuras se solapan y no reciben eventos); con teclado
+// (Intro/Espacio en el botón) y en el carrusel del móvil, la del botón pulsado.
 import { MOVIL, requerido } from "../lib/medios";
 
 interface Mascara {
@@ -161,10 +165,40 @@ pista.addEventListener("pointerleave", (e) => {
   activar(null);
 });
 
+// ---------- Ventana de la persona ----------
+function abrirVentana(f: Figura): void {
+  const ventana = document.getElementById(f.el.dataset.ventana ?? "");
+  if (ventana instanceof HTMLDialogElement) ventana.showModal();
+}
+
+// Tablet: el segundo toque sobre la persona destapada la deja aquí y la ventana se abre en el `click` que
+// sigue (abrirla en el pointerup haría que ese click cayese en el fondo de la ventana y la cerrase)
+let pendiente: Figura | null = null;
+let ultimoPuntero = "mouse";
+
+pista.addEventListener("click", (e) => {
+  if (pendiente) {
+    const f = pendiente;
+    pendiente = null;
+    return abrirVentana(f);
+  }
+  // Teclado (detail 0) o carrusel del móvil: la persona del botón pulsado (no los enlaces de su bio)
+  if (e.detail === 0 || MOVIL.matches) {
+    const boton = (e.target as Element).closest(".dossier");
+    const f = boton && figuras.find((x) => x.dossier === boton);
+    if (f) abrirVentana(f);
+    return;
+  }
+  if (ultimoPuntero === "mouse" && activa) abrirVentana(activa);
+});
+
 // ---------- Táctil (tablet/iPad): toques ----------
 // Al levantar el dedo el navegador lanza pointerleave; por eso los toques no usan el hover de arriba.
 let inicioToque: { x: number; y: number } | null = null;
-document.addEventListener("pointerdown", (e) => { inicioToque = esRaton(e) ? null : { x: e.clientX, y: e.clientY }; }, { passive: true });
+document.addEventListener("pointerdown", (e) => {
+  ultimoPuntero = e.pointerType;
+  inicioToque = esRaton(e) ? null : { x: e.clientX, y: e.clientY };
+}, { passive: true });
 document.addEventListener("pointercancel", () => { inicioToque = null; });
 document.addEventListener("pointerup", (e) => {
   if (MOVIL.matches || !inicioToque || esRaton(e)) return;
@@ -173,7 +207,8 @@ document.addEventListener("pointerup", (e) => {
   if (movido) return;
   const f = pista.contains(e.target as Node) ? figuraEn(e.clientX, e.clientY) : null;
   clearTimeout(temporizadorGracia);
-  activar(f && f !== activa ? f : null);
+  if (f && f === activa) pendiente = f;
+  else activar(f);
 });
 
 // Al pasar a móvil, el carrusel se encarga (scripts/equipo/carrusel.ts)

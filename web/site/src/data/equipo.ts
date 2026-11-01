@@ -1,4 +1,5 @@
 import type { ImageMetadata } from "astro";
+import type { NombreRed } from "./iconos-redes";
 
 import yisusCapucha from "../assets/equipo/yisus-capucha.webp";
 import yisusManos from "../assets/equipo/yisus-manos.webp";
@@ -45,7 +46,20 @@ export interface Miembro {
   fila: "atras" | "delante";
   /** Sus ilustraciones. Si aún no las tiene, se usan las de Yisus. */
   ilustracion?: Ilustracion;
+  /** Descripción corta: sale en su ventana (escritorio y tablet) y debajo de la persona en el carrusel del móvil. */
+  bio?: string;
+  redes?: { nombre: NombreRed; url: string }[];
 }
+
+// PROVISIONAL (1-11-2026): texto de relleno hasta que cada persona pase su descripción y sus redes.
+// Quitar antes de publicar la web completa (ver «Pendiente» en claude/CLAUDE.md).
+const RELLENO = {
+  bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.",
+  redes: [
+    { nombre: "LinkedIn", url: "https://www.linkedin.com/" },
+    { nombre: "GitHub", url: "https://github.com/" },
+  ],
+} satisfies Pick<Miembro, "bio" | "redes">;
 
 // Para añadir las ilustraciones de alguien: procesarlas con web/tools/procesar-equipo.py,
 // importarlas aquí arriba y ponerlas en su `ilustracion`.
@@ -63,11 +77,11 @@ export const ilustracionPorDefecto: Ilustracion = ilustraciones.yisus;
 
 // Orden de la sección EQUIPO (también el del carrusel en móvil). Yisus = Jesús.
 export const equipo: Miembro[] = [
-  { nombre: "Jesús", rol: "Organización", fila: "atras", ilustracion: ilustraciones.yisus },
-  { nombre: "Iria", rol: "Organización", fila: "delante", ilustracion: ilustraciones.iria },
-  { nombre: "Matías", rol: "Organización", fila: "atras", ilustracion: ilustraciones.matias },
-  { nombre: "Nacho", rol: "Organización", fila: "delante", ilustracion: ilustraciones.nacho },
-  { nombre: "Tiziana", rol: "Organización", fila: "delante", ilustracion: ilustraciones.tiziana },
-  { nombre: "Daniel", rol: "Organización", fila: "atras", ilustracion: ilustraciones.daniel },
-  { nombre: "Carlos", rol: "Organización", fila: "delante", ilustracion: ilustraciones.carlos },
+  { nombre: "Jesús", rol: "Organización", fila: "atras", ilustracion: ilustraciones.yisus, ...RELLENO },
+  { nombre: "Iria", rol: "Organización", fila: "delante", ilustracion: ilustraciones.iria, ...RELLENO },
+  { nombre: "Matías", rol: "Organización", fila: "atras", ilustracion: ilustraciones.matias, ...RELLENO },
+  { nombre: "Nacho", rol: "Organización", fila: "delante", ilustracion: ilustraciones.nacho, ...RELLENO },
+  { nombre: "Tiziana", rol: "Organización", fila: "delante", ilustracion: ilustraciones.tiziana, ...RELLENO },
+  { nombre: "Daniel", rol: "Organización", fila: "atras", ilustracion: ilustraciones.daniel, ...RELLENO },
+  { nombre: "Carlos", rol: "Organización", fila: "delante", ilustracion: ilustraciones.carlos, ...RELLENO },
 ];
