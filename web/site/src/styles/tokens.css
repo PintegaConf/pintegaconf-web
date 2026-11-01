@@ -38,6 +38,7 @@
   --slot-text: rgba(253, 195, 48, .7);
   --line: rgba(255, 255, 255, .08);
   --logo-filter: brightness(0) invert(1);   /* logos de patrocinadores en blanco */
+  --huella: rgba(253, 195, 48, .16);        /* rastro de la píntega (decorativo, components/Rastro.astro) */
 
   /* Sección EQUIPO: escenario con el orbe (oscuro en el tema oscuro, crema cálido en el claro) */
   --equipo-fondo: var(--ink);
@@ -74,6 +75,7 @@
     --slot-text: #8f3510;          /* más oscuro que --accent-text: va sobre el velo de --slot-bg */
     --line: rgba(7, 54, 66, .14);
     --logo-filter: brightness(0);
+    --huella: rgba(28, 28, 27, .14);
     --equipo-fondo: #eee8d5;       /* base2 */
     --equipo-suelo: #e3dcc5;
     --equipo-halo: rgba(181, 137, 0, .3);
@@ -98,6 +100,7 @@
   --slot-text: #8f3510;
   --line: rgba(7, 54, 66, .14);
   --logo-filter: brightness(0);
+  --huella: rgba(28, 28, 27, .14);
   --equipo-fondo: #eee8d5;
   --equipo-suelo: #e3dcc5;
   --equipo-halo: rgba(181, 137, 0, .3);
