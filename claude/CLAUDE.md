@@ -24,37 +24,16 @@ Idioma de trabajo: **español**. El usuario es Matías (organización, sistemas/
 
 ## Mapa
 
-Repositorio **github.com/PintegaConf/pintegaconf-web — PRIVADO (debe seguir siéndolo)**, organización PintegaConf (dueño: Matías). Solo versiona dos carpetas (`.gitignore` en modo lista blanca):
+Repositorio **github.com/PintegaConf/pintegaconf-web — PRIVADO (debe seguir siéndolo)**, organización PintegaConf (dueño: Matías). Solo versiona `claude/` y `web/` (`.gitignore` en modo lista blanca).
 
-```
-CLAUDE.md                      ← una línea: importa claude/CLAUDE.md
-Dockerfile, .dockerignore      ← imagen nginx para desplegar (hoy sirve web/temporal; config en web/nginx.conf)
-README.md                      ← qué hay en el repositorio
-claude/
-  CLAUDE.md                    ← este archivo
-  README.md                    ← cómo montar el proyecto en otro equipo (Node, npm ci, Claude Code)
-  docs/contexto-web.md         ← historial de decisiones de diseño/código de la web y to-dos (LEER antes de tocar la web)
-  docs/entradas-weezevent.md   ← venta de entradas con Weezevent: qué cubre, qué falta y lista antes de abrir la venta
-  docs/propuestas-mejora.md    ← auditoría antigua de la web con mejoras priorizadas
-web/
-  README.md                    ← decisión tecnológica (Astro), seguridad, mejoras y REGLAS DEL REPOSITORIO
-  site/                        ← **WEB ACTUAL (Astro 7)**: FUENTE DE VERDAD. Guía en web/site/README.md
-  temporal/                    ← web provisional "en obras" (index.html + assets/)
-  tools/procesar-equipo.py     ← prepara las ilustraciones del equipo (difuminado de hombros) → site/src/assets/equipo/
-  backup/                      ← v1 (archivo único) y web temporal tal como estaban antes de pasar a Astro. Solo referencia
-  web_assets/
-    TIERS/{SVG,PNG,WEBP,JPG}/  ← medallones de patrocinio: dragón, basilisco, tritón, ajolote
-    orbes/                     ← propuestas de orbe + orbe-elegido-transparente.png (el de la portada)
-    designs/<persona>/         ← ilustraciones del equipo (lienzo 1236×1272), una carpeta por persona con nombres fijos:
-                                 <persona>-capucha.png, -manos.png (quitándose la capucha), -rostro.png y -capucha-sola.png (no se usa).
-                                 Hechas las 7: yisus, iria, matias, nacho, tiziana, daniel, carlos (Yisus = Jesús, Carlos = "Centryck"). Al recibir dibujos nuevos, renombrarlos así.
-    equipo/                    ← versiones web antiguas (las actuales las genera tools/procesar-equipo.py)
-```
+- `claude/docs/contexto-web.md`: historial de decisiones de la web — **LEER antes de tocar la web**. `claude/docs/entradas-weezevent.md`: venta de entradas. `web/README.md`: reglas del repositorio.
+- `web/site/` (Astro) es la **fuente de verdad**; `web/backup/` y `web/web_assets/equipo/` son solo referencia antigua.
+- Ilustraciones del equipo en `web/web_assets/designs/<persona>/` (Yisus = Jesús, Carlos = "Centryck"); nombres de archivo en `web/CLAUDE.md` → «Nuevas ilustraciones».
 
 **Solo en el equipo de Matías, NO en el repositorio** (pedírselos si hacen falta): `dossiers/` (ponentes y patrocinio, PDF), `contracts/` (**confidencial: no subir a ningún sitio**), `marca_and_rrss/` (manual de marca PDF, banners de LinkedIn/Twitter, colaboraciones con Lareira/Sysarmy, logos PNG con tilde), `Claude outputs/` (v1 antigua y dossier).
 
-**Importante:** la web se edita en `web/site/` (Astro). Node 24 LTS (en el Mac de Matías: `/opt/homebrew/opt/node@24/bin`, keg-only, hay que tenerlo en el PATH). Comandos: `npm ci`, `npm run dev`, `npm run build` (incluye `astro check`). Contenido en `src/data/`, secciones en `src/components/secciones/`, JS en `src/scripts/`, colores en `src/styles/tokens.css`.
-CI: `.github/workflows/web.yml` (GitHub Actions, ~30 s por ejecución, gratis en el plan Free) comprueba tipos, build y `npm audit` en cada cambio de `web/site`; debe quedar en verde. Dependabot (`.github/dependabot.yml`) abre PR semanales: revisar antes de fusionar. `.github/` está en la raíz porque GitHub solo lo busca ahí.
+**Importante:** la web se edita en `web/site/` (Astro). Node 24 LTS (en el Mac de Matías: `/opt/homebrew/opt/node@24/bin`, keg-only, hay que tenerlo en el PATH).
+CI: `.github/workflows/web.yml` (GitHub Actions, gratis en el plan Free); debe quedar en verde. Dependabot abre PR semanales: revisar antes de fusionar.
 Seguridad del proyecto: `.npmrc` con `ignore-scripts` y versiones exactas (no quitar), CSP en `astro.config.mjs` (no añadir orígenes externos sin motivo), fuentes autoalojadas (nunca volver a cargar de Google), nada de `innerHTML` con datos: renderizar en Astro o usar `textContent`.
 
 ## Marca / tokens
