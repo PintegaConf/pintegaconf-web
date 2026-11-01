@@ -1,20 +1,22 @@
 ---
-// Entradas: las tres entradas a la venta (cada una enlaza a Weezevent) y, debajo, la vista previa de la entrada
-// y cómo es la compra.
+// Entradas: las tres entradas a la venta (cada una enlaza a Weezevent) y, debajo, cómo es la compra
+// (con la vista previa de la entrada al lado si DISENO_ENTRADA no es "ninguna").
 import SelectorEntradas from "../entradas/SelectorEntradas.astro";
 import PaseWallet from "../entradas/PaseWallet.astro";
 import TicketClasico from "../entradas/TicketClasico.astro";
 import ComoComprar from "../entradas/ComoComprar.astro";
 
-// Diseño de la entrada: "wallet" (pase estilo Apple Wallet) o "clasico" (ticket mostaza original).
-const DISENO_ENTRADA: "wallet" | "clasico" = "wallet";
+// Vista previa de la entrada: "wallet" (pase estilo Apple Wallet), "clasico" (ticket mostaza original) o "ninguna"
+// (actual: Matías la quitó el 1-11-2026 porque sobraba).
+const DISENO_ENTRADA = "ninguna" as "wallet" | "clasico" | "ninguna";   // «as»: si no, TypeScript lo fija a "ninguna" y da error al comparar
 ---
 <section id="entradas">
   <div class="wrap">
     <h2 class="sec-title">ENTRADAS</h2>
     <SelectorEntradas />
-    <div class="tickets">
-      {DISENO_ENTRADA === "wallet" ? <PaseWallet /> : <TicketClasico />}
+    <div class:list={["tickets", { sola: DISENO_ENTRADA === "ninguna" }]}>
+      {DISENO_ENTRADA === "wallet" && <PaseWallet />}
+      {DISENO_ENTRADA === "clasico" && <TicketClasico />}
       <ComoComprar />
     </div>
   </div>
@@ -24,4 +26,5 @@ const DISENO_ENTRADA: "wallet" | "clasico" = "wallet";
   .tickets { display: grid; grid-template-columns: 685px 315px; gap: 65px; justify-content: center; align-items: stretch; }
   @media (max-width: 1240px) { .tickets { grid-template-columns: minmax(0, 1fr) 315px; gap: 2rem; } }
   @media (max-width: 980px) { .tickets { grid-template-columns: 1fr; max-width: 685px; margin: 0 auto; } }
+  .tickets.sola { grid-template-columns: minmax(0, 685px); }   /* solo «Cómo se compra», centrado */
 </style>
