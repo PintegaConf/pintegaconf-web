@@ -35,8 +35,16 @@ export const evento = {
   dossierPonentes: "https://pintegaconf-dossier.my.canva.site/pintegaconf27-dossier-ponentes-pdf",
   // Dossier de patrocinio (Canva). Lo enlazan los botones de "patrocina" (también el de la web temporal).
   dossierPatrocinio: "https://pintegaconf-dossier.my.canva.site",
-  // Formulario (Google Forms) para proponer charlas. Lo enlaza la FAQ.
+  // Formulario (Google Forms) para proponer charlas. Lo enlazan la FAQ y la ventana de los huecos de ponentes.
   formularioPonentes: "https://forms.gle/RYwGGrW43a5542Rz8",
+  // Lo que se ofrece a los ponentes (FAQ y ventana de los huecos de ponentes).
+  ofertaPonentes: [
+    "viaje y hotel cubiertos",
+    "entrada full-pass",
+    "cena en el post-evento",
+    "grabación de la charla y difusión en la web y en redes",
+    "un regalo de ponente",
+  ],
 
   // Perfiles oficiales. Salen en el pie y en schema.org (sameAs); `usuario` de X va en twitter:site.
   redes: [
