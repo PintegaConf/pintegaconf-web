@@ -92,11 +92,7 @@ const temas = [
           </p>
           <p>A los ponentes les ofrecemos:</p>
           <ul>
-            <li>viaje y hotel cubiertos;</li>
-            <li>entrada full-pass;</li>
-            <li>cena en el post-evento;</li>
-            <li>grabación de la charla y difusión en la web y en redes;</li>
-            <li>un regalo de ponente.</li>
+            {evento.ofertaPonentes.map((o, i, todas) => <li>{o}{i < todas.length - 1 ? ";" : "."}</li>)}
           </ul>
         </PreguntaFaq>
         <PreguntaFaq numero={6} pregunta="¿Se graban las charlas?">
