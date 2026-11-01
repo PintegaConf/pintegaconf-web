@@ -1,0 +1,82 @@
+---
+// Ventana (<dialog>) con los datos de una persona: ponente, hueco de ponente u organización.
+// Foto en el slot "foto" (una <Image> directa o un <span class="marco"> con una ilustración dentro); el resto
+// del contenido, en el slot por defecto (clases disponibles: etiqueta, charla, oferta, acciones, enlace).
+// Se cierra con Esc, con el botón Cerrar (form method="dialog") o con clic fuera (closedby="any"); quien la
+// abre usa commandfor/command="show-modal" o showModal(). scripts/ventana.ts cubre a los navegadores sin
+// soporte nativo.
+import RedesPersona from "./RedesPersona.astro";
+import type { NombreRed } from "../data/iconos-redes";
+
+interface Props {
+  id: string;
+  nombre: string;
+  subtitulo?: string;
+  redes?: { nombre: NombreRed; url: string }[];
+}
+const { id, nombre, subtitulo, redes } = Astro.props;
+---
+<dialog id={id} class="ventana" aria-labelledby={`${id}-titulo`} closedby="any">
+  <div class="caja">
+    <form method="dialog">
+      <button class="cerrar" aria-label="Cerrar">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
+      </button>
+    </form>
+    <div class="foto"><slot name="foto" /></div>
+    <div class="datos">
+      <h3 id={`${id}-titulo`}>{nombre}</h3>
+      {subtitulo && <p class="subtitulo">{subtitulo}</p>}
+      <slot />
+      <RedesPersona nombre={nombre} redes={redes} />
+    </div>
+  </div>
+</dialog>
+
+<script>
+  import "../scripts/ventana";
+</script>
+
+<style>
+  .ventana {
+    padding: 0; border: 1px solid var(--gold); color: var(--text);
+    background: linear-gradient(180deg, var(--panel-top), var(--panel-bottom));
+    width: min(760px, 100% - 2rem); max-height: calc(100dvh - 2rem); overflow: auto;
+  }
+  .ventana::backdrop { background: rgba(0, 0, 0, .72); }
+  :global(html:has(.ventana[open])) { overflow: hidden; }
+  .caja { position: relative; display: grid; grid-template-columns: 220px 1fr; gap: 2.2rem; padding: 2.8rem 2.6rem 2.6rem; }
+  /* El formulario del botón Cerrar va fuera de la rejilla (si no, ocupa la primera celda) */
+  .caja > form { position: absolute; top: .7rem; right: .7rem; margin: 0; }
+  .cerrar {
+    width: 44px; height: 44px; border-radius: 50%;
+    display: grid; place-items: center; padding: 0;
+    border: 1.5px solid var(--gold); background: transparent; color: var(--accent-text);
+    cursor: pointer; transition: background .2s, color .2s;
+  }
+  .cerrar:hover { background: var(--gold); color: var(--ink); }
+
+  /* Foto: redonda con borde dorado. Ilustraciones (siluetas, rostros del equipo): en un marco redondo
+     oscuro; --suelo hace que el fundido de la silueta acabe en el mismo color que el marco */
+  .foto > :global(img) { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 50%; border: 2px solid var(--gold); }
+  .foto :global(.marco) { display: block; aspect-ratio: 1; border-radius: 50%; overflow: hidden; border: 2px solid var(--gold); background: var(--ink); --suelo: var(--ink); padding: 14% 12% 0; }
+  .foto :global(.marco > img) { display: block; width: 100%; height: auto; }
+
+  .datos h3 { font: 400 34px/1.15 var(--f-head); color: var(--accent-text); margin: 0 0 .3rem; padding-right: 2.6rem; }
+  .datos .subtitulo { color: var(--text-3); margin: 0 0 1.6rem; line-height: 1.6; }
+  .datos :global(p) { margin: 0 0 1rem; color: var(--text-2); line-height: 1.6; }
+  .datos :global(.etiqueta) { font: 700 13px/1.3 var(--f-sans); letter-spacing: .12em; text-transform: uppercase; color: var(--accent-text); margin: 0 0 .4rem; }
+  .datos :global(.charla) { font: 400 23px/1.3 var(--f-head); color: var(--text); }
+  .datos :global(.oferta) { margin: 0 0 1.6rem; padding-left: 1.2rem; color: var(--text-2); line-height: 1.7; }
+  .datos :global(.oferta li::marker) { color: var(--accent-text); }
+  .datos :global(.acciones) { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.4rem; }
+  .datos :global(.enlace) { color: var(--accent-text); font: 600 15px var(--f-sans); text-underline-offset: 3px; }
+
+  @media (max-width: 680px) {
+    .caja { grid-template-columns: 1fr; gap: 1.2rem; padding: 3.4rem 1.4rem 1.8rem; }
+    .foto { width: 150px; margin: 0 auto; }
+    .datos h3 { font-size: 28px; padding-right: 0; text-align: center; }
+    .datos .subtitulo { text-align: center; }
+  }
+  @media (prefers-reduced-motion: reduce) { .cerrar { transition: none; } }
+</style>
