@@ -202,6 +202,9 @@ async function espaciadoTexto(p) {
         if (!n.textContent.trim() || n.parentElement.closest("[aria-hidden=true], .sr-only")) continue;
         const rango = document.createRange(); rango.selectNodeContents(n);
         const r = rango.getBoundingClientRect();
+        // Texto oculto con visibility (p. ej. la bio de las personas del equipo que no están centradas en el
+        // carrusel del móvil): no se ve, así que no puede quedar cortado
+        if (getComputedStyle(n.parentElement).visibility !== "visible") continue;
         if (r.width && (r.bottom > caja.bottom + 1 || r.right > caja.right + 1 || r.top < caja.top - 1 || r.left < caja.left - 1)) {
           cortados.push(el.tagName.toLowerCase() + "." + [...el.classList].filter(c => !c.startsWith("astro-")).join(".") + " «" + n.textContent.trim().slice(0, 30) + "»");
           break;
