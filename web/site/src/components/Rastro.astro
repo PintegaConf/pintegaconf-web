@@ -1,0 +1,34 @@
+---
+// Rastro de la píntega: según se baja por la página, la salamandra va dejando pisadas por debajo de las
+// cajas y las de atrás se borran. Solo decorativo (aria-hidden). Las pisadas las crea scripts/rastro.ts.
+// Sin JS, con «reducir movimiento», en alto contraste o al imprimir no hay rastro.
+---
+<div class="rastro" aria-hidden="true"></div>
+
+<script>
+  import "../scripts/rastro";
+</script>
+
+<style>
+  /* El rastro va detrás del contenido de <main> pero delante del fondo de la página */
+  :global(#contenido) { position: relative; isolation: isolate; }
+  .rastro { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+
+  /* Cada pisada: centrada en su punto, girada hacia donde anda. Entra «estampándose» (de grande a su
+     tamaño) y sale fundiéndose; el tamaño vuelve a grande cuando ya no se ve */
+  .rastro :global(.huella) {
+    /* mismo tamaño que las huellas de la portada (huellas.svg a 520 px: escala 0,93 del viewBox de 59×48) */
+    position: absolute; width: 55px; aspect-ratio: 59 / 48; translate: -50% -50%;
+    background: var(--huella);
+    -webkit-mask: url("../assets/marca/huella-sola.svg") center / contain no-repeat;
+    mask: url("../assets/marca/huella-sola.svg") center / contain no-repeat;
+    opacity: 0; scale: 1.6;
+    transition: opacity .6s, scale 0s .6s;
+  }
+  .rastro :global(.huella.izq) { transform: scaleY(-1); }   /* pata izquierda: la misma huella en espejo */
+  .rastro :global(.huella.pisada) { scale: 1; transition: opacity .2s, scale .3s var(--ease); }
+
+  @media (prefers-reduced-motion: reduce), (forced-colors: active), print {
+    .rastro { display: none; }
+  }
+</style>
