@@ -5,6 +5,14 @@ import basilisco from "../assets/niveles/basilisco.png";
 import triton from "../assets/niveles/triton.png";
 import ajolote from "../assets/niveles/ajolote.png";
 
+// Logos de los patrocinadores: los SVG de la web de Lareira Conf (github.com/Gallegarmy/LareiraConf-MainPage,
+// src/img/sponsors/) y el de Allenta, que pasó Matías; revisados (sin scripts ni enlaces externos).
+import raiola from "../assets/patrocinadores/raiola.svg";
+import denodo from "../assets/patrocinadores/denodo.svg";
+import nextDigital from "../assets/patrocinadores/nextdigital.svg";
+import teimas from "../assets/patrocinadores/teimas.svg";
+import allenta from "../assets/patrocinadores/allenta.svg";
+
 export interface Logo {
   src: ImageMetadata;
   alt: string;
@@ -28,8 +36,15 @@ export interface Nivel {
 // añadirlo a `logos`, p. ej. { src: miLogo, alt: "Empresa S.L.", url: "https://empresa.com" }.
 export const niveles: Nivel[] = [
   { id: "dragon", nombre: "Dragón", rango: "Patrocinio principal · exclusivo", medallon: dragon, huecos: 1, logos: [] },
-  { id: "basilisco", nombre: "Basilisco", rango: "Patrocinio oro", medallon: basilisco, huecos: 4, logos: [] },
-  { id: "triton", nombre: "Tritón", rango: "Patrocinio plata", medallon: triton, huecos: 6, logos: [] },
+  { id: "basilisco", nombre: "Basilisco", rango: "Patrocinio oro", medallon: basilisco, huecos: 4, logos: [
+    { src: raiola, alt: "Raiola Networks", url: "https://raiolanetworks.com/" },
+    { src: denodo, alt: "Denodo", url: "https://www.denodo.com/" },
+    { src: nextDigital, alt: "Next Digital", url: "https://www.nextdigital.es/" },
+    { src: allenta, alt: "Allenta", url: "https://allenta.com/" },
+  ] },
+  { id: "triton", nombre: "Tritón", rango: "Patrocinio plata", medallon: triton, huecos: 6, logos: [
+    { src: teimas, alt: "Teimas", url: "https://www.teimas.com/" },
+  ] },
   { id: "ajolote", nombre: "Ajolote", rango: "Patrocinio bronce", medallon: ajolote, huecos: 8, logos: [] },
 ];
 
