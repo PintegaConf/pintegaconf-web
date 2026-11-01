@@ -1,57 +1,168 @@
 ---
-// Line-up. Mientras no haya ponentes, tarjetas "Próximamente" con el "?" dorado (decisión del usuario).
+// Line-up: encapuchados sin cara a contraluz (decisión del usuario, 1-11-2026). Cada ponente abre su ventana
+// (<dialog>) con foto, charla, bio y redes; los huecos sin anunciar llevan el «?» dorado y abren
+// «¿Quieres ser tú?» para captar ponentes. Todo se genera al compilar (sin innerHTML).
+// Apertura y cierre nativos (commandfor/command y closedby); scripts/ponentes/ventana.ts cubre a los
+// navegadores que aún no los traen.
 import { Image } from "astro:assets";
+import Silueta from "../ponentes/Silueta.astro";
 import { ponentes, HUECOS_PONENTES } from "../../data/ponentes";
 import { evento } from "../../data/evento";
+import { iconosRedes } from "../../data/iconos-redes";
 
-const tarjetas = ponentes.length
-  ? ponentes
-  : Array.from({ length: HUECOS_PONENTES }, () => ({ nombre: "Próximamente", charla: "Ponente por anunciar", foto: undefined }));
+const huecos = Math.max(0, HUECOS_PONENTES - ponentes.length);
+const HUECO = "ponente-hueco";
+const idPonente = (i: number) => `ponente-${i + 1}`;
 ---
 <section id="ponentes">
   <div class="wrap">
     <h2 class="sec-title">PONENTES</h2>
-    <div class="cards">
-      {tarjetas.map((p) => (
-        <article class="card">
-          <div class="avatar">
-            {p.foto ? <Image src={p.foto} alt="" width={195} height={195} /> : <span class="q" aria-hidden="true">?</span>}
-          </div>
-          <h3>{p.nombre}</h3>
+    <ul class="rejilla">
+      {ponentes.map((p, i) => (
+        <li class="ponente">
+          <Silueta n={i} />
+          <h3><button type="button" commandfor={idPonente(i)} command="show-modal" aria-haspopup="dialog">{p.nombre}</button></h3>
           <p>{p.charla}</p>
-        </article>
+        </li>
       ))}
-    </div>
+      {Array.from({ length: huecos }, (_, j) => (
+        <li class="ponente">
+          <Silueta n={ponentes.length + j} interrogante />
+          <h3><button type="button" commandfor={HUECO} command="show-modal" aria-haspopup="dialog">Próximamente</button></h3>
+          <p>Ponente por anunciar</p>
+        </li>
+      ))}
+    </ul>
     <div class="speaker-cta">
       <p>¿Quieres dar una charla en Píntega Conf?</p>
       <a class="btn btn-gold" href={evento.dossierPonentes}>Quiero ser ponente</a>
     </div>
   </div>
+
+  {ponentes.map((p, i) => (
+    <dialog id={idPonente(i)} class="ventana" aria-labelledby={`${idPonente(i)}-nombre`} closedby="any">
+      <div class="caja">
+        <form method="dialog"><button class="cerrar" aria-label="Cerrar"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg></button></form>
+        <div class="foto">
+          {p.foto ? <Image src={p.foto} alt="" width={320} height={320} /> : <span class="marco"><Silueta n={i} /></span>}
+        </div>
+        <div class="datos">
+          <h3 id={`${idPonente(i)}-nombre`}>{p.nombre}</h3>
+          {p.cargo && <p class="cargo">{p.cargo}</p>}
+          <p class="etiqueta">Charla</p>
+          <p class="charla">{p.charla}</p>
+          {p.resumen && <p>{p.resumen}</p>}
+          {p.bio && <p class="bio">{p.bio}</p>}
+          {p.redes && p.redes.length > 0 && (
+            <ul class="redes" aria-label={`${p.nombre} en redes`}>
+              {p.redes.map((r) => (
+                <li>
+                  <a href={r.url} rel="noopener">
+                    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" set:html={iconosRedes[r.nombre]} />
+                    <span>{r.nombre}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </div>
+    </dialog>
+  ))}
+
+  {huecos > 0 && (
+    <dialog id={HUECO} class="ventana" aria-labelledby={`${HUECO}-titulo`} closedby="any">
+      <div class="caja">
+        <form method="dialog"><button class="cerrar" aria-label="Cerrar"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg></button></form>
+        <div class="foto"><span class="marco"><Silueta interrogante /></span></div>
+        <div class="datos">
+          <h3 id={`${HUECO}-titulo`}>¿Quieres ser tú?</h3>
+          <p class="cargo">Ponente por anunciar</p>
+          <p>Este hueco todavía está libre. Si tienes algo que contar, nos encantará escucharte: buscamos perfiles muy distintos.</p>
+          <p class="etiqueta">A los ponentes les ofrecemos</p>
+          <ul class="oferta">
+            {evento.ofertaPonentes.map((o) => <li>{o}</li>)}
+          </ul>
+          <div class="acciones">
+            <a class="btn btn-gold" href={evento.formularioPonentes}>Propón tu charla</a>
+            <a class="enlace" href={evento.dossierPonentes}>Ver el dossier para ponentes</a>
+          </div>
+        </div>
+      </div>
+    </dialog>
+  )}
 </section>
 
+<script>
+  import "../../scripts/ponentes/ventana";
+</script>
+
 <style>
-  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4.5rem 3.4rem; padding-top: 1rem; }
-  .card { position: relative; border: 1px solid var(--gold); background: linear-gradient(180deg, var(--panel-top), var(--panel-bottom)); min-height: 440px; padding: 12.5rem 1.6rem 2rem; text-align: center; }
-  .avatar {
-    position: absolute; left: 50%; top: -14px; width: 195px; aspect-ratio: 1; transform: translateX(-50%); border-radius: 50%; overflow: hidden;
-    background: radial-gradient(circle at 50% 42%, #2f2f2f, #151515 70%); border: 2px solid var(--gold);
-  }
-  .avatar img { width: 100%; height: 100%; object-fit: cover; }
-  .q { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font: 700 84px/1 var(--f-head); color: var(--gold); opacity: .85; animation: q-glow 3.2s ease-in-out 1; }
-  /* Un solo destello al cargar (< 5 s) y el brillo continuo solo con el ratón encima: nada se mueve
-     solo más de 5 segundos sin forma de pararlo (WCAG 2.2.2) */
-  .card:hover .q { opacity: 1; animation: q-glow 1.4s ease-in-out infinite; }
-  @keyframes q-glow {
-    0%, 100% { opacity: .55; text-shadow: none; }
-    50% { opacity: 1; text-shadow: 0 0 18px rgba(253, 195, 48, .55); }
-  }
-  h3 { font: 400 26px var(--f-head); color: var(--accent-text); margin: 0 0 .5rem; }
-  p { margin: 0; color: var(--text-2); }
+  /* ---------- Rejilla de encapuchados ---------- */
+  .rejilla { list-style: none; margin: 0; padding: 1rem 0 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 3.4rem 2.4rem; }
+  .ponente { position: relative; text-align: center; }
+  .ponente :global(.silueta) { width: min(240px, 100%); margin: 0 auto .9rem; }
+  /* Hover y foco encienden el halo y la silueta sube un poco (variables que lee Silueta.astro) */
+  .ponente:hover, .ponente:has(:focus-visible) { --sube: 1; --brillo: 1; }
+  .ponente h3 { font: 400 26px/1.2 var(--f-head); color: var(--accent-text); margin: 0 0 .4rem; }
+  .ponente h3 button { background: none; border: 0; padding: 0; font: inherit; color: inherit; cursor: pointer; }
+  /* Toda la tarjeta es el botón (el nombre accesible sigue siendo el texto visible) */
+  .ponente h3 button::after { content: ""; position: absolute; inset: 0; }
+  .ponente > p { margin: 0; color: var(--text-2); }
 
   .speaker-cta { margin-top: 5rem; text-align: center; }
   .speaker-cta p { font: 400 26px/1.3 var(--f-head); color: var(--text); margin: 0 0 1.3rem; }
 
-  @media (max-width: 980px) { .cards { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 680px) { .cards { grid-template-columns: 1fr; gap: 4rem; } .speaker-cta p { font-size: 21px; } }
-  @media (prefers-reduced-motion: reduce) { .q { animation: none; } }
+  /* ---------- Ventana del ponente ---------- */
+  .ventana {
+    padding: 0; border: 1px solid var(--gold); color: var(--text);
+    background: linear-gradient(180deg, var(--panel-top), var(--panel-bottom));
+    width: min(760px, 100% - 2rem); max-height: calc(100dvh - 2rem); overflow: auto;
+  }
+  .ventana::backdrop { background: rgba(0, 0, 0, .72); }
+  :global(html:has(.ventana[open])) { overflow: hidden; }
+  .caja { position: relative; display: grid; grid-template-columns: 220px 1fr; gap: 2.2rem; padding: 2.8rem 2.6rem 2.6rem; }
+  /* El formulario del botón Cerrar va fuera de la rejilla (si no, ocupa la primera celda) */
+  .caja > form { position: absolute; top: .7rem; right: .7rem; margin: 0; }
+  .cerrar {
+    width: 44px; height: 44px; border-radius: 50%;
+    display: grid; place-items: center; padding: 0;
+    border: 1.5px solid var(--gold); background: transparent; color: var(--accent-text);
+    cursor: pointer; transition: background .2s, color .2s;
+  }
+  .cerrar:hover { background: var(--gold); color: var(--ink); }
+  /* Sin foto: la silueta, enmarcada como las fotos (el suelo se funde con el fondo del marco) */
+  .marco { display: block; aspect-ratio: 1; border-radius: 50%; overflow: hidden; border: 2px solid var(--gold); background: var(--ink); --suelo: var(--ink); padding: 14% 12% 0; }
+  .foto > :global(img) { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 50%; border: 2px solid var(--gold); }
+  .datos h3 { font: 400 34px/1.15 var(--f-head); color: var(--accent-text); margin: 0 0 .3rem; padding-right: 2.6rem; }
+  .datos p { margin: 0 0 1rem; color: var(--text-2); line-height: 1.6; }
+  .datos .cargo { color: var(--text-3); margin-bottom: 1.6rem; }
+  .datos .etiqueta { font: 700 13px/1.3 var(--f-sans); letter-spacing: .12em; text-transform: uppercase; color: var(--accent-text); margin: 0 0 .4rem; }
+  .datos .charla { font: 400 23px/1.3 var(--f-head); color: var(--text); }
+  .oferta { margin: 0 0 1.6rem; padding-left: 1.2rem; color: var(--text-2); line-height: 1.7; }
+  .oferta li::marker { color: var(--accent-text); }
+  .acciones { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.4rem; }
+  .enlace { color: var(--accent-text); font: 600 15px var(--f-sans); text-underline-offset: 3px; }
+
+  .redes { list-style: none; margin: 1.4rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem; }
+  .redes a {
+    display: inline-flex; align-items: center; gap: .45rem; min-height: 36px; padding: .35rem .9rem .35rem .7rem;
+    border-radius: 999px; border: 1.5px solid var(--gold); color: var(--accent-text);
+    font: 600 14px/1.2 var(--f-sans); text-decoration: none; transition: background .2s, color .2s;
+  }
+  .redes a:hover { background: var(--gold); color: var(--ink); }
+  .redes svg { flex: none; }
+
+  @media (max-width: 680px) {
+    .rejilla { grid-template-columns: repeat(2, 1fr); gap: 2.4rem 1rem; }
+    .ponente :global(.silueta) { margin-bottom: .8rem; }
+    .ponente h3 { font-size: 20px; }
+    .ponente > p { font-size: 13px; }
+    .speaker-cta p { font-size: 21px; }
+    .caja { grid-template-columns: 1fr; gap: 1.2rem; padding: 3.4rem 1.4rem 1.8rem; }
+    .foto { width: 150px; margin: 0 auto; }
+    .datos h3 { font-size: 28px; padding-right: 0; text-align: center; }
+    .datos .cargo { text-align: center; }
+  }
+  @media (prefers-reduced-motion: reduce) { .cerrar, .redes a { transition: none; } }
 </style>

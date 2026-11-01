@@ -1,0 +1,80 @@
+---
+// Encapuchado sin cara a contraluz. Son las capuchas que el ilustrador dibujó para el equipo, pintadas de
+// negro con un filtro: conservan el contorno real del dibujo y el difuminado de busto que ya traen, y no se
+// ve ninguna cara. Detrás, una luz dorada; el borde de la silueta la recoge (drop-shadow) y un «suelo» con el
+// color de fondo (--suelo) funde la parte de abajo. Decorativa: el nombre accesible lo pone el botón o el
+// título de al lado. Hover y foco los controla quien la usa (variables --sube y --brillo, de 0 a 1).
+// Sin las de Iria y Matías: tienen poros en la transparencia que el borde dorado convierte en puntos.
+import { Image } from "astro:assets";
+import yisus from "../../assets/equipo/yisus-capucha.webp";
+import nacho from "../../assets/equipo/nacho-capucha.webp";
+import tiziana from "../../assets/equipo/tiziana-capucha.webp";
+import daniel from "../../assets/equipo/daniel-capucha.webp";
+import carlos from "../../assets/equipo/carlos-capucha.webp";
+
+const capuchas = [yisus, tiziana, carlos, nacho, daniel];
+
+interface Props {
+  /** Posición en la rejilla: va alternando las capuchas para que no salgan todas iguales. */
+  n?: number;
+  /** Hueco sin ponente: «?» dorado en la sombra de la cara. */
+  interrogante?: boolean;
+}
+const { n = 0, interrogante = false } = Astro.props;
+---
+<span class="silueta" aria-hidden="true">
+  <span class="luz"></span>
+  <Image class="figura" src={capuchas[n % capuchas.length]} alt="" width={480} height={494} />
+  {interrogante && <span class="q">?</span>}
+</span>
+
+<style>
+  .silueta { position: relative; display: block; aspect-ratio: 480 / 494; }
+  .luz {
+    /* Poco margen a los lados: más ancho abría scroll horizontal en móvil (y recortarlo con overflow corta el
+       texto con el espaciado de WCAG 1.4.12) */
+    position: absolute; inset: -10% -6% 12%;
+    background: radial-gradient(closest-side, var(--contraluz) 0%, var(--contraluz-suave) 50%, transparent 100%);
+    opacity: calc(.75 + var(--brillo, 0) * .25);
+    transform: scale(calc(1 + var(--brillo, 0) * .08));
+    transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+  }
+  .silueta :global(.figura) {
+    position: relative; display: block; width: 100%; height: auto;
+    filter: brightness(0) drop-shadow(0 -1px calc(2px + var(--brillo, 0) * 3px) var(--contraluz-borde));
+    transform: translateY(calc(var(--sube, 0) * -6px));
+    transition: transform var(--dur) var(--ease), filter var(--dur) var(--ease);
+  }
+  /* Suelo: funde el busto (y su borde dorado de abajo) con el fondo */
+  .silueta::after {
+    content: ""; position: absolute; left: -6%; right: -6%; bottom: -1px; height: 30%;
+    /* Degradado con paradas suavizadas: con uno lineal, el negro sobre el fondo claro dejaba una banda gris */
+    background: linear-gradient(to bottom,
+      transparent,
+      color-mix(in srgb, var(--suelo, var(--bg)) 25%, transparent) 30%,
+      color-mix(in srgb, var(--suelo, var(--bg)) 65%, transparent) 58%,
+      color-mix(in srgb, var(--suelo, var(--bg)) 90%, transparent) 78%,
+      var(--suelo, var(--bg)) 92%);
+  }
+  /* El «?» va en HTML (no en la imagen) para poder usar text-shadow también en Safari */
+  .q {
+    position: absolute; left: 50%; top: 57%; z-index: 1;
+    transform: translate(-50%, calc(-50% - var(--sube, 0) * 6px));
+    font: 700 clamp(28px, 8vw, 54px)/1 var(--f-head); color: var(--gold); opacity: .85;
+    animation: q-glow 3.2s ease-in-out 1;
+    transition: transform var(--dur) var(--ease);
+  }
+  /* Un solo destello al cargar (< 5 s); el brillo continuo solo con hover/foco (WCAG 2.2.2) */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.ponente:hover) .q, :global(.ponente:has(:focus-visible)) .q { opacity: 1; animation: q-glow 1.4s ease-in-out infinite; }
+  }
+  @keyframes q-glow {
+    0%, 100% { opacity: .55; text-shadow: none; }
+    50% { opacity: 1; text-shadow: 0 0 18px var(--contraluz-borde); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .luz, .silueta :global(.figura), .q { transition: none; }
+    .luz, .silueta :global(.figura) { transform: none; }
+    .q { animation: none; transform: translate(-50%, -50%); }
+  }
+</style>

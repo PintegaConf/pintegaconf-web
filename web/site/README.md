@@ -73,7 +73,7 @@ se destapa a alguien del equipo) están marcados con `:global(...)`.
   `fecha()`: no escribir fechas ni el año a mano en los componentes. Lo que hay que cambiar aparte: el logo y la imagen para
   redes (llevan el año dibujado: `src/assets/marca/logo-*.svg`, `public/og.jpg`) y los enlaces a los dossiers.
 - **Añadir un patrocinador:** guardar el logo en `src/assets/patrocinadores/`, importarlo en `src/data/patrocinio.ts` y añadirlo a `logos` del nivel: `{ src: logo, alt: "Empresa", url: "https://…" }`. El hueco "Tu logo aquí" desaparece solo.
-- **Añadir ponentes:** `src/data/ponentes.ts`. Mientras la lista esté vacía se ven 6 tarjetas "Próximamente".
+- **Añadir ponentes:** `src/data/ponentes.ts` (nombre, cargo, charla, resumen, bio, foto en `src/assets/ponentes/` y redes). Los huecos que falten hasta `HUECOS_PONENTES` se ven como encapuchados "Próximamente".
 - **Ilustraciones de alguien del equipo:**
   1. Dejar sus dibujos (lienzo 1236×1272) en `web/web_assets/designs/<slug>/` con estos nombres: `<slug>-capucha.png`, `<slug>-manos.png`, `<slug>-rostro.png` (y `<slug>-capucha-sola.png`, que no se usa en la web).
   2. Añadir su slug a `PERSONAS` en `web/tools/procesar-equipo.py` y ejecutarlo (`python3 web/tools/procesar-equipo.py <slug>`).
