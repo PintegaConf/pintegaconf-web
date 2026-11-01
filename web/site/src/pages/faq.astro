@@ -33,7 +33,7 @@ const temas = [
         ))}
       </nav>
 
-      <div class="contacto">
+      <div class="contacto panel">
         <p class="contacto-titulo">¿Otra pregunta?</p>
         <p>Te respondemos en el correo de la organización.</p>
         <a class="btn btn-gold" href={`mailto:${evento.email}`}>{evento.email}</a>
@@ -133,8 +133,7 @@ const temas = [
     font: 700 12px var(--f-mono); background: var(--slot-bg); color: var(--accent-text); border: 1px solid rgba(253, 195, 48, .4);
   }
 
-  .contacto { position: relative; padding: 1.5rem 1.4rem 1.6rem; border: 1px solid var(--gold); background: linear-gradient(180deg, var(--panel-top), var(--panel-bottom)); }
-  .contacto::after { content: ""; position: absolute; left: -1px; bottom: -1px; width: 22px; height: 22px; background: var(--gold); }
+  .contacto { padding: 1.5rem 1.4rem 1.6rem; }
   .contacto p { margin: 0 0 1rem; font-size: 15px; }
   .contacto .contacto-titulo { font: 400 23px/1.2 var(--f-head); color: var(--text); margin-bottom: .4rem; }
   /* color explícito: si no, hereda el dorado de los enlaces del texto y queda dorado sobre dorado */

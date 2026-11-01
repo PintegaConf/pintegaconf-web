@@ -63,9 +63,8 @@ main:focus { outline: none; box-shadow: none; }
   color: var(--accent-text); text-align: center; margin: 5.5rem 0 3rem; letter-spacing: .01em;
 }
 
-/* ---------- Panel: borde dorado + cuadradito en la esquina inferior izquierda ---------- */
-.panel { position: relative; border: 1px solid var(--gold); background: linear-gradient(180deg, var(--panel-top), var(--panel-bottom)); }
-.panel::after { content: ""; position: absolute; left: -1px; bottom: -1px; width: 34px; height: 34px; background: var(--gold); }
+/* ---------- Panel: fondo liso, borde dorado muy suave y esquinas un poco redondeadas ---------- */
+.panel { position: relative; border: 1px solid var(--panel-borde); border-radius: 6px; background: var(--panel-top); }
 .panel p { margin: 0 0 1.2rem; }
 
 /* ---------- Rejilla de logos y huecos "Tu logo aquí" ---------- */

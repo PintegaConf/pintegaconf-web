@@ -1,5 +1,5 @@
 ---
-// Cada nivel es un panel con su medallón asomando por arriba. La importancia se marca con los
+// Cada nivel es un panel (.panel, base.css) con su medallón asomando por arriba. La importancia se marca con los
 // logos por fila y el tamaño del medallón (valores por nivel en los estilos, [data-nivel]).
 import { Image } from "astro:assets";
 import { niveles } from "../../data/patrocinio";
@@ -11,7 +11,7 @@ import LogoHueco from "../LogoHueco.astro";
     <h2 class="sec-title">PATROCINADORES</h2>
     <div class="tiers">
       {niveles.map((n) => (
-        <article class="tier" data-nivel={n.id}>
+        <article class="tier panel" data-nivel={n.id}>
           <Image class="medal" src={n.medallon} alt="" width={420} widths={[210, 420]} sizes="210px" />
           <h3 class="tier-name">{n.nombre}</h3>
           <p class="tier-rank">{n.rango}</p>
@@ -45,10 +45,8 @@ import LogoHueco from "../LogoHueco.astro";
 
   .tiers { display: grid; gap: 7.5rem; padding-top: 6.5rem; }
   .tier {
-    position: relative; border: 1px solid var(--gold); background: linear-gradient(180deg, var(--panel-top), var(--panel-bottom));
     padding: calc(var(--m) / 2 + 1.1rem) 2.4rem 2.6rem; text-align: center;
   }
-  .tier::after { content: ""; position: absolute; left: -1px; bottom: -1px; width: 30px; height: 30px; background: var(--gold); }
   .medal { position: absolute; left: 50%; top: 0; width: var(--m); height: auto; transform: translate(-50%, -50%); filter: drop-shadow(0 7px 0 rgba(0, 0, 0, .4)); }
   .tier-name { font: 400 var(--fs) / 1.1 var(--f-head); color: var(--accent-text); margin: 0; }
   .tier-rank { font: 700 12px var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--text-3); margin: .45rem 0 1.8rem; }
