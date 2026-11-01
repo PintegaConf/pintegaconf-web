@@ -20,6 +20,7 @@ Idioma de trabajo: **español**. El usuario es Matías (organización, sistemas/
 - **Oferta a ponentes:** viaje y hotel cubiertos, entrada full-pass, cena en el post-evento (no hay cena solo de ponentes), grabación de la charla + difusión en web/redes, regalo de ponente.
 - **Charlas:** 30–45 min de media, duraciones variadas (no slot fijo). La agenda la organizará Matías más adelante.
 - **Niveles de patrocinio:** Dragón > Basilisco > Tritón > Ajolote. **Dragón es exclusivo: una sola empresa** (un único hueco en la web).
+- **Patrocinadores confirmados (1-11-2026):** Basilisco: Raiola Networks, Denodo, Next Digital y Allenta (Basilisco completo: 4 huecos); Tritón: Teimas. Logos en `web/site/src/assets/patrocinadores/` (los de la web de Lareira, `Gallegarmy/LareiraConf-MainPage`, `src/img/sponsors/`; el de Allenta lo pasó Matías). Revisar cada SVG antes de meterlo (sin scripts ni enlaces externos) y que su tamaño óptico cuadre con los demás (al de Allenta se le dio margen en el `viewBox`).
 
 ## Mapa
 
@@ -88,7 +89,7 @@ Seguridad del proyecto: `.npmrc` con `ignore-scripts` y versiones exactas (no qu
 
 - **Venta de entradas con Weezevent:** tarifas (con early bird) y los enlaces de los tres módulos filtrados ya están (1-11-2026). Las webs están en «Muy pronto a la venta». Falta abrir la venta en Weezevent (y entonces `ventaAbierta = true` y quitar `venta-pronto` en la temporal), poner en la web los precios early bird y quitar el borrador de la PR #26. **Ojo al fusionar:** `deploy.yml` publica en el servidor al fusionar una PR en `main`. Lista completa en `claude/docs/entradas-weezevent.md`.
 - Web temporal "en obras" hecha en `web/temporal/`, con fuentes autoalojadas, CSP propia y aviso legal en `/aviso-legal/` (copia del de Astro sin el enlace a privacidad/cookies: si cambia uno, cambiar el otro). Portada compacta en ≤ 480 px para que las redes se vean sin bajar en un iPhone SE (375×548). Es la que se va a publicar (ver Publicación).
-- Line-up de ponentes, logos de patrocinadores (`logos` de cada nivel en `web/site/src/data/patrocinio.ts`), colaboradores y comunidades.
+- Line-up de ponentes, el resto de patrocinadores (`logos` de cada nivel en `web/site/src/data/patrocinio.ts`), colaboradores y comunidades.
 - Agenda: detalles del pre-evento (viernes 9) y horario de charlas (sábado 10).
 - **Accesibilidad: probar con lectores de pantalla reales** (VoiceOver macOS/iOS, NVDA, TalkBack) y actualizar la declaración. Lo automático y el teclado ya están (sep 2026).
 - **Renovar `security.txt`** antes del 26-09-2027.
