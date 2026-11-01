@@ -1,5 +1,6 @@
 ---
 // Un hueco de la rejilla de logos: el logo real (enlazado si tiene web) o el texto "Tu logo aquí".
+// El enlace lleva su nombre en aria-label, con el aviso de que abre otra pestaña (no se ve en el logo).
 // Los huecos vacíos son aria-hidden: el lector de pantalla no los lee uno a uno (serían 19 "Tu logo
 // aquí" seguidos); en su lugar, cada sección dice cuántos huecos libres quedan (texto .sr-only).
 import { Image } from "astro:assets";
@@ -13,7 +14,7 @@ const { logo, texto } = Astro.props;
 ---
 {logo ? (
   logo.url ? (
-    <a class="logo-slot" href={logo.url} target="_blank" rel="noopener noreferrer">
+    <a class="logo-slot" href={logo.url} target="_blank" rel="noopener noreferrer" aria-label={`${logo.alt} (se abre en otra pestaña)`}>
       <Image src={logo.src} alt={logo.alt} width={300} />
     </a>
   ) : (
