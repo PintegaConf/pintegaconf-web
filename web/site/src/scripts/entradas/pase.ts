@@ -1,5 +1,5 @@
 // Entrada estilo Wallet: con ratón, la entrada se inclina en 3D siguiendo el puntero.
-// Si se usa el ticket clásico, no hay nada que hacer.
+// Lo carga PaseWallet.astro, así que solo llega a la página cuando se usa ese diseño.
 import { MENOS_MOVIMIENTO, PUNTERO_FINO } from "../lib/medios";
 
 const INCLINACION_Y = 14; // grados máximos a izquierda/derecha
