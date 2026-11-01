@@ -39,6 +39,11 @@
   --equipo-suelo: #121211;
   --equipo-halo: rgba(253, 195, 48, .16);
 
+  /* Sección PONENTES: luz dorada detrás de los encapuchados y borde que la recoge */
+  --contraluz: rgba(253, 195, 48, .5);
+  --contraluz-suave: rgba(253, 195, 48, .13);
+  --contraluz-borde: rgba(253, 195, 48, .9);
+
   /* Movimiento y maquetación */
   --ease: cubic-bezier(.22, .9, .24, 1);
   --dur: .5s;
@@ -65,6 +70,9 @@
     --equipo-fondo: #f3e9cf;
     --equipo-suelo: #e9dcb8;
     --equipo-halo: rgba(253, 195, 48, .35);
+    --contraluz: rgba(253, 195, 48, .62);
+    --contraluz-suave: rgba(253, 195, 48, .2);
+    --contraluz-borde: #e0a400;
   }
 }
 :root[data-theme="light"] {
@@ -84,6 +92,9 @@
   --equipo-fondo: #f3e9cf;
   --equipo-suelo: #e9dcb8;
   --equipo-halo: rgba(253, 195, 48, .35);
+  --contraluz: rgba(253, 195, 48, .62);
+  --contraluz-suave: rgba(253, 195, 48, .2);
+  --contraluz-borde: #e0a400;
 }
 
 @media (max-width: 680px) {

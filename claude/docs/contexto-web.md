@@ -65,7 +65,7 @@ Un componente web para la página de **Pintega Conf**: una fila de personas ocul
 - **Centrado del equipo en Safari**: ancho explícito `calc(4*200px - 3*55px)` en vez de `fit-content`.
 - **Orbe de portada**: composición propia del usuario (orbe dorado con sombra negra abajo-izquierda + llama de contorno + salamandra enroscada) → `web_assets/orbes/orbe-elegido-transparente.png` (813×880). Va en `.hero-art`.
 - **Ilustraciones actuales (v3)**: una carpeta por persona en `web_assets/designs/` (yisus, iria, matias, daniel, carlos; nacho y tiziana vacías a la espera), cada una con `<persona>-capucha.png`, `-manos.png`, `-rostro.png` y `-capucha-sola.png` (renombrados así el 27 sep 2026; los originales traían nombres distintos en cada entrega); mismo lienzo 1236×1272 → ya alineadas. En la web van a 480×494 con difuminado de hombros corto (vertical 72%→98,5%, lados 13% solo abajo). `.frame` aspect-ratio 1236/1272.
-- **Ponentes por anunciar**: círculo oscuro con borde dorado y "?" dorado que brilla suavemente.
+- **Ponentes por anunciar**: círculo oscuro con borde dorado y "?" dorado que brilla suavemente. **Sustituido el 1-11-2026** por encapuchados sin cara a contraluz (siluetas de las capuchas del equipo) que abren una ventana con foto, charla, bio y redes; los huecos conservan el «?» y abren «¿Quieres ser tú?» (ver `web/CLAUDE.md`). Antes se probó un disco dorado plano con una silueta dibujada a mano: al usuario le pareció feo, sobre todo el hover.
 - **Patrocinadores**: medallones Dragón/Basilisco/Tritón/Ajolote (de `web_assets/TIERS/PNG`, 400px WebP incrustados). Cada nivel es un panel con el medallón asomando; la importancia se marca por **logos por fila** — Dragón 1, Basilisco 2, Tritón 3, Ajolote 4 (huecos: Dragón 1 —patrocinador exclusivo, una sola empresa—, Basilisco 4, Tritón 6, Ajolote 8); medallones decrecientes 210/190/170/150px (mínimo 150px escritorio, 130px móvil para que se lea el texto del Ajolote). Huecos oscuros con borde dorado discontinuo "Tu logo aquí"; logos reales en blanco y a color al hover; botón "Patrocina Pintega Conf".
 - Formulario de compra: sin pasarela, solo valida y muestra "la venta abrirá muy pronto".
 - Los fuentes de build antiguos (`web/template.html`, `web/build.py`, `web/*.txt`) **no se conservaron**; el HTML final es la fuente de verdad.
@@ -108,7 +108,7 @@ Decisión, seguridad y mejoras: `web/README.md`. Guía de uso: `web/site/README.
 - [x] ~~Revelado al tocar en tablets~~ (hecho, ver abajo). Nota original:: en pantallas táctiles de más de 680px no hay hover, así que no se puede quitar la capucha. Activar el revelado con un toque (`pointerdown`/`click` con `pointerType === "touch"`, o bajo `@media (hover: none)`): el toque en una silueta la marca `.is-active` y un toque fuera o en otra persona cambia la activa. Reutilizar el `pick()` por alfa de la silueta que ya existe para escritorio. Probar en iPad real (Safari).
 
 ### Contenido de la web
-- [ ] Line-up de ponentes (hoy 6 tarjetas "Próximamente").
+- [ ] Line-up de ponentes (hoy 6 encapuchados "Próximamente"; cada ponente: nombre, cargo, charla, resumen, bio, foto y redes en `src/data/ponentes.ts`).
 - [x] Medallones de nivel.
 - [x] Rediseño de Patrocinadores.
 - [ ] Logos de patrocinadores: array `niveles[i].logos = [{ src, alt, url }]`. Hechos (1-11-2026): Raiola Networks, Next Digital y Allenta (Basilisco) y Teimas (Tritón). Denodo (Basilisco), desactivado hasta que firme. Cada logo enlaza a su web en otra pestaña y el enlace lo avisa en su `aria-label`.
