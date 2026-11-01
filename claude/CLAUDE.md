@@ -55,6 +55,7 @@ Seguridad del proyecto: `.npmrc` con `ignore-scripts` y versiones exactas (no qu
 
 - **Venta de entradas con Weezevent:** tarifas (con early bird) y los enlaces de los tres módulos filtrados ya están (1-11-2026). Las webs están en «Muy pronto a la venta». Falta abrir la venta en Weezevent (y entonces `ventaAbierta = true` y quitar `venta-pronto` en la temporal), poner en la web los precios early bird y quitar el borrador de la PR #26. **Ojo al fusionar:** `deploy.yml` publica en el servidor al fusionar una PR en `main`. Lista completa en `claude/docs/entradas-weezevent.md`.
 - Web temporal "en obras" hecha en `web/temporal/`, con fuentes autoalojadas, CSP propia y aviso legal en `/aviso-legal/` (copia del de Astro sin el enlace a privacidad/cookies: si cambia uno, cambiar el otro). Portada compacta en ≤ 480 px para que las redes se vean sin bajar en un iPhone SE (375×548). Es la que se va a publicar (ver Publicación).
+- **Equipo: bios y redes de relleno (lorem ipsum, 1-11-2026)** en `RELLENO` de `web/site/src/data/equipo.ts`: pedir a cada persona su descripción y sus redes y quitar el relleno antes de publicar la web completa.
 - Line-up de ponentes, el resto de patrocinadores (`logos` de cada nivel en `web/site/src/data/patrocinio.ts`), colaboradores y comunidades.
 - Agenda: detalles del pre-evento (viernes 9) y horario de charlas (sábado 10).
 - **Accesibilidad: probar con lectores de pantalla reales** (VoiceOver macOS/iOS, NVDA, TalkBack) y actualizar la declaración. Lo automático y el teclado ya están (sep 2026).

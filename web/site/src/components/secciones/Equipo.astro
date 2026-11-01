@@ -7,6 +7,10 @@
 //   (scripts/equipo/carrusel.ts).
 // El HTML va en el orden de `equipo`, que es también el del carrusel, el tabulador y los lectores de pantalla.
 //
+// Info de cada persona (bio y redes): en escritorio y tablet, en su ventana (VentanaPersona.astro), que se
+// abre con un clic en la persona destapada, con un segundo toque o con Intro/Espacio (revelado.ts). En el
+// carrusel del móvil aparece sola debajo de la persona centrada cuando acaba el revelado (.bio-movil).
+//
 // Revelado: capucha → manos → rostro, con fundidos (nada de cortes secos). Las capas van apiladas:
 // capucha (arriba) > manos > rostro. El difuminado de hombros va incrustado en las imágenes.
 // En escritorio, cada figura lleva debajo una capa más, el cuerpo sin difuminar (ver .layer-body).
@@ -16,6 +20,8 @@
 // (scripts/equipo/pausa-orbe.ts); con «reducir movimiento» no gira y el botón no aparece.
 import { Image } from "astro:assets";
 import OrbeCorona from "../equipo/OrbeCorona.astro";
+import VentanaPersona from "../VentanaPersona.astro";
+import RedesPersona from "../RedesPersona.astro";
 import { equipo, ilustracionPorDefecto } from "../../data/equipo";
 
 // Columna de la rejilla de escritorio: delante 1,3,5,7 · atrás 2,4,6 (medio paso desplazada)
@@ -23,7 +29,7 @@ const cuenta = { atras: 0, delante: 0 };
 const miembros = equipo.map((m, indice) => {
   const n = cuenta[m.fila]++;
   const columna = m.fila === "delante" ? 1 + 2 * n : 2 + 2 * n;
-  return { ...m, indice, columna, ilu: m.ilustracion ?? ilustracionPorDefecto };
+  return { ...m, indice, columna, ilu: m.ilustracion ?? ilustracionPorDefecto, ventana: `equipo-${indice + 1}` };
 });
 ---
 <section id="equipo">
@@ -33,20 +39,26 @@ const miembros = equipo.map((m, indice) => {
       <div class="fondo-orbe"><OrbeCorona /></div>
       <div class="formation-inner" id="equipo-lista" role="list" aria-label="Miembros del equipo">
         {miembros.map((m) => (
-          <div class="operative" role="listitem" data-fila={m.fila} data-col={m.columna} data-indice={m.indice}>
-            {/* role="img": la figura es una imagen con nombre ("Jesús, Organización"). Es enfocable para que el
-                teclado pueda destaparla igual que el ratón (WCAG 2.1.1). */}
-            <div class="dossier" role="img" tabindex="0" aria-label={`${m.nombre}, ${m.rol}`}>
-              <div class="frame">
-                <div class="portrait">
+          <div class="operative" role="listitem" data-fila={m.fila} data-col={m.columna} data-indice={m.indice} data-ventana={m.ventana}>
+            {/* Botón con nombre ("Jesús, Organización"): al enfocarlo se destapa la persona, igual que con el ratón
+                (WCAG 2.1.1), y abre su ventana. Dentro solo puede haber contenido de línea: spans, no divs. */}
+            <button type="button" class="dossier" aria-label={`${m.nombre}, ${m.rol}`} aria-haspopup="dialog">
+              <span class="frame">
+                <span class="portrait">
                   <Image class="layer-body" src={m.ilu.cuerpo} alt="" width={480} quality={90} draggable="false" />
                   <Image class="layer-hood" src={m.ilu.capucha} alt="" width={480} quality={90} draggable="false" />
                   <Image class="layer-hands" src={m.ilu.manos} alt="" width={480} quality={90} draggable="false" />
                   <Image class="layer-face" src={m.ilu.rostro} alt="" width={480} quality={90} draggable="false" />
-                </div>
+                </span>
+              </span>
+              <span class="info" aria-hidden="true"><span class="info-name">{m.nombre}</span><span class="info-role">{m.rol}</span></span>
+            </button>
+            {(m.bio || m.redes) && (
+              <div class="bio-movil">
+                {m.bio && <p>{m.bio}</p>}
+                <RedesPersona nombre={m.nombre} redes={m.redes} />
               </div>
-              <div class="info" aria-hidden="true"><p class="info-name">{m.nombre}</p><p class="info-role">{m.rol}</p></div>
-            </div>
+            )}
           </div>
         ))}
       </div>
@@ -60,6 +72,13 @@ const miembros = equipo.map((m, indice) => {
       <span class="pausa-texto">Pausar animación</span>
     </button>
   </div>
+
+  {miembros.map((m) => (
+    <VentanaPersona id={m.ventana} nombre={m.nombre} subtitulo={m.rol} redes={m.redes}>
+      <span slot="foto" class="marco"><Image src={m.ilu.rostro} alt="" width={480} quality={90} /></span>
+      {m.bio && <p>{m.bio}</p>}
+    </VentanaPersona>
+  ))}
 </section>
 
 <script>
@@ -137,13 +156,14 @@ const miembros = equipo.map((m, indice) => {
   .formation-inner.pointing { cursor: pointer; }
 
   /* "Paso al frente". OJO: si cambian estos transform, cambiar también REST/ACTIVE en scripts/equipo/revelado.ts */
-  .dossier { position: relative; cursor: pointer; pointer-events: none; display: flex; flex-direction: column; align-items: center; gap: .35rem; transition: transform var(--dur) var(--ease), filter var(--dur) var(--ease); }
+  /* Es un <button>: sin sus estilos de serie y con ancho explícito (un botón no se estira como un div) */
+  .dossier { width: 100%; margin: 0; padding: 0; border: 0; background: none; font: inherit; color: inherit; text-align: center; position: relative; cursor: pointer; pointer-events: none; display: flex; flex-direction: column; align-items: center; gap: .35rem; transition: transform var(--dur) var(--ease), filter var(--dur) var(--ease); }
   [data-fila="atras"] .dossier { transform: translateY(12px) scale(.8); filter: brightness(.82); }
   [data-fila="atras"]:is(:hover, :focus-within, .is-active):not(.cerrada) .dossier { transform: translateY(64px) scale(1.06); filter: brightness(1); }
   [data-fila="delante"]:is(:hover, :focus-within, .is-active):not(.cerrada) .dossier { transform: translateY(-8px) scale(1.06); }
 
-  .frame { position: relative; width: 100%; aspect-ratio: 1236 / 1272; }
-  .portrait { position: absolute; inset: 0; }
+  .frame { display: block; position: relative; width: 100%; aspect-ratio: 1236 / 1272; }
+  .portrait { display: block; position: absolute; inset: 0; }
   .portrait img { position: absolute; inset: 0; width: 100%; height: 100%; user-select: none; -webkit-user-drag: none; }
 
   /* ---------- Revelado ----------
@@ -172,11 +192,12 @@ const miembros = equipo.map((m, indice) => {
   }
 
   .info {
-    position: absolute; left: 50%; bottom: calc(100% + 8px); transform: translate(-50%, 8px);
+    display: block; position: absolute; left: 50%; bottom: calc(100% + 8px); transform: translate(-50%, 8px);
     width: 190px; background: var(--ink); border: 1px solid var(--gold); padding: .15rem .9rem;
     opacity: 0; visibility: hidden; pointer-events: none; z-index: 60; text-align: center;
     transition: opacity .35s var(--ease), transform .45s var(--ease), visibility 0s linear .45s;
   }
+  .info-name, .info-role { display: block; }
   .info-name { font: 700 1.25rem var(--f-head); color: var(--gold); margin: .55rem 0 .1rem; }
   .info-role { font-size: .72rem; letter-spacing: .04em; text-transform: uppercase; color: #d8d8d8; margin: 0 0 .6rem; }
   .operative:is(:hover, :focus-within, .is-active):not(.cerrada) .info { opacity: 1; transform: translate(-50%, 0); visibility: visible; transition-delay: .9s, .9s, 0s; }
@@ -186,7 +207,7 @@ const miembros = equipo.map((m, indice) => {
   :global(main > section:not(#equipo)), :global(.site-footer) { transition: filter .4s var(--ease), opacity .4s var(--ease); }
   :global(body:has(.operative.is-active:not(.cerrada), .operative:focus-within:not(.cerrada)) :is(main > section:not(#equipo), .site-footer)) { filter: blur(2px); opacity: .5; }
 
-  .swipe-hint, .nav { display: none; }
+  .swipe-hint, .nav, .bio-movil { display: none; }
 
   /* ---------- Móvil: carrusel ---------- */
   @media (max-width: 680px) {
@@ -204,7 +225,7 @@ const miembros = equipo.map((m, indice) => {
     }
     .formation-inner::-webkit-scrollbar { display: none; }
     .operative, .operative[data-fila="delante"] {
-      flex: 0 0 100%; width: auto; margin: 0; display: flex; justify-content: center;
+      flex: 0 0 100%; width: auto; margin: 0; display: flex; flex-direction: column; align-items: center;
       scroll-snap-align: center; scroll-snap-stop: always; pointer-events: auto;
     }
     .dossier { width: min(62vw, 240px); pointer-events: auto; }
@@ -213,6 +234,17 @@ const miembros = equipo.map((m, indice) => {
     [data-fila]:is(:hover, :focus-within, .is-active):not(.cerrada) .dossier { transform: scale(1.04) translateY(-6px); }
     .info { position: static; transform: translateY(6px); width: min(78vw, 280px); margin-top: .4rem; }
     .operative:is(:hover, :focus-within, .is-active):not(.cerrada) .info { transform: none; }
+    /* Bio y redes debajo de la persona centrada: entran cuando ya se ha quitado la capucha y ha salido la
+       ficha con el nombre (a los 0,9 s). Ocultas con visibility (no display) para que el carrusel reserve su
+       sitio y no salte de altura; así tampoco se puede llegar con Tab a las redes de quien no se ve. */
+    .bio-movil {
+      display: block; width: min(80vw, 300px); margin: 1rem 0 0; text-align: center;
+      opacity: 0; visibility: hidden; transform: translateY(6px);
+      transition: opacity .35s var(--ease), transform .45s var(--ease), visibility 0s linear .45s;
+    }
+    .bio-movil p { margin: 0; color: var(--text-2); font-size: 13px; line-height: 1.6; }
+    .bio-movil :global(.redes) { justify-content: center; margin-top: .9rem; }
+    .operative:is(:hover, :focus-within, .is-active):not(.cerrada) .bio-movil { opacity: 1; visibility: visible; transform: none; transition-delay: 1.25s, 1.25s, 0s; }
     /* en el carrusel no se desenfoca nada */
     .formation-inner .dossier,
     .formation-inner:has(.operative:is(:focus-within, .is-active):not(.cerrada)) .operative:not(:focus-within):not(.is-active) .dossier { filter: none; }
@@ -240,7 +272,7 @@ const miembros = equipo.map((m, indice) => {
 
   @media (prefers-reduced-motion: reduce) {
     .pausa-orbe { display: none; }   /* el orbe no gira: no hay nada que pausar */
-    .operative, .dossier, .layer-body, .layer-hood, .layer-face, .info, .nav { transition: none !important; }
+    .operative, .dossier, .layer-body, .layer-hood, .layer-face, .info, .bio-movil, .nav { transition: none !important; }
     .layer-hands { animation: none !important; opacity: 0 !important; }
     :global(main > section), :global(.site-footer) { transition: none !important; }
   }
