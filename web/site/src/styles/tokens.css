@@ -3,7 +3,10 @@
 
    Tema: oscuro por defecto (el diseño original). El claro se aplica si el sistema lo pide
    (prefers-color-scheme: light) o si el visitante lo elige con el botón (html[data-theme]).
-   La cabecera y la portada son blancas en los dos temas (el logo es negro).
+   La cabecera y la portada van sobre --cabecera-bg: blanco en el oscuro y el fondo de la página en el claro
+   (el logo es negro y se lee en los dos).
+   Tema claro: Solarized Light (base3 de fondo, base2 en los paneles, azul pizarra para el texto), con el
+   naranja y los grises oscurecidos lo justo para cumplir AA (los de Solarized tal cual no llegan a 4,5:1).
 
    Regla: los colores de las secciones van SIEMPRE por token, nunca en literal.
 
@@ -22,6 +25,7 @@
   /* Tema oscuro (por defecto) */
   color-scheme: dark;
   --bg: #232323;
+  --cabecera-bg: var(--white);   /* cabecera y portada */
   --panel-top: #1b1b1b;
   --panel-bottom: #2d2d2d;
   --panel-borde: rgba(253, 195, 48, .24);   /* borde de los paneles (.panel): dorado muy suave */
@@ -56,48 +60,50 @@
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
     color-scheme: light;
-    --bg: #f6f2e7;
-    --panel-top: #ffffff;
-    --panel-bottom: #fbf5e3;
-    --panel-borde: rgba(138, 91, 0, .25);
-    --text: #1C1C1B;
-    --text-2: #3b3b39;
-    --text-3: #66645e;
-    --accent-text: #8a5b00;   /* el dorado no se lee sobre claro: ocre oscuro (contraste ≥ 5:1) */
-    --form-bg: #ffffff;
-    --slot-bg: rgba(28, 28, 27, .035);
-    --slot-text: #8a5b00;
-    --line: rgba(0, 0, 0, .08);
+    --bg: #fdf6e3;                 /* Solarized base3 */
+    --cabecera-bg: #fdf6e3;
+    --panel-top: #e9e2cc;          /* base2 algo más oscuro: los paneles se distinguen bien del fondo */
+    --panel-bottom: #e9e2cc;
+    --panel-borde: #93a1a1;        /* base1 */
+    --text: #073642;               /* base02 */
+    --text-2: #475c63;             /* base01 oscurecido (≥ 5:1 sobre los paneles) */
+    --text-3: #4c6067;             /* ≥ 4,5:1 también sobre el suelo del escenario del Equipo (degradado: axe no lo mide) */
+    --accent-text: #9f3b10;        /* naranja de Solarized oscurecido: el dorado no se lee sobre claro (≥ 5:1) */
+    --form-bg: #e9e2cc;
+    --slot-bg: rgba(7, 54, 66, .07);   /* velo translúcido: el hueco se ve sobre el fondo y dentro de un panel */
+    --slot-text: #8f3510;          /* más oscuro que --accent-text: va sobre el velo de --slot-bg */
+    --line: rgba(7, 54, 66, .14);
     --logo-filter: brightness(0);
-    --equipo-fondo: #f3e9cf;
-    --equipo-suelo: #e9dcb8;
-    --equipo-halo: rgba(253, 195, 48, .35);
-    --contraluz: rgba(253, 195, 48, .62);
-    --contraluz-suave: rgba(253, 195, 48, .2);
-    --contraluz-borde: #e0a400;
+    --equipo-fondo: #eee8d5;       /* base2 */
+    --equipo-suelo: #e3dcc5;
+    --equipo-halo: rgba(181, 137, 0, .3);
+    --contraluz: rgba(181, 137, 0, .5);   /* amarillo de Solarized */
+    --contraluz-suave: rgba(181, 137, 0, .16);
+    --contraluz-borde: #b58900;
   }
 }
 :root[data-theme="light"] {
   color-scheme: light;
-  --bg: #f6f2e7;
-  --panel-top: #ffffff;
-  --panel-bottom: #fbf5e3;
-  --panel-borde: rgba(138, 91, 0, .25);
-  --text: #1C1C1B;
-  --text-2: #3b3b39;
-  --text-3: #66645e;
-  --accent-text: #8a5b00;
-  --form-bg: #ffffff;
-  --slot-bg: rgba(28, 28, 27, .035);
-  --slot-text: #8a5b00;
-  --line: rgba(0, 0, 0, .08);
+  --bg: #fdf6e3;
+  --cabecera-bg: #fdf6e3;
+  --panel-top: #e9e2cc;
+  --panel-bottom: #e9e2cc;
+  --panel-borde: #93a1a1;
+  --text: #073642;
+  --text-2: #475c63;
+  --text-3: #4c6067;
+  --accent-text: #9f3b10;
+  --form-bg: #e9e2cc;
+  --slot-bg: rgba(7, 54, 66, .07);
+  --slot-text: #8f3510;
+  --line: rgba(7, 54, 66, .14);
   --logo-filter: brightness(0);
-  --equipo-fondo: #f3e9cf;
-  --equipo-suelo: #e9dcb8;
-  --equipo-halo: rgba(253, 195, 48, .35);
-  --contraluz: rgba(253, 195, 48, .62);
-  --contraluz-suave: rgba(253, 195, 48, .2);
-  --contraluz-borde: #e0a400;
+  --equipo-fondo: #eee8d5;
+  --equipo-suelo: #e3dcc5;
+  --equipo-halo: rgba(181, 137, 0, .3);
+  --contraluz: rgba(181, 137, 0, .5);
+  --contraluz-suave: rgba(181, 137, 0, .16);
+  --contraluz-borde: #b58900;
 }
 
 @media (max-width: 680px) {
