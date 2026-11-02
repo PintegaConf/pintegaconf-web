@@ -7,7 +7,7 @@
 # De momento se publica la WEB TEMPORAL ("en obras"). Cuando toque la completa (Astro), se añade una
 # etapa con Node 24 que haga `npm ci && npm run build` en web/site y se copia web/site/dist en su lugar.
 # Versión fijada por hash; Dependabot la actualiza (.github/dependabot.yml).
-FROM nginxinc/nginx-unprivileged:1.31.6-alpine@sha256:b9241c6e7b8e9a862f129d8d4199ab64b10390949a78bdd5603379b32c844083
+FROM nginxinc/nginx-unprivileged:1.31.7-alpine@sha256:b5047b9b76845eac124358373c6852377c52e4b05834a47647e955dd91cb8f1e
 
 COPY web/nginx.conf /etc/nginx/conf.d/default.conf
 COPY web/temporal/ /usr/share/nginx/html/
