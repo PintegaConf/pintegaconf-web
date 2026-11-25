@@ -20,6 +20,7 @@ Idioma de trabajo: **español**. El usuario es Matías (organización, sistemas/
 - **Oferta a ponentes:** viaje y hotel cubiertos, entrada full-pass, cena en el post-evento (no hay cena solo de ponentes), grabación de la charla + difusión en web/redes, regalo de ponente.
 - **Charlas:** 30–45 min de media, duraciones variadas (no slot fijo). La agenda la organizará Matías más adelante.
 - **Niveles de patrocinio:** Dragón > Basilisco > Tritón > Ajolote. **Dragón es exclusivo: una sola empresa** (un único hueco en la web).
+- **Colaboradores (25-11-2026):** Diseñarte (se encargó del diseño), logo en `web/site/src/assets/colaboradores/` y enlace a https://diseniarte.com/.
 - **Patrocinadores confirmados (1-11-2026):** Basilisco: Raiola Networks, Next Digital y Allenta; Tritón: Teimas. **Denodo (Basilisco) aún no ha firmado:** su logo está en el repositorio pero desactivado (línea comentada en `patrocinio.ts`); activarlo cuando Matías lo confirme. Logos en `web/site/src/assets/patrocinadores/` (los de la web de Lareira, `Gallegarmy/LareiraConf-MainPage`, `src/img/sponsors/`; el de Allenta lo pasó Matías). Revisar cada SVG antes de meterlo (sin scripts ni enlaces externos) y que su tamaño óptico cuadre con los demás (al de Allenta se le dio margen en el `viewBox`).
 
 ## Mapa
