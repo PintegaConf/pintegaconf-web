@@ -70,7 +70,9 @@ main:focus { outline: none; box-shadow: none; }
 /* ---------- Rejilla de logos y huecos "Tu logo aquí" ---------- */
 .logos { display: grid; grid-template-columns: repeat(3, 315px); gap: 55px; justify-content: center; }
 .logo-slot {
-  height: 115px; display: grid; place-items: center;
+  /* Fila y columna fijas al tamaño del hueco: con una fila automática, un logo poco apaisado (Diseñarte)
+     la estiraba con su alto natural antes de aplicar el max-height en %, y quedaba más abajo del centro. */
+  height: 115px; display: grid; grid-template: minmax(0, 1fr) / minmax(0, 1fr); place-items: center;
   background: var(--slot-bg); border: 1.5px dashed rgba(253, 195, 48, .45);
   color: var(--slot-text); font-family: var(--f-sans); font-size: 13px; letter-spacing: .08em; text-transform: uppercase;
   transition: border-color .25s, background .25s;
