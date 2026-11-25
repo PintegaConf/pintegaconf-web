@@ -12,6 +12,9 @@ import raiola from "../assets/patrocinadores/raiola.svg";
 import nextDigital from "../assets/patrocinadores/nextdigital.svg";
 import teimas from "../assets/patrocinadores/teimas.svg";
 import allenta from "../assets/patrocinadores/allenta.svg";
+// Colaboradores: Diseñarte hizo el diseño (logo pasado por Matías, revisado: sin scripts ni enlaces externos; viewBox
+// recortado a su contenido con 5 de margen, que traía mucho aire arriba y abajo y se veía pequeño).
+import disenarte from "../assets/colaboradores/disenarte.svg";
 
 export interface Logo {
   src: ImageMetadata;
@@ -49,6 +52,8 @@ export const niveles: Nivel[] = [
   { id: "ajolote", nombre: "Ajolote", rango: "Patrocinio bronce", medallon: ajolote, huecos: 8, logos: [] },
 ];
 
-// Colaboradores y comunidades: huecos hasta que haya logos.
-export const colaboradores: Logo[] = [];
+// Colaboradores y comunidades: los que haya y huecos hasta completar tres (Logos.astro).
+export const colaboradores: Logo[] = [
+  { src: disenarte, alt: "Diseñarte", url: "https://diseniarte.com/" },
+];
 export const comunidades: Logo[] = [];
