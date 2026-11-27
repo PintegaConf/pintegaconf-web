@@ -1,6 +1,8 @@
 ---
 // Rastro de la píntega: según se baja por la página, la salamandra va dejando pisadas por debajo de las
-// cajas y las de atrás se borran. Solo decorativo (aria-hidden). Las pisadas las crea scripts/rastro.ts.
+// cajas y las de atrás se borran. La pisada nueva sale encendida como una brasa, suelta unas chispas y se
+// enfría; cuando el rastro entra o sale de debajo de un panel, su borde se enciende un momento justo por
+// ahí. Solo decorativo (aria-hidden). Las pisadas, chispas y destellos los crea scripts/rastro.ts.
 // Sin JS, con «reducir movimiento», en alto contraste o al imprimir no hay rastro.
 ---
 <div class="rastro" aria-hidden="true"></div>
@@ -15,20 +17,67 @@
   .rastro { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
 
   /* Cada pisada: centrada en su punto, girada hacia donde anda. Entra «estampándose» (de grande a su
-     tamaño) y sale fundiéndose; el tamaño vuelve a grande cuando ya no se ve */
+     tamaño) y sale fundiéndose; el tamaño vuelve a grande cuando ya no se ve. La forma va en el <i> (máscara)
+     para que el halo de la brasa (filter en el span) no quede recortado por ella */
   .rastro :global(.huella) {
     /* mismo tamaño que las huellas de la portada (huellas.svg a 520 px: escala 0,93 del viewBox de 59×48) */
     position: absolute; width: 55px; aspect-ratio: 59 / 48; translate: -50% -50%;
-    background: var(--huella);
+    opacity: 0; scale: 1.6;
+    transition: opacity .6s, scale 0s .6s, filter 1.2s;
+  }
+  .rastro :global(.huella i) {
+    position: absolute; inset: 0; background-color: var(--huella);
     -webkit-mask: url("../assets/marca/huella-sola.svg") center / contain no-repeat;
     mask: url("../assets/marca/huella-sola.svg") center / contain no-repeat;
-    opacity: 0; scale: 1.6;
-    transition: opacity .6s, scale 0s .6s;
+    transition: background-color 1.2s;
   }
   .rastro :global(.huella.izq) { transform: scaleY(-1); }   /* pata izquierda: la misma huella en espejo */
-  .rastro :global(.huella.pisada) { scale: 1; transition: opacity .2s, scale .3s var(--ease); }
+  .rastro :global(.huella.pisada) { scale: 1; transition: opacity .2s, scale .3s var(--ease), filter 1.2s; }
+
+  /* Brasa: las pisadas más nuevas, encendidas y con halo; al quedarse atrás se enfrían poco a poco */
+  .rastro :global(.huella.caliente) { filter: drop-shadow(0 0 4px var(--brasa-halo)) drop-shadow(0 0 12px var(--brasa-halo)); }
+  .rastro :global(.huella.caliente i) { background-color: var(--brasa); transition: background-color .15s; }
+
+  /* Chispas: salen de la pisada nueva hacia arriba y se apagan (0,7 s) */
+  .rastro :global(.chispa) {
+    position: absolute; width: 4px; height: 4px; margin: -2px 0 0 -2px; border-radius: 50%;
+    background: var(--brasa); box-shadow: 0 0 6px 1px var(--brasa-halo);
+    animation: chispa .7s ease-out forwards;
+  }
+  @keyframes chispa { to { translate: var(--dx) var(--dy); opacity: 0; scale: .3; } }
+
+  /* Destello en el borde del panel por donde entra o sale el rastro: una raya en el borde y un halo hacia
+     dentro, centrados en --pos. Ocupa todo el lado del panel para no salirse nunca de él (scroll horizontal) */
+  :global(.destello) { position: absolute; pointer-events: none; border-radius: inherit; animation: destello 1.4s ease-out forwards; }
+  :global(.destello.abajo), :global(.destello.arriba) { left: 0; right: 0; height: 90px; }
+  :global(.destello.izq), :global(.destello.der) { top: 0; bottom: 0; width: 90px; }
+  :global(.destello.abajo) {
+    bottom: -1px;
+    background:
+      linear-gradient(90deg, transparent calc(var(--pos) - 180px), var(--brasa) calc(var(--pos) - 50px) calc(var(--pos) + 50px), transparent calc(var(--pos) + 180px)) bottom / 100% 2px no-repeat,
+      radial-gradient(180px 90px at var(--pos) 100%, var(--brasa-velo), transparent);
+  }
+  :global(.destello.arriba) {
+    top: -1px;
+    background:
+      linear-gradient(90deg, transparent calc(var(--pos) - 180px), var(--brasa) calc(var(--pos) - 50px) calc(var(--pos) + 50px), transparent calc(var(--pos) + 180px)) top / 100% 2px no-repeat,
+      radial-gradient(180px 90px at var(--pos) 0, var(--brasa-velo), transparent);
+  }
+  :global(.destello.izq) {
+    left: -1px;
+    background:
+      linear-gradient(180deg, transparent calc(var(--pos) - 180px), var(--brasa) calc(var(--pos) - 50px) calc(var(--pos) + 50px), transparent calc(var(--pos) + 180px)) left / 2px 100% no-repeat,
+      radial-gradient(90px 180px at 0 var(--pos), var(--brasa-velo), transparent);
+  }
+  :global(.destello.der) {
+    right: -1px;
+    background:
+      linear-gradient(180deg, transparent calc(var(--pos) - 180px), var(--brasa) calc(var(--pos) - 50px) calc(var(--pos) + 50px), transparent calc(var(--pos) + 180px)) right / 2px 100% no-repeat,
+      radial-gradient(90px 180px at 100% var(--pos), var(--brasa-velo), transparent);
+  }
+  @keyframes destello { 0% { opacity: 0; } 15% { opacity: 1; } 100% { opacity: 0; } }
 
   @media (prefers-reduced-motion: reduce), (forced-colors: active), print {
-    .rastro { display: none; }
+    .rastro, :global(.destello) { display: none; }
   }
 </style>
