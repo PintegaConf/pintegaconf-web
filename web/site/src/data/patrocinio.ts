@@ -28,28 +28,27 @@ export interface Nivel {
   nombre: string;
   rango: string;
   medallon: ImageMetadata;
-  /** Huecos "Tu logo aquí" que se muestran mientras no haya logos reales. */
-  huecos: number;
   logos: Logo[];
 }
 
 // La importancia se marca con los logos POR FILA (Dragón 1, Basilisco 2, Tritón 3, Ajolote 4)
 // y con medallones decrecientes. Dragón es exclusivo: una sola empresa.
+// Solo se ven los niveles con logos y solo sus logos, sin huecos vacíos (Patrocinadores.astro).
 // Para añadir un patrocinador: guardar su logo en src/assets/patrocinadores/, importarlo y
 // añadirlo a `logos`, p. ej. { src: miLogo, alt: "Empresa S.L.", url: "https://empresa.com" }.
 export const niveles: Nivel[] = [
-  { id: "dragon", nombre: "Dragón", rango: "Patrocinio principal · exclusivo", medallon: dragon, huecos: 1, logos: [] },
-  { id: "basilisco", nombre: "Basilisco", rango: "Patrocinio oro", medallon: basilisco, huecos: 4, logos: [
+  { id: "dragon", nombre: "Dragón", rango: "Patrocinio principal · exclusivo", medallon: dragon, logos: [] },
+  { id: "basilisco", nombre: "Basilisco", rango: "Patrocinio oro", medallon: basilisco, logos: [
     { src: raiola, alt: "Raiola Networks", url: "https://raiolanetworks.com/" },
     // Denodo: aún no ha firmado (1-11-2026). Cuando firme, descomentar esta línea y su import de arriba.
     // { src: denodo, alt: "Denodo", url: "https://www.denodo.com/" },
     { src: nextDigital, alt: "Next Digital", url: "https://www.nextdigital.es/" },
     { src: allenta, alt: "Allenta", url: "https://allenta.com/" },
   ] },
-  { id: "triton", nombre: "Tritón", rango: "Patrocinio plata", medallon: triton, huecos: 6, logos: [
+  { id: "triton", nombre: "Tritón", rango: "Patrocinio plata", medallon: triton, logos: [
     { src: teimas, alt: "Teimas", url: "https://www.teimas.com/" },
   ] },
-  { id: "ajolote", nombre: "Ajolote", rango: "Patrocinio bronce", medallon: ajolote, huecos: 8, logos: [] },
+  { id: "ajolote", nombre: "Ajolote", rango: "Patrocinio bronce", medallon: ajolote, logos: [] },
 ];
 
 // Colaboradores y comunidades: los que haya y huecos hasta completar tres (Logos.astro).
