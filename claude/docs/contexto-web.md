@@ -58,7 +58,7 @@ Un componente web para la página de **Pintega Conf**: una fila de personas ocul
 - **Tokens**: dorado web #FDC330 (manual #FDC822), negro #1C1C1B, fondo #232323. Arima (títulos 48px), Roboto Mono (texto 14px), Source Sans 3 (formulario/footer).
 - **Assets**: logo horizontal, logo PC27, salamandra y huellas sacados en vectorial del PDF `marca_and_rrss/imagen corporativa pintega conf.pdf` (manual de marca, págs. 16, 14, 14 y 1). Las descargas directas de Penpot estaban bloqueadas por la red.
 - **Portada** (propuesta aceptada): cabecera fija (sticky) en todos los tamaños con logo + menú horizontal (≥1100px) + botón Entradas; por debajo de 1100px hamburguesa, y la barra sigue visible al hacer scroll. Hero blanco: "Conferencia tecnológica · A Coruña", H1 "El punto de encuentro de las comunidades tech", datos (fecha, lugar, un solo track), botones "Consigue tu entrada" / "Ver agenda", salamandra sobre orbe dorado. En móvil los botones van antes de los datos.
-- **Huecos de ponentes y patrocinadores: se quedan así** hasta que haya (decisión del usuario).
+- **Huecos de ponentes: se quedan así** hasta que haya (decisión del usuario). Los de patrocinadores se quitaron el 27-11-2026: solo salen los niveles con logos.
 - **Precio** (31-10-2026): Chispa 30 €, Llama 40 € y Hoguera 60 € (ver `claude/CLAUDE.md`); se muestran en el selector de la sección Entradas.
 - Bug corregido: en móvil el carrusel del equipo salía desplazado 24px → `max-width:none` en el media query.
 - **Hombros difuminados** incrustados en los PNG. Antes era una máscara CSS y en **Safari** dejaba líneas claras al animar — **no volver a la máscara CSS**.
