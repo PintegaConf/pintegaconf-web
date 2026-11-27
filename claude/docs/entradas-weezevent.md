@@ -6,8 +6,8 @@ ya trae el panel, los QR, las facturas y los reembolsos, y no hay tiempo para de
 
 ## Cómo va en la web
 
-- La web **enlaza** a la tienda de Weezevent desde un selector propio: las tres entradas (Chispa 30 €, Llama 40 € y Hoguera
-  60 €) como entradas de papel, y el talón «Comprar …» de cada una abre su **módulo filtrado** de Weezevent, con esa tarifa ya
+- La web **enlaza** a la tienda de Weezevent desde un selector propio: las tres entradas (Chispa 25 €, Llama 50 € y Hoguera
+  70 €) como entradas de papel, y el talón «Comprar …» de cada una abre su **módulo filtrado** de Weezevent, con esa tarifa ya
   elegida. El botón «Compra tu entrada» de la portada lleva a esa sección. No usamos su iframe ni su script (su widget solo
   deja cambiar el color principal, el fondo, el tamaño y el idioma): la CSP no cambia, la tarjeta nunca pasa por nuestra web, la accesibilidad de un iframe ajeno no la
   controlamos y el pago con 3D Secure dentro de un iframe en el móvil suele dar problemas.
@@ -22,8 +22,8 @@ ya trae el panel, los QR, las facturas y los reembolsos, y no hay tiempo para de
   el enlace no cambie, el módulo de cada entrada debe llevar sus dos tarifas, y la normal empezar «sustituyendo» a la early bird
   (que necesita fecha de fin o cupo; las dos visibles en Internet). Si el módulo solo admite una tarifa, al acabar el early bird
   hay que crear módulos nuevos y cambiar los tres enlaces.
-- Precios en Weezevent: **precio fijo** de 30, 40 y 60 € (es el precio final con IVA) **sin «+ comisiones»**: la comisión sale
-  de lo que nos pagan (0,99 €, 1,00 € y 1,50 €). IVA del evento: el que diga la gestora (previsiblemente el 21 %, tipo general).
+- Precios en Weezevent: **precio fijo** de 25, 50 y 70 € (es el precio final con IVA) **sin «+ comisiones»**: la comisión sale
+  de lo que nos pagan (con 30, 40 y 60 € era 0,99 €, 1,00 € y 1,50 €; recalcular con los precios nuevos). IVA del evento: el que diga la gestora (previsiblemente el 21 %, tipo general).
 
 ## Qué cubre Weezevent de lo que pedimos
 

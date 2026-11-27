@@ -7,7 +7,7 @@ import PreguntaFaq from "../components/PreguntaFaq.astro";
 import { evento, fecha, mailto } from "../data/evento";
 import { entradas, ventaAbierta } from "../data/entradas";
 
-// «Chispa (30 €), Llama (40 €) y Hoguera (60 €)»
+// «Chispa (25 €), Llama (50 €) y Hoguera (70 €)»
 const precios = new Intl.ListFormat("es").format(entradas.map((e) => `${e.nombre} (${e.precio}\u00a0€)`));
 
 const temas = [
